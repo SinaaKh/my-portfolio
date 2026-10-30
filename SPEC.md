@@ -641,7 +641,7 @@ Secondary pages
 - [x] Projects (`/projects`)
 - [x] Case study (`/projects/[slug]`)
 - [x] Lab (`/lab`)
-- [ ] Writing index (`/blog`)
+- [x] Writing index (`/blog`)
 - [ ] Post (`/blog/[slug]`)
 - [ ] Learn (`/learn`)
 
