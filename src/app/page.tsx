@@ -9,6 +9,7 @@ import { TechStack } from "@/components/sections/tech-stack";
 import { Story } from "@/components/sections/story";
 import { Insights } from "@/components/sections/insights";
 import { Partnership } from "@/components/sections/partnership";
+import { Collaborations } from "@/components/sections/collaborations";
 
 // Home sections in page order (SPEC.md §3). Sections not built yet render a placeholder.
 const SECTIONS: Partial<Record<string, ComponentType>> = {
@@ -21,6 +22,7 @@ const SECTIONS: Partial<Record<string, ComponentType>> = {
   story: Story,
   insights: Insights,
   partnership: Partnership,
+  collaborations: Collaborations,
 };
 
 export default function Home() {
