@@ -181,7 +181,7 @@ function Structure({ study }: { study: CaseStudy }) {
               <div
                 className={`w-full rounded-2xl border px-6 py-4 text-center font-medium ${
                   i === last
-                    ? "border-accent bg-accent text-black shadow-[0_0_30px_rgb(0_191_165/0.3)]"
+                    ? "border-accent bg-accent text-black shadow-[0_0_30px_color-mix(in_srgb,var(--color-accent)_30%,transparent)]"
                     : "border-white/10 bg-white/5 text-white"
                 }`}
               >
