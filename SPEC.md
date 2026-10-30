@@ -122,7 +122,9 @@ Named tokens (Tailwind `text-*`):
 - **Durations**: 150ms (nav link color), 300ms (link underline, arrow nudge), 500ms (default card/hover), 700ms (slow color
   fades, icon grayscale), 1000ms (image zoom on hover).
 - **Smooth scroll**: Lenis on `<html>` (`.lenis.lenis-smooth`), default lerp. Main uses `snap-y snap-proximity` with
-  `snap-start` wrappers per section. Smooth scroll is disabled when `prefers-reduced-motion: reduce`.
+  `snap-start` wrappers per section (we drop the snap; see §6). Smooth scroll is disabled when
+  `prefers-reduced-motion: reduce`. Ours: `src/components/smooth-scroll.tsx` drives Lenis from Framer Motion's frame
+  loop, so scroll-linked motion values stay in sync. Anchor links scroll smoothly (`anchors: true`).
 - **Reduced motion**: all scroll-linked transforms fall back to their end state, and marquees and spins stop.
 
 ---
@@ -583,6 +585,12 @@ replace.
 | `post-cover-01…04.svg` | 1600×900 | 16:9 | blog posts |
 | `og.svg` | 1200×630 | 1.91:1 | social card source |
 
+Implementation notes:
+- `next/image` refuses SVGs by default. Placeholder `<Image>`s pass `unoptimized` while the source ends in `.svg`.
+  Real photos (JPG/PNG/WebP) go through the optimizer as normal.
+- Social platforms don't accept SVG Open Graph images. Export `og.svg` to PNG (or use `opengraph-image.tsx`)
+  during the polish phase.
+
 ---
 
 ## 6. Open questions / deliberate deviations
@@ -594,6 +602,8 @@ replace.
 5. **Footer "Work" link**: 404 on the reference. Ours points to `/projects`.
 6. **Serif face**: a system stack, as on the reference, so it varies by OS. Say if you want a fixed webfont instead
    (e.g. Instrument Serif).
+7. **Scroll snap**: the reference combines CSS `snap-y snap-proximity` with Lenis, and the two fight each other. We
+   leave CSS snap off. If snapping is wanted, use `lenis/snap`.
 
 ---
 
@@ -602,10 +612,10 @@ replace.
 Foundations
 - [x] Project setup (Next.js, TS, Tailwind, Framer Motion, Lenis)
 - [x] Design spec
-- [ ] Design tokens (Tailwind theme + CSS variables)
-- [ ] Content model (`src/content/site.ts`)
-- [ ] Placeholder images
-- [ ] Layout shell (Lenis provider, section anchors)
+- [x] Design tokens (Tailwind theme + CSS variables)
+- [x] Content model (`src/content/site.ts`)
+- [x] Placeholder images
+- [x] Layout shell (Lenis provider, section anchors)
 
 Global
 - [ ] Navigation (desktop + mobile dropdown, scroll fade)

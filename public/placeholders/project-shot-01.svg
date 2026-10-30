@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1100" viewBox="0 0 1800 1100" role="img" aria-label="Project Screenshot 01 placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5f5f5"/>
+      <stop offset="1" stop-color="#e5e7eb"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.75" cy="0.2" r="0.6">
+      <stop offset="0" stop-color="#00bfa5" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#00bfa5" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="92" height="92" patternUnits="userSpaceOnUse">
+      <path d="M 92 0 L 0 0 0 92" fill="none" stroke="#000000" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1800" height="1100" fill="url(#bg)"/>
+  <rect width="1800" height="1100" fill="url(#grid)"/>
+  <rect width="1800" height="1100" fill="url(#glow)"/>
+  <text x="50%" y="550" text-anchor="middle" dominant-baseline="auto" font-family="Poppins, ui-sans-serif, system-ui, sans-serif" font-weight="600" font-size="83" letter-spacing="-0.02em" fill="#000000" fill-opacity="0.75">Project Screenshot 01</text>
+  <text x="50%" y="624.7" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="33" fill="#000000" fill-opacity="0.45">project-shot-01.svg · 1800×1100</text>
+</svg>

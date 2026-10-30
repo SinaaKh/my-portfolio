@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="YN placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#063b3d"/>
+      <stop offset="1" stop-color="#09757a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.75" cy="0.2" r="0.6">
+      <stop offset="0" stop-color="#00bfa5" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#00bfa5" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="13" height="13" patternUnits="userSpaceOnUse">
+      <path d="M 13 0 L 0 0 0 13" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="160" height="160" fill="url(#bg)"/>
+  <rect width="160" height="160" fill="url(#grid)"/>
+  <rect width="160" height="160" fill="url(#glow)"/>
+  <text x="50%" y="80" text-anchor="middle" dominant-baseline="central" font-family="Poppins, ui-sans-serif, system-ui, sans-serif" font-weight="600" font-size="58" letter-spacing="-0.02em" fill="#ffffff" fill-opacity="0.9">YN</text>
+  
+</svg>
