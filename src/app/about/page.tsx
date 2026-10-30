@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/content/site";
 import { Reveal } from "@/components/ui/reveal";
 import { SiteImage } from "@/components/ui/site-image";
@@ -6,10 +7,11 @@ import { SmartLink } from "@/components/ui/smart-link";
 
 const { about } = site.pages;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: about.metaTitle,
   description: about.intro,
-};
+  path: "/about",
+});
 
 /** About page (SPEC.md §4.1). */
 export default function AboutPage() {

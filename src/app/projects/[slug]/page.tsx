@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/lib/metadata";
 import { site, type CaseStudy } from "@/content/site";
 import { Reveal } from "@/components/ui/reveal";
 import { SiteImage } from "@/components/ui/site-image";
@@ -13,7 +14,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const study = findCaseStudy((await params).slug);
-  return study ? { title: study.metaTitle, description: study.intro } : {};
+  return study
+    ? pageMetadata({ title: study.metaTitle, description: study.intro, path: `/projects/${study.slug}`, type: "article" })
+    : {};
 }
 
 /** Case study page (SPEC.md §4.3). */

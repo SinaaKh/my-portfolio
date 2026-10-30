@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { site, type ProjectBand } from "@/content/site";
 import { Collaborations } from "@/components/sections/collaborations";
 import { ArrowLink } from "@/components/ui/arrow-link";
@@ -7,10 +8,11 @@ import { SmartLink } from "@/components/ui/smart-link";
 
 const { projects } = site.pages;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: projects.metaTitle,
   description: projects.intro,
-};
+  path: "/projects",
+});
 
 const TONE = {
   dark: { kicker: "text-white/70", title: "text-white", summary: "text-white/80", label: "text-white/70", value: "text-white", pill: "border-white/80 text-white" },

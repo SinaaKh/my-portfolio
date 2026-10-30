@@ -28,9 +28,16 @@ export const site: SiteContent = {
     description: "A one-sentence placeholder description of what you do and who you do it for.",
     url: "https://example.com",
     locale: "en_US",
+    keywords: ["Your Name", "portfolio", "your role", "your specialty"],
+    twitterHandle: undefined,
     email: "hello@example.com",
     avatar: img("avatar.svg", 160, 160, "Portrait of Your Name"),
-    ogImage: img("og.svg", 1200, 630, "Your Name: portfolio"),
+    ogImage: img("og.png", 1200, 630, "Your Name: portfolio"),
+    icons: {
+      svg: "/placeholders/favicon.svg",
+      png: "/placeholders/favicon-32.png",
+      apple: "/placeholders/apple-touch-icon.png",
+    },
   },
 
   nav: {
@@ -590,6 +597,14 @@ export const site: SiteContent = {
       lines: ["Placeholder line one...", "Placeholder line two?", "Placeholder line three?"],
       message: "A placeholder sentence about upcoming learning content.",
       badge: "Coming soon!",
+    },
+
+    notFound: {
+      metaTitle: "Page not found",
+      eyebrow: "Error 404",
+      titleLines: ["Lost in", "the scroll."],
+      message: "The page you are looking for does not exist or has moved.",
+      link: { label: "Back to home", href: "/" },
     },
   },
 

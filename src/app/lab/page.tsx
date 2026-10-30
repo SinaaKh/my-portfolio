@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { site, type LabBlock } from "@/content/site";
 import { Reveal } from "@/components/ui/reveal";
 import { SiteImage } from "@/components/ui/site-image";
 
 const { lab } = site.pages;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: lab.metaTitle,
   description: lab.intro,
-};
+  path: "/lab",
+});
 
 /** Lab / experiment page (SPEC.md §4.4). */
 export default function LabPage() {

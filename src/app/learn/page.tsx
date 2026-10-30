@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/content/site";
 
 const { learn } = site.pages;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: learn.metaTitle,
   description: learn.message,
-};
+  path: "/learn",
+});
 
 const lineClass = "pt-3 text-4xl font-medium leading-[110%] md:leading-[140%] lg:text-5xl lg:leading-none";
 

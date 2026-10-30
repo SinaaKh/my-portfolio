@@ -583,13 +583,15 @@ replace.
 | `case-study-cover-01…02.svg` | 2100×900 | 21:9 | case-study covers |
 | `project-shot-01…03.svg` | 1800×1100 | ~16:10 | Projects page screenshots |
 | `post-cover-01…04.svg` | 1600×900 | 16:9 | blog posts |
-| `og.svg` | 1200×630 | 1.91:1 | social card source |
+| `og.png` | 1200×630 | 1.91:1 | social share card (PNG, rendered from SVG with sharp) |
+| `favicon.svg`, `favicon-32.png` | 64×64, 32×32 | 1:1 | browser tab icon + PNG fallback |
+| `apple-touch-icon.png` | 180×180 | 1:1 | iOS home-screen icon |
 
 Implementation notes:
 - `next/image` refuses SVGs by default. Placeholder `<Image>`s pass `unoptimized` while the source ends in `.svg`.
   Real photos (JPG/PNG/WebP) go through the optimizer as normal.
-- Social platforms don't accept SVG Open Graph images. Export `og.svg` to PNG (or use `opengraph-image.tsx`)
-  during the polish phase.
+- Social platforms don't accept SVG Open Graph images, so the generator renders `og.png` (and the PNG icons)
+  from SVG with sharp.
 
 ---
 
@@ -661,5 +663,5 @@ Secondary pages
 Polish
 - [x] Reduced-motion fallbacks
 - [x] Responsive QA at 375 / 768 / 1024 / 1440
-- [ ] Metadata, OG image, favicon
-- [ ] Lighthouse pass (performance, a11y)
+- [x] Metadata, OG image, favicon, sitemap, robots, 404
+- [x] Lighthouse pass: 90+ on every category, mobile and desktop (see README)
