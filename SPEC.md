@@ -354,7 +354,7 @@ caseStudy?`).
     Tabs: All plus 6 categories. **Default tab: the second one (first real category), not "All".**
   - **Grid** `grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8`. Tile `relative h-48 bg-white/2 border
     border-white/5 rounded-2xl p-8 flex flex-col items-center justify-center` (hover: `bg-white/5 border-white/20`).
-    Icon `text-4xl md:text-5xl` in the brand color, `grayscale` until hover (then `grayscale-0 scale-110`, 700ms).
+    Icon `text-4xl md:text-5xl` in `white/60` until hover (then the brand color and `scale-110`, 700ms; see §6).
     Name `text-white/40 font-bold text-eyebrow uppercase tracking-caps` (hover: white). A brand-color glow
     `blur-2xl opacity-0 → 10%` on hover.
 - **Motion**: changing the filter uses `AnimatePresence mode="wait"`. Exits go `y 0 → 10, scale 1 → 0.9, opacity → 0`.
@@ -413,8 +413,9 @@ accent-bordered note under its entry's description.
   - Right: "Read more" (`text-eyebrow font-black uppercase tracking-caps`) and a 48px round arrow. The group
     translates `x 16px` on hover.
 - **Motion**: **scroll-linked theme flip.** With `useScroll({ target, offset: ['start end', 'end start'] })`,
-  progress **0.30 → 0.50** maps the background **black → white**, the text **white → black**, and the borders and
-  alpha text invert to match. On desktop that's the section top going from about +90px to -450px of the viewport.
+  progress **0.37 → 0.43** maps the background **black → white**. The text goes **white → black** and the borders and
+  alpha text invert to match inside **0.38 → 0.386**, so text doesn't fade into the mid-flip grey. *(The reference
+  uses 0.30 → 0.50 for all of them, which is unreadable midway; see §6.)*
   The eyebrow stays accent. Rows fade up (`y 20 → 0`) in view.
 - 4 posts on the reference.
 
@@ -636,6 +637,10 @@ Defaults applied during the build (2026-10-30). Each can be revisited.
 16. **Horizontal track distances**: the reference slides Dev Works and the timeline by fixed percentages, which only
     land right for one card or entry count. Ours measures the distance so the last card or entry always stops fully in
     view, and holds it for the last 10% of the section.
+17. **Insights theme flip**: the reference flips over 0.30 → 0.50 of scroll progress, leaving grey text on grey for
+    hundreds of pixels. Ours flips the background over 0.37 → 0.43 and the text almost instantly inside that (§3.9).
+18. **Tech Stack logos**: the reference's grayscale filter left dark brand colors nearly invisible. Ours draws every
+    logo in `white/60` until hover, then in its brand color (§3.7).
 
 ---
 

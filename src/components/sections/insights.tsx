@@ -9,11 +9,16 @@ import { SmartLink } from "@/components/ui/smart-link";
 
 const { insights, posts } = site;
 
-/** Scroll progress window over which the section flips from black to white (measured). */
-const FLIP: [number, number] = [0.3, 0.5];
+/** Scroll progress window over which the section flips from black to white. */
+const FLIP: [number, number] = [0.37, 0.43];
+/**
+ * Text flips almost instantly so it never fades into the grey. Framer mixes colors in linear
+ * light, so black and white text are equally legible about a quarter of the way through FLIP.
+ */
+const TEXT_FLIP: [number, number] = [0.38, 0.386];
 
 function useFlip(progress: MotionValue<number>, alpha: number) {
-  return useTransform(progress, FLIP, [`rgba(255, 255, 255, ${alpha})`, `rgba(0, 0, 0, ${alpha})`]);
+  return useTransform(progress, TEXT_FLIP, [`rgba(255, 255, 255, ${alpha})`, `rgba(0, 0, 0, ${alpha})`]);
 }
 
 /** Latest Insights: post list whose theme flips black → white with scroll (SPEC.md §3.9). */

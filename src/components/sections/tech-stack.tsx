@@ -1,9 +1,8 @@
 "use client";
 
-import { useId, useRef, useState, type KeyboardEvent } from "react";
+import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { site, type TechCategory, type TechItem } from "@/content/site";
-import { SiteImage } from "@/components/ui/site-image";
 
 const { techStack } = site;
 
@@ -149,11 +148,15 @@ function TechTile({ item }: { item: TechItem }) {
       <div className="relative z-10 mb-6">
         <div
           aria-hidden
-          style={{ color: item.color }}
-          className="text-4xl grayscale transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0 md:text-5xl"
+          style={{ "--brand": item.color } as CSSProperties}
+          className="text-4xl text-white/60 transition-all duration-700 group-hover:scale-110 group-hover:text-(--brand) md:text-5xl"
         >
           {item.icon ? (
-            <SiteImage src={item.icon} alt="" width={48} height={48} className="h-[1em] w-[1em]" />
+            // A mask rather than an image, so the logo takes the item's color through currentColor.
+            <span
+              style={{ maskImage: `url(${item.icon})` }}
+              className="block h-[1em] w-[1em] bg-current mask-contain mask-center mask-no-repeat"
+            />
           ) : (
             <Monogram name={item.name} />
           )}

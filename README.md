@@ -121,7 +121,7 @@ landmarks. Keep the ids, because the components look their label up by id. Renam
 | `versatility` | Title, description, link, hub words, **industries** and pillars | The hub has **6 node positions**. Give an industry an `href` to make it a link with a pulsing dot |
 | `devWorks` | Horizontal-scroll project cards (6 fits the scroll distance) | `meta` is the small accent line ("01 / Category / Role"). Add `caseStudy` to show the "Read Case Study" link |
 | `threeDWorks` | Scroll-flipped research card | Any number of `items`; each half-turn reveals the next |
-| `techStack` | Filter tabs and tech tiles | `categories` drive the tabs, `defaultCategory` is selected first. Items in category `"tools"` only appear under "All". `color` tints the icon on hover; add `icon: "/images/your-logo.svg"` for a real logo (otherwise initials are drawn) |
+| `techStack` | Filter tabs and tech tiles | `categories` drive the tabs, `defaultCategory` is selected first. Items in category `"tools"` only appear under "All". `color` tints the icon on hover; `icon` is a single-color SVG in `public/images/tech/`, used as a mask so it takes `color` (otherwise initials are drawn) |
 | `timeline` | Horizontal story | Any number of `entries` (`title`, `period`, `tag`, `description`, optional `milestone` shown under the entry) |
 | `insights` | "Latest writing" list | Shows the first `limit` posts from `posts` |
 | `posts` | Blog posts (home list, `/blog`, `/blog/[slug]`) | `body` is a list of blocks: `paragraph`, `heading`, `list` (`ordered?`), `quote`. `date` is ISO (`"2026-01-15"`) |
