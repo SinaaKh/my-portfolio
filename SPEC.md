@@ -632,7 +632,7 @@ Home sections
 - [x] Selected 3D Works
 - [x] Tech Stack
 - [x] Story / Timeline
-- [ ] Latest Insights
+- [x] Latest Insights
 - [ ] Partnership
 - [ ] Collaborations
 
