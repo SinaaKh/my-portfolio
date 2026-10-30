@@ -33,7 +33,14 @@ export default function LabPage() {
         </Reveal>
 
         <Reveal y={0} className="relative mt-24 h-screen w-full overflow-hidden rounded-5xl shadow-2xl">
-          <SiteImage src={lab.image.src} alt={lab.image.alt} fill sizes="(min-width: 1100px) 1052px, 100vw" className="object-cover" />
+          <SiteImage
+            src={lab.image.src}
+            alt={lab.image.alt}
+            fill
+            loading="eager"
+            sizes="(min-width: 1100px) 1052px, 100vw"
+            className="object-cover"
+          />
         </Reveal>
 
         <article className="mt-24 grid gap-6 text-[18px] text-gray-800">

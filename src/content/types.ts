@@ -51,6 +51,8 @@ export interface NavContent {
   menuLabel: string;
   homeLabel: string;
   skipLabel: string;
+  /** Accessible name of the primary navigation landmark. */
+  landmarkLabel: string;
 }
 
 export interface HomeSectionAnchor {
@@ -256,6 +258,8 @@ export interface FooterColumn {
 }
 
 export interface FooterContent {
+  /** Accessible name of the footer navigation landmark. */
+  navLabel: string;
   heading: string;
   headingAccent: string;
   headingSuffix: string;

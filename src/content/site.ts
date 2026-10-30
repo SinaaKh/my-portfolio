@@ -43,6 +43,7 @@ export const site: SiteContent = {
     menuLabel: "Open menu",
     homeLabel: "Home",
     skipLabel: "Skip to content",
+    landmarkLabel: "Primary",
   },
 
   sections: [
@@ -373,6 +374,7 @@ export const site: SiteContent = {
   },
 
   footer: {
+    navLabel: "Footer",
     heading: "Your closing call to action goes",
     headingAccent: "here",
     headingSuffix: ".",

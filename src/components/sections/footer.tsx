@@ -22,7 +22,7 @@ export function Footer() {
             </SmartLink>
           </div>
 
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-12 md:gap-24">
+          <nav aria-label={footer.navLabel} className="grid grid-cols-2 gap-12 md:gap-24">
             {footer.columns.map((column) => (
               <div key={column.title} className="flex flex-col gap-4">
                 <p className="mb-2 text-eyebrow font-black uppercase tracking-eyebrow text-black/30">{column.title}</p>
