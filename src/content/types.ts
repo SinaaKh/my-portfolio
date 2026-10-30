@@ -242,7 +242,7 @@ export interface TechItem {
   category: TechCategoryId;
   /** Brand color used for the icon and hover glow. */
   color: string;
-  /** Optional path to an icon; a monogram is rendered otherwise. */
+  /** Optional path to a single-color SVG, used as a mask in `color`; a monogram is rendered otherwise. */
   icon?: string;
 }
 
