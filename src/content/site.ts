@@ -64,7 +64,7 @@ export const site: SiteContent = {
     greeting: "Hi, I am Your Name",
     headline: "A short placeholder headline for the work you do best.",
     link: { label: "Placeholder link to a featured page", href: "/lab" },
-    badgeText: "• Placeholder badge text • Goes around the circle ",
+    badgeText: "• Your badge text • Placeholder ring copy ",
     badgeLink: { label: "Schedule a call", href: SCHEDULE_URL, external: true },
     image: img("hero.svg", 2100, 900, "Hero image placeholder"),
     overlayTitle: "My Works",
