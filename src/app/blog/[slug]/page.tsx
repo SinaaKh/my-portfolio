@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/lib/metadata";
 import { site, type PostBlock } from "@/content/site";
 import { SiteImage } from "@/components/ui/site-image";
 
@@ -12,7 +13,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const post = findPost((await params).slug);
-  return post ? { title: post.title, description: post.excerpt || undefined } : {};
+  return post
+    ? pageMetadata({ title: post.title, description: post.excerpt || undefined, path: `/blog/${post.slug}`, type: "article" })
+    : {};
 }
 
 /** Single post (SPEC.md §4.6). */

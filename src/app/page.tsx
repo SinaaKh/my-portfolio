@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/hero";
+import { pageMetadata } from "@/lib/metadata";
 import { MyWorks } from "@/components/sections/my-works";
 import { Versatility } from "@/components/sections/versatility";
 import { DevWorks } from "@/components/sections/dev-works";
@@ -8,6 +9,8 @@ import { Story } from "@/components/sections/story";
 import { Insights } from "@/components/sections/insights";
 import { Partnership } from "@/components/sections/partnership";
 import { Collaborations } from "@/components/sections/collaborations";
+
+export const metadata = pageMetadata({ path: "/" });
 
 // Home sections in page order (SPEC.md §3). The footer (#contact) comes from the root layout.
 export default function Home() {

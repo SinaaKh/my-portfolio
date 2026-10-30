@@ -9,7 +9,19 @@ import { ArrowRightIcon } from "./icons";
  * One writing row (SPEC.md §3.9). Colors come from the --row-* CSS variables set by the
  * parent, so the same row works on the theme-flipping home section and the dark /blog page.
  */
-export function PostRow({ post, index, readMoreLabel }: { post: Post; index: number; readMoreLabel: string }) {
+export function PostRow({
+  post,
+  index,
+  readMoreLabel,
+  headingLevel = 3,
+}: {
+  post: Post;
+  index: number;
+  readMoreLabel: string;
+  /** h3 under a section heading (home), h2 directly under the page h1 (/blog). */
+  headingLevel?: 2 | 3;
+}) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
     <motion.li
       initial={{ opacity: 0, y: 20 }}
@@ -27,9 +39,9 @@ export function PostRow({ post, index, readMoreLabel }: { post: Post; index: num
             <div aria-hidden className="h-px w-8 bg-(--row-fg-5)" />
             <span className="text-eyebrow font-black uppercase tracking-label text-accent">{post.category}</span>
           </div>
-          <h3 className="text-4xl font-medium leading-[0.9] tracking-tighter text-(--row-fg) transition-colors duration-500 group-hover:text-accent md:text-5xl md:leading-none">
+          <Heading className="text-4xl font-medium leading-[0.9] tracking-tighter text-(--row-fg) transition-colors duration-500 group-hover:text-accent md:text-5xl md:leading-none">
             {post.title}
-          </h3>
+          </Heading>
         </div>
         <div className="hidden opacity-0 transition-opacity duration-500 group-focus-within:opacity-100 group-hover:opacity-100 md:block md:w-1/3">
           <p className="max-w-xs text-sm font-medium leading-relaxed text-(--row-fg-40)">{post.excerpt}</p>

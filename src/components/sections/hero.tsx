@@ -131,6 +131,7 @@ export function Hero() {
             fill
             sizes="100vw"
             loading="eager"
+            fetchPriority="high"
             className="object-cover"
           />
         </motion.div>

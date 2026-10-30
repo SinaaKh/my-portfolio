@@ -1,6 +1,8 @@
-// Generates the placeholder SVGs in public/placeholders.
+// Generates the placeholder images in public/placeholders.
 // Usage: node scripts/generate-placeholders.mjs
-// Sizes and ratios are listed in SPEC.md §5. Replace the files with real images when ready.
+// Sizes and ratios are listed in SPEC.md §5 and README.md. Replace the files with real images when ready.
+// Entries ending in .png are rendered from the same SVG with sharp (installed with Next.js), because
+// social cards and Apple touch icons must be raster images.
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -26,13 +28,18 @@ const MANIFEST = [
   ...[1, 2].map((n) => [`case-study-cover-0${n}.svg`, 2100, 900, `Case Study 0${n}`, "light"]),
   ...[1, 2, 3].map((n) => [`project-shot-0${n}.svg`, 1800, 1100, `Project Screenshot 0${n}`, "light"]),
   ...[1, 2, 3, 4].map((n) => [`post-cover-0${n}.svg`, 1600, 900, `Post Cover 0${n}`, "dark"]),
-  ["og.svg", 1200, 630, "Your Name", "teal"],
+  ["og.png", 1200, 630, "Your Name", "teal"],
+  // Icons: compact layout (no file label)
+  ["favicon.svg", 64, 64, "YN", "teal"],
+  ["favicon-32.png", 32, 32, "YN", "teal"],
+  ["apple-touch-icon.png", 180, 180, "YN", "teal"],
 ];
 
 function svg(width, height, label, themeName, file) {
   const t = THEMES[themeName];
   const min = Math.min(width, height);
-  const isAvatar = file === "avatar.svg";
+  // Avatar and icons: just the initials, large and centered.
+  const isAvatar = width <= 200 && height <= 200;
   const cell = Math.round(min / 12);
   const titleSize = Math.round(min * (isAvatar ? 0.36 : 0.075));
   const metaSize = Math.max(10, Math.round(min * 0.03));
@@ -65,7 +72,13 @@ function svg(width, height, label, themeName, file) {
 }
 
 await mkdir(OUT_DIR, { recursive: true });
+const sharp = MANIFEST.some(([file]) => file.endsWith(".png")) ? (await import("sharp")).default : null;
 await Promise.all(
-  MANIFEST.map(([file, w, h, label, theme]) => writeFile(path.join(OUT_DIR, file), svg(w, h, label, theme, file))),
+  MANIFEST.map(async ([file, w, h, label, theme]) => {
+    const markup = svg(w, h, label, theme, file);
+    const out = path.join(OUT_DIR, file);
+    if (file.endsWith(".png")) await sharp(Buffer.from(markup)).png().toFile(out);
+    else await writeFile(out, markup);
+  }),
 );
 console.log(`Wrote ${MANIFEST.length} placeholders to ${path.relative(process.cwd(), OUT_DIR)}`);

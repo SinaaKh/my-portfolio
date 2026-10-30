@@ -38,11 +38,25 @@ export interface SiteMeta {
   /** Used with `%s` for page titles, e.g. "%s · Your Name". */
   titleTemplate: string;
   description: string;
+  /** Production URL, used for canonical links, Open Graph, sitemap and robots. No trailing slash. */
   url: string;
   locale: string;
+  /** Search keywords for the <meta name="keywords"> tag. */
+  keywords: string[];
+  /** Optional X (Twitter) handle, e.g. "@yourhandle". */
+  twitterHandle?: string;
   email: string;
   avatar: ImageAsset;
+  /** Social share card, 1200×630 PNG or JPG (SVG is not supported by social platforms). */
   ogImage: ImageAsset;
+  icons: {
+    /** Browser tab icon (SVG). */
+    svg: string;
+    /** 32×32 PNG fallback. */
+    png: string;
+    /** 180×180 PNG for iOS home screens. */
+    apple: string;
+  };
 }
 
 export interface NavContent {
@@ -378,6 +392,14 @@ export interface LearnPageContent {
   badge: string;
 }
 
+export interface NotFoundPageContent {
+  metaTitle: string;
+  eyebrow: string;
+  titleLines: [string, string];
+  message: string;
+  link: Link;
+}
+
 /* Root */
 
 export interface SiteContent {
@@ -403,6 +425,7 @@ export interface SiteContent {
     lab: LabPageContent;
     blog: BlogPageContent;
     learn: LearnPageContent;
+    notFound: NotFoundPageContent;
   };
   caseStudies: CaseStudy[];
 }
