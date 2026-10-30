@@ -638,7 +638,7 @@ Home sections
 
 Secondary pages
 - [x] About (`/about`)
-- [ ] Projects (`/projects`)
+- [x] Projects (`/projects`)
 - [ ] Case study (`/projects/[slug]`)
 - [ ] Lab (`/lab`)
 - [ ] Writing index (`/blog`)

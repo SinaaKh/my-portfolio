@@ -299,6 +299,8 @@ export interface ProjectBand {
     background: string;
     /** Text and pill color scheme. */
     tone: "light" | "dark";
+    /** Case-study link style; defaults to the tone. Use "accent" on accent-colored bands. */
+    linkTone?: "light" | "dark" | "accent";
   };
   meta: ProjectBandMeta[];
   tags: string[];
