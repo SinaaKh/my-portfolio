@@ -637,7 +637,7 @@ Home sections
 - [x] Collaborations
 
 Secondary pages
-- [ ] About (`/about`)
+- [x] About (`/about`)
 - [ ] Projects (`/projects`)
 - [ ] Case study (`/projects/[slug]`)
 - [ ] Lab (`/lab`)
