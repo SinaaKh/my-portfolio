@@ -639,7 +639,7 @@ Home sections
 Secondary pages
 - [x] About (`/about`)
 - [x] Projects (`/projects`)
-- [ ] Case study (`/projects/[slug]`)
+- [x] Case study (`/projects/[slug]`)
 - [ ] Lab (`/lab`)
 - [ ] Writing index (`/blog`)
 - [ ] Post (`/blog/[slug]`)
