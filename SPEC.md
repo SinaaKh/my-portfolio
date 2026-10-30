@@ -296,12 +296,14 @@ overflow-hidden`, with a label, an arrow icon in accent (`group-hover/link:trans
 
 ### 3.5 Selected Dev Works: horizontal scroll (`#dev-works`)
 **Layout**
-- `section relative h-[600vh] bg-black` → `sticky top-0 flex h-screen items-center overflow-hidden`.
-- Corner header (`absolute top-4 px-6 md:px-12`): eyebrow `text-white/20 text-eyebrow font-black tracking-ultra
+- `section relative h-[600vh] bg-black` → `sticky top-0 flex flex-col h-screen overflow-hidden`.
+- Corner header (in the flow, `pt-4 px-6 md:px-12`; see §6.15): eyebrow `text-white/20 text-eyebrow font-black tracking-ultra
   uppercase`, and title `text-2xl font-light tracking-tight text-white/90` with an `italic font-serif` accent.
-- Track `flex gap-16 md:gap-24 pl-[10vw] pr-24`. Its `x` goes **0% → -80%** across the section's scroll progress
-  (`offset: start start → end end`).
-- **Card** `group relative h-[550px] w-[350px] md:h-[650px] md:w-[600px] shrink-0 flex flex-col justify-between`:
+- Track `w-max flex flex-1 min-h-0 items-center gap-16 md:gap-24 py-8 pl-[10vw] pr-6 md:pr-[10vw]`. Its `x` goes
+  **0 → −(track width − viewport width)**, measured, over scroll progress 0 → 0.9 (`offset: start start → end end`),
+  then holds so the last card stays in view before the section ends.
+- **Card** `group relative h-full max-h-[550px] w-[350px] md:max-h-[650px] md:w-[600px] shrink-0 flex flex-col
+  justify-between`, so it shrinks to fit below the header on short screens (the image frame gives way first):
   - Meta row: `text-accent text-eyebrow font-black tracking-label uppercase` ("NN / category / role") plus a hairline
     `h-px flex-1 bg-white/10`.
   - Title `text-4xl md:text-6xl font-medium text-white tracking-tight leading-[1.1] mb-6`.
@@ -325,12 +327,14 @@ caseStudy?`).
 - Body `container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-center gap-12 mt-12`:
   - Left `max-w-xl space-y-6`: title `text-5xl md:text-8xl font-medium leading-[0.9] tracking-tight uppercase`, then a
     line break and a subtitle `italic font-light text-white/40 lowercase`.
-  - Right `flex justify-center md:justify-end` with `perspective: 1000px`: the card `relative w-[280px] h-[380px]
-    md:w-[450px]` with `transform-style: preserve-3d`. It has two faces, `absolute inset-0 backface-hidden rounded-5xl
-    overflow-hidden shadow-2xl bg-neutral-100`, and the back face is pre-rotated `rotateY(180deg)`.
-    *(The reference's md height class is malformed, so the card stays 380px tall on desktop. We keep 380px.)*
-- **Motion** (scroll-linked over the 600vh): the card transform is `rotateX(15deg) rotateY(p × 540deg) rotateZ(-10deg)`.
-  Active index = `min(n-1, floor(p × n))`. Whichever face is turned away swaps to the next image, so every half-turn
+  - Right `flex justify-center md:justify-end` with `perspective: 1000px`: the card `relative aspect-[3/4] w-[240px]
+    md:w-[330px]` with `transform-style: preserve-3d`. It has two faces, `absolute inset-0 backface-hidden rounded-5xl
+    overflow-hidden shadow-2xl bg-black`, and the back face is pre-rotated `rotateY(180deg)`.
+    *(The reference's card is 450×380; ours matches the 3:4 research art so nothing is cropped, see §6.4.)*
+- **Motion** (scroll-linked over the 600vh): the card transform is `rotateX(15deg) rotateY(θ) rotateZ(-10deg)`.
+  Progress is split into `n + 0.5` bands (the extra half is a final hold before Tech Stack slides over, §6.8). θ stays
+  at `k × 180deg` inside band k and turns 180deg over ±0.04 around each band edge. Active index =
+  `min(n-1, floor(p × (n + 0.5)))`. Whichever face is turned away swaps to the next image, so every half-turn
   reveals a new work. On index change the title block cross-fades (`opacity 0, y 10 → 1, 0`) and the counter updates.
 - **Mobile**: stacked, with the title above the card.
 
@@ -370,7 +374,7 @@ caseStudy?`).
 - Center line `absolute top-1/2 inset-x-0 h-px bg-white/5`.
 - **Traveler**: a 32px `bg-accent rounded-full shadow-dot` with an 8px black "eye" (top-right) and two 16px hairline
   "wings" (`rotate ±45°`, `bg-white/40`), plus an `animate-ping` halo at 20% opacity.
-- Track `flex items-center pl-[20vw] gap-[40vw] md:gap-[20vw]` with a `w-[10vw]` spacer at the end.
+- Track `flex items-center pl-[20vw] gap-[40vw] md:gap-[20vw]`.
 - **Entry** `relative shrink-0 w-[280px] md:w-[500px]`:
   - Above the line (`absolute bottom-[calc(50%+40px)] pl-4`): title `text-lg md:text-2xl font-medium tracking-tight
     text-white/90`, then a row with the period (`text-micro md:text-eyebrow font-bold tracking-label uppercase
@@ -382,14 +386,16 @@ caseStudy?`).
 - Bottom-left (`absolute bottom-12`): two 32px round arrow buttons and `font-mono text-xs tracking-tighter "SCROLL TO
   EXPLORE"`. *(The reference styles the arrows `black/10` on black, so they're invisible. We use `white/10`.)*
 - **Motion** (section scroll progress `p`):
-  - Track `x` **0% → -88%**.
-  - Traveler `x` **0 → 92vw**, with a gentle `y` bob (0 to -20px) and a small `rotateZ` wobble (±10° decaying).
+  - Both travel over `p` 0 → 0.9, then hold (§6.16). The last entry stops at `endX = min(40vw, viewport − entry
+    width − 24px)`, so the track `x` goes **0 → −(lastEntry.offsetLeft − endX)**, measured.
+  - Traveler `x` **0 → endX**, so it meets every entry on the way, with a gentle `y` bob (0 to -20px) and a small `rotateZ` wobble (±10° decaying).
   - Entries fade in only near the traveler: the top block goes `y -20 → 0`, the bottom block `y 20 → 0`, opacity 0 → 1.
     About 2 entries are visible at once.
 - **Mobile**: same mechanic with 280px entries and wider gaps.
 
 **Content slots**: `timeline.watermark/eyebrow/title/titleAccent/subtitle`, `entries[]` (`title, period, tag,
-description`), `scrollCue`, `endCue`, `exploreHint`.
+description, milestone?`), `scrollCue`, `endCue`, `exploreHint`. A `milestone` (e.g. a thesis) renders as an
+accent-bordered note under its entry's description.
 
 ### 3.9 Latest Insights: theme-flip list (`#insights`)
 **Layout**
@@ -608,12 +614,14 @@ Defaults applied during the build (2026-10-30). Each can be revisited.
 2. **Timeline arrows**: invisible and non-functional on the reference. Ours are `white/10` buttons that scroll to the
    previous or next milestone.
 3. **Custom cursor on touch**: shown on the reference. Ours hides it on coarse pointers.
-4. **3D card height on desktop**: kept at 380px to match the reference's broken class.
+4. **3D card shape**: 3:4 (240px wide, 330px on md) instead of the reference's 450×380, so the portrait research art
+   fits without cropping.
 5. **Footer "Work" link**: 404 on the reference. Ours points to `/projects`.
 6. **Serif face**: kept the system `ui-serif` stack, as on the reference.
 7. **Scroll snap**: CSS snap is left off because it conflicts with Lenis.
-8. **3D Works counter**: the reference changes the index slightly out of sync with the card flips. Ours changes it on
-   each half-turn, while the card is edge-on.
+8. **3D Works pacing**: the reference turns the card continuously, so the last work appears late and Tech Stack
+   covers it almost at once. Ours holds each work still between quick half-turns, with an extra half band at the end.
+   The counter changes mid-turn, while the card is edge-on.
 9. **Insights hover**: the reference's inline colors block the title hover color. Ours drives colors through CSS
    variables, so the accent hover works.
 10. **/blog**: the reference renders black text on black. Ours uses the readable dark row theme.
@@ -623,6 +631,11 @@ Defaults applied during the build (2026-10-30). Each can be revisited.
 13. **Unknown slugs** under `/projects/[slug]` and `/blog/[slug]` show the 404 UI with a 200 status. `dynamicParams`
     isn't available with Cache Components, and params are read inside `<Suspense>` for instant navigation.
 14. **Placeholder copy** was sized to wrap like the reference's copy, so section heights match.
+15. **Dev Works header**: in the flow instead of absolutely positioned, with cards capped to the remaining height, so
+    the title never overlaps a card on short screens.
+16. **Horizontal track distances**: the reference slides Dev Works and the timeline by fixed percentages, which only
+    land right for one card or entry count. Ours measures the distance so the last card or entry always stops fully in
+    view, and holds it for the last 10% of the section.
 
 ---
 

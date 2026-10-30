@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   motion,
+  useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -14,9 +15,12 @@ import { site, type TimelineEntry } from "@/content/site";
 
 const { timeline } = site;
 
-/** Track travel and traveler travel, as fractions measured on the reference. */
-const TRACK_SHIFT = 0.88;
-const TRAVELER_SHIFT_VW = 92;
+/** The traveler reaches the last milestone at this much scroll progress, then holds there. */
+const TRACK_END = 0.9;
+/** Where the last milestone stops: at most this fraction of the viewport from the left... */
+const END_X_VW = 0.4;
+/** ...and never so far right that its text runs off screen. */
+const END_MARGIN = 24;
 
 /** Story / Timeline: a horizontal journey driven by vertical scroll (SPEC.md §3.8). */
 export function Story() {
@@ -26,13 +30,38 @@ export function Story() {
   const lenis = useLenis();
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-  const trackX = useTransform(scrollYProgress, [0, 1], ["0%", `-${TRACK_SHIFT * 100}%`]);
-  const travelerX = useTransform(scrollYProgress, [0, 1], ["0vw", `${TRAVELER_SHIFT_VW}vw`]);
+  // Measured, since both depend on the entry count and the viewport: the track slides until the
+  // last entry sits at endX, and the traveler walks to endX, so the two meet on every entry.
+  const shift = useMotionValue(0);
+  const endX = useMotionValue(0);
+  const travel = useTransform(scrollYProgress, [0, TRACK_END], [0, 1]);
+  const trackX = useTransform([travel, shift], ([t, d]: number[]) => -t * d);
+  const travelerX = useTransform([travel, endX], ([t, e]: number[]) => t * e);
   const travelerY = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -20, 0, -20, 0, -20]);
   // Wobble: scroll velocity tilts the traveler, a loose spring lets it settle.
   const velocity = useVelocity(scrollYProgress);
   const tilt = useTransform(velocity, [-0.5, 0, 0.5], [-30, 0, 30], { clamp: true });
   const rotate = useSpring(tilt, { stiffness: 120, damping: 6 });
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const lastEntry = track?.querySelector<HTMLElement>("[data-entry]:last-of-type");
+    if (!track || !lastEntry) return;
+    const measure = () => {
+      const viewport = window.innerWidth;
+      const end = Math.max(0, Math.min(END_X_VW * viewport, viewport - lastEntry.offsetWidth - END_MARGIN));
+      endX.set(end);
+      shift.set(Math.max(0, lastEntry.offsetLeft - end));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [shift, endX]);
 
   /** Scroll so the traveler sits at the next or previous entry. */
   const step = (direction: 1 | -1) => {
@@ -40,11 +69,10 @@ export function Story() {
     const track = trackRef.current;
     if (!section || !track) return;
     const entries = [...track.querySelectorAll<HTMLElement>("[data-entry]")];
-    const viewport = window.innerWidth;
-    const meetAt = (el: HTMLElement) =>
-      el.offsetLeft / (TRACK_SHIFT * track.scrollWidth + (TRAVELER_SHIFT_VW / 100) * viewport);
+    const lastLeft = entries[entries.length - 1].offsetLeft;
     const current = scrollYProgress.get();
-    const stops = entries.map(meetAt);
+    // The traveler meets an entry when travel reaches offsetLeft / lastLeft.
+    const stops = entries.map((el) => (el.offsetLeft / lastLeft) * TRACK_END);
     const target =
       direction === 1 ? stops.find((p) => p > current + 0.01) : [...stops].reverse().find((p) => p < current - 0.01);
     if (target === undefined) return;
@@ -93,7 +121,6 @@ export function Story() {
           {timeline.entries.map((entry, i) => (
             <Entry key={entry.title} entry={entry} index={i} isLast={i === timeline.entries.length - 1} />
           ))}
-          <li aria-hidden className="w-[10vw] shrink-0" />
         </motion.ol>
 
         <div className="absolute bottom-12 left-6 z-20 flex items-center gap-8 md:left-12">
@@ -145,6 +172,20 @@ function Entry({ entry, index, isLast }: { entry: TimelineEntry; index: number; 
             <p className="mb-4 text-xs font-light leading-relaxed text-white/50 md:mb-6 md:text-sm md:leading-5">
               {entry.description}
             </p>
+            {entry.milestone && (
+              <div className="mb-4 border-l border-accent/40 pl-4 md:mb-6">
+                <div className="mb-1 flex items-center gap-3">
+                  <span className="text-micro font-bold uppercase tracking-label text-accent md:text-eyebrow">
+                    {entry.milestone.label}
+                  </span>
+                  <div aria-hidden className="h-px w-4 bg-white/10" />
+                  <span className="font-serif text-micro italic text-white/40 md:text-eyebrow">{entry.milestone.period}</span>
+                </div>
+                <p className="text-xs font-light leading-relaxed text-white/50 md:text-sm md:leading-5">
+                  {entry.milestone.text}
+                </p>
+              </div>
+            )}
             <div aria-hidden className="group flex cursor-pointer items-center gap-4">
               <div className="h-px w-8 bg-white/10 transition-all duration-500 group-hover:w-16" />
               <span className="text-micro font-black uppercase tracking-widest text-white/20 transition-colors group-hover:text-accent">

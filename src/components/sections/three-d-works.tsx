@@ -15,8 +15,16 @@ import { SiteImage } from "@/components/ui/site-image";
 const { threeDWorks } = site;
 const items = threeDWorks.items;
 const last = items.length - 1;
-/** One half-turn per work: 4 works → 540°, as on the reference. */
-const TOTAL_ROTATION = last * 180;
+/**
+ * Scroll is split into one band per work plus half a band of extra hold at the end, because
+ * Tech Stack slides over the last 600px of this track. Each half-turn happens quickly around
+ * a band edge, so a work stays still and readable for the rest of its band.
+ */
+const BANDS = items.length + 0.5;
+const HALF_TURN = 0.04;
+const turnAt = (k: number) => k / BANDS;
+const rotationInput = [0, ...items.slice(1).flatMap((_, i) => [turnAt(i + 1) - HALF_TURN, turnAt(i + 1) + HALF_TURN]), 1];
+const rotationOutput = [0, ...items.slice(1).flatMap((_, i) => [i * 180, (i + 1) * 180]), last * 180];
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -28,13 +36,12 @@ export function ThreeDWorks() {
   const ref = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const rotateY = useTransform(scrollYProgress, [0, 1], [0, TOTAL_ROTATION]);
+  const rotateY = useTransform(scrollYProgress, rotationInput, rotationOutput);
   const [active, setActive] = useState(0);
 
+  // The work changes at each band edge, mid-turn, while the card is edge-on.
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    const next = reduceMotion
-      ? Math.min(last, Math.floor(progress * items.length))
-      : Math.min(last, Math.max(0, Math.floor((progress * TOTAL_ROTATION + 90) / 180)));
+    const next = Math.min(last, Math.max(0, Math.floor(progress * BANDS)));
     if (next !== active) setActive(next);
   });
 
@@ -90,7 +97,7 @@ export function ThreeDWorks() {
           <div className="perspective-1000 flex justify-center md:justify-end">
             <motion.div
               style={{ rotateX: 15, rotateY: reduceMotion ? 0 : rotateY, rotateZ: -10, transformStyle: "preserve-3d" }}
-              className="relative h-[380px] w-[280px] md:w-[450px]"
+              className="relative aspect-[3/4] w-[240px] md:w-[330px]"
             >
               <Face item={items[front]} />
               {!reduceMotion && <Face item={items[back]} flipped />}
@@ -106,9 +113,9 @@ function Face({ item, flipped = false }: { item: (typeof items)[number]; flipped
   return (
     <div
       style={{ backfaceVisibility: "hidden", transform: flipped ? "rotateY(180deg)" : undefined }}
-      className="absolute inset-0 overflow-hidden rounded-5xl bg-neutral-100 shadow-2xl"
+      className="absolute inset-0 overflow-hidden rounded-5xl bg-black shadow-2xl"
     >
-      <SiteImage src={item.image.src} alt={item.image.alt} fill sizes="(min-width: 768px) 450px, 280px" className="object-cover" />
+      <SiteImage src={item.image.src} alt={item.image.alt} fill sizes="(min-width: 768px) 330px, 240px" className="object-cover" />
     </div>
   );
 }

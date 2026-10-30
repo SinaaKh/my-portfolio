@@ -1,23 +1,44 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { site, type DevProject } from "@/content/site";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { SiteImage } from "@/components/ui/site-image";
 
 const { devWorks } = site;
 
+/** The track reaches the last card at this much scroll progress, then holds it for the rest. */
+const TRACK_END = 0.9;
+
 /** Selected Dev Works: vertical scroll drives a horizontal card track (SPEC.md §3.5). */
 export function DevWorks() {
   const ref = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLUListElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
+  // How far the track must travel for the last card to land in view, measured, since it
+  // depends on the card count and the viewport.
+  const distance = useMotionValue(0);
+  const travel = useTransform(scrollYProgress, [0, TRACK_END], [0, 1]);
+  const x = useTransform([travel, distance], ([t, d]: number[]) => -t * d);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const frame = track?.parentElement;
+    if (!track || !frame) return;
+    const measure = () => distance.set(Math.max(0, track.offsetWidth - frame.clientWidth));
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, [distance]);
 
   return (
     <section ref={ref} id="dev-works" aria-labelledby="dev-works-title" className="relative h-[600vh] bg-black">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <div className="pointer-events-none absolute left-0 top-4 z-10 flex w-full items-end justify-between px-6 md:px-12">
+      {/* The header sits in the flow, not over the track, so cards can't run into it on short screens. */}
+      <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
+        <div className="flex w-full items-end justify-between px-6 pt-4 md:px-12">
           <div>
             <span className="mb-2 block text-eyebrow font-black uppercase tracking-ultra text-white/20">
               {devWorks.eyebrow}
@@ -28,7 +49,11 @@ export function DevWorks() {
           </div>
         </div>
 
-        <motion.ul style={{ x }} className="flex gap-16 pl-[10vw] pr-24 md:gap-24">
+        <motion.ul
+          ref={trackRef}
+          style={{ x }}
+          className="flex min-h-0 w-max flex-1 items-center gap-16 py-8 pl-[10vw] pr-6 md:gap-24 md:pr-[10vw]"
+        >
           {devWorks.projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
@@ -40,7 +65,7 @@ export function DevWorks() {
 
 function ProjectCard({ project }: { project: DevProject }) {
   return (
-    <li className="group relative flex h-[550px] w-[350px] shrink-0 flex-col justify-between md:h-[650px] md:w-[600px]">
+    <li className="group relative flex h-full max-h-[550px] w-[350px] shrink-0 flex-col justify-between md:max-h-[650px] md:w-[600px]">
       <div className="relative z-20 mb-8">
         <div className="mb-4 flex items-center gap-4">
           <span className="text-eyebrow font-black uppercase tracking-label text-accent">{project.meta}</span>
@@ -64,7 +89,7 @@ function ProjectCard({ project }: { project: DevProject }) {
         )}
       </div>
 
-      <div className="relative w-full flex-1 overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl transition-all duration-500 group-hover:border-white/20">
+      <div className="relative min-h-40 w-full flex-1 overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl transition-all duration-500 group-hover:border-white/20">
         <SiteImage
           src={project.image.src}
           alt={project.image.alt}
