@@ -643,7 +643,7 @@ Secondary pages
 - [x] Lab (`/lab`)
 - [x] Writing index (`/blog`)
 - [x] Post (`/blog/[slug]`)
-- [ ] Learn (`/learn`)
+- [x] Learn (`/learn`)
 
 Polish
 - [ ] Reduced-motion fallbacks
