@@ -640,7 +640,7 @@ Secondary pages
 - [x] About (`/about`)
 - [x] Projects (`/projects`)
 - [x] Case study (`/projects/[slug]`)
-- [ ] Lab (`/lab`)
+- [x] Lab (`/lab`)
 - [ ] Writing index (`/blog`)
 - [ ] Post (`/blog/[slug]`)
 - [ ] Learn (`/learn`)
