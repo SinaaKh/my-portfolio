@@ -2,11 +2,13 @@ import type { ComponentType } from "react";
 import { site } from "@/content/site";
 import { Hero } from "@/components/sections/hero";
 import { MyWorks } from "@/components/sections/my-works";
+import { Versatility } from "@/components/sections/versatility";
 
 // Home sections in page order (SPEC.md §3). Sections not built yet render a placeholder.
 const SECTIONS: Partial<Record<string, ComponentType>> = {
   hero: Hero,
   "my-works": MyWorks,
+  versatility: Versatility,
 };
 
 export default function Home() {

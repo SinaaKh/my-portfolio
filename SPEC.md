@@ -627,7 +627,7 @@ Home sections
 - [x] Hero
 - [x] My Works (word marquee)
 - [x] AI Firewall Challenge widget
-- [ ] Versatility (industries hub)
+- [x] Versatility (industries hub)
 - [ ] Selected Dev Works
 - [ ] Selected 3D Works
 - [ ] Tech Stack

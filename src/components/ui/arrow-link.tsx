@@ -29,7 +29,7 @@ export function ArrowLink({
     <SmartLink
       href={link.href}
       external={link.external}
-      className={`group/link relative inline-flex items-center gap-3 overflow-hidden pb-2 text-eyebrow font-extrabold uppercase tracking-label outline-offset-4 ${t.text} ${className}`}
+      className={`group/link relative inline-flex items-center gap-3 overflow-hidden pb-2 text-eyebrow font-black uppercase tracking-label outline-offset-4 ${t.text} ${className}`}
     >
       <span>{link.label}</span>
       <ArrowRightIcon

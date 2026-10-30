@@ -98,7 +98,7 @@ export const site: SiteContent = {
 
   versatility: {
     eyebrow: "Section Eyebrow",
-    title: "Placeholder Title for Every",
+    title: "Placeholder for Every",
     titleAccent: "Accent",
     description:
       "A placeholder paragraph of roughly two lines that explains the range of problems you solve and the kinds of teams you solve them for.",
