@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <>
-      <main>
+      <main id="main">
         {sections.map((section, index) => (
           <section
             key={section.id}
