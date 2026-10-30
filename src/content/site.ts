@@ -363,8 +363,8 @@ export const site: SiteContent = {
 
   collaborations: {
     eyebrow: "Collaborations",
-    title: "Placeholder",
-    titleAccent: "clients",
+    title: "Clients",
+    titleAccent: "and teams",
     rows: [
       ["Client A", "Client B", "Client C", "Client D", "Client E", "Client F", "Client G", "Client H", "Client I", "Client J", "Client K", "Client L"],
       ["Client M", "Client N", "Client O", "Client P", "Client Q", "Client R", "Client S", "Client T", "Client U", "Client V", "Client W", "Client X"],

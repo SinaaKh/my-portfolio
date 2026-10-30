@@ -634,7 +634,7 @@ Home sections
 - [x] Story / Timeline
 - [x] Latest Insights
 - [x] Partnership
-- [ ] Collaborations
+- [x] Collaborations
 
 Secondary pages
 - [ ] About (`/about`)
