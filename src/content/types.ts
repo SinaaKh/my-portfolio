@@ -109,6 +109,8 @@ export interface Industry {
   label: string;
   /** Bottom-border accent color of the node tile. */
   color: string;
+  /** Optional link. Linked nodes get a pulsing dot and an accent hover border. */
+  href?: Href;
 }
 
 export interface Pillar {
