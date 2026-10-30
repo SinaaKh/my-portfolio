@@ -176,6 +176,8 @@ export interface TechItem {
 }
 
 export interface TechStackContent extends SectionHeading {
+  /** Second line of the heading, after the accent word. */
+  titleEnd: string;
   categories: TechCategory[];
   defaultCategory: TechCategory["id"];
   items: TechItem[];
