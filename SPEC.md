@@ -621,7 +621,7 @@ Global
 - [x] Navigation (desktop + mobile dropdown, scroll fade)
 - [x] Custom cursor
 - [x] Shared components (ArrowLink, SmartLink, SiteImage, icons, media-query hooks)
-- [ ] Footer
+- [x] Footer
 
 Home sections
 - [x] Hero

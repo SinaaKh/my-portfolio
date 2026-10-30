@@ -5,6 +5,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Cursor } from "@/components/layout/cursor";
 import { Nav } from "@/components/layout/nav";
+import { Footer } from "@/components/sections/footer";
 import { site } from "@/content/site";
 
 // Same family and weights as the reference. 900 is intentionally not loaded,
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Cursor />
           <Nav />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>
