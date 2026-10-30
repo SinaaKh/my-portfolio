@@ -49,11 +49,22 @@
   /* Elevation */
   --shadow-card: 0 20px 40px rgb(0 0 0 / 0.4);
   --shadow-card-sm: 0 10px 20px rgb(0 0 0 / 0.4);
-  --shadow-glow: 0 20px 40px rgb(0 191 165 / 0.2);
-  --shadow-dot: 0 0 20px #00bfa5;
+  --shadow-glow: 0 20px 40px color-mix(in srgb, var(--color-accent) 20%, transparent);
+  --shadow-dot: 0 0 20px var(--color-accent);
 
   /* Animation */
   --animate-spin-slow: spin 12s linear infinite;
+  --animate-hub-pulse: hub-pulse 3s ease-in-out infinite;
+
+  @keyframes hub-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px color-mix(in srgb, var(--color-indigo) 20%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 40px color-mix(in srgb, var(--color-indigo) 40%, transparent);
+    }
+  }
 }
 
 @theme inline {

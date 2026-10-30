@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { sectionLabel } from "@/lib/content";
 import { site } from "@/content/site";
 import { FirewallGame } from "./firewall-game";
 
@@ -19,7 +20,7 @@ export function MyWorks() {
       <section
         ref={ref}
         id="my-works"
-        aria-label={site.sections[1].label}
+        aria-label={sectionLabel("my-works")}
         className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-black"
       >
         <div

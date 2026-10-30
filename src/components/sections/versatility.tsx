@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { sectionLabel } from "@/lib/content";
 import { site, type Industry } from "@/content/site";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
@@ -44,7 +45,7 @@ export function Versatility() {
   return (
     <section
       id="versatility"
-      aria-label={site.sections[2].label}
+      aria-label={sectionLabel("versatility")}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black py-12 lg:py-24"
     >
       <div aria-hidden className="dot-grid absolute inset-0 text-white opacity-[0.05]" />
@@ -129,7 +130,7 @@ function Hub() {
                 textAnchor="middle"
                 dominantBaseline="central"
                 opacity={0}
-                style={{ filter: "drop-shadow(0 0 8px rgb(99 102 241 / 0.5))" }}
+                style={{ filter: "drop-shadow(0 0 8px color-mix(in srgb, var(--color-indigo) 50%, transparent))" }}
               >
                 {bit.digit}
                 <animateMotion dur={`${BIT_DURATION}s`} begin={`${bit.begin}s`} repeatCount="indefinite" path={bit.path} />
@@ -172,15 +173,8 @@ function Core({ reduceMotion }: { reduceMotion: boolean }) {
 
   return (
     <div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2">
-      <motion.div
-        animate={
-          reduceMotion
-            ? undefined
-            : { boxShadow: ["0 0 20px rgb(99 102 241 / 0.2)", "0 0 40px rgb(99 102 241 / 0.4)", "0 0 20px rgb(99 102 241 / 0.2)"] }
-        }
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-indigo to-indigo-deep p-[2px] lg:h-32 lg:w-32"
-      >
+      {/* Glow pulse is a CSS keyframe (animate-hub-pulse) so it follows --color-indigo. */}
+      <div className="relative flex h-24 w-24 animate-hub-pulse items-center justify-center rounded-full bg-gradient-to-br from-indigo to-indigo-deep p-[2px] lg:h-32 lg:w-32">
         <div aria-hidden className="absolute inset-0 rounded-full bg-black/40 backdrop-blur-xl" />
         <div className="relative z-10 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-black/80 shadow-2xl lg:h-24 lg:w-24">
           <AnimatePresence initial={false}>
@@ -208,7 +202,7 @@ function Core({ reduceMotion }: { reduceMotion: boolean }) {
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="absolute inset-[-20px] rounded-full border border-dotted border-indigo/20 lg:inset-[-30px]"
         />
-      </motion.div>
+      </div>
     </div>
   );
 }

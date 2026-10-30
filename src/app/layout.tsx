@@ -7,6 +7,7 @@ import { Cursor } from "@/components/layout/cursor";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/sections/footer";
 import { site } from "@/content/site";
+import { htmlLang } from "@/lib/content";
 
 // Same family and weights as the reference. 900 is intentionally not loaded,
 // so `font-black` renders at 800 like the original.
@@ -56,7 +57,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${poppins.variable} antialiased`}>
+    <html lang={htmlLang} className={`${poppins.variable} antialiased`}>
       <body className="bg-paper font-sans text-ink">
         <Providers>
           <a
