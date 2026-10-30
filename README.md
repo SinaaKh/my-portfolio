@@ -115,7 +115,9 @@ landmarks. Keep the ids, because the components look their label up by id. Renam
 | --- | --- | --- |
 | `hero` | Greeting, headline, link, rotating badge, image, "My Works" overlay | `headline` animates word by word. Keep `badgeText` to about 40 characters so it fits the ring |
 | `myWorks` | Two rows of drifting words behind the mini game | 6–10 short words per row |
-| `firewall` | The "catch the target" mini game | Labels, hints, duration (`durationSeconds`) and result messages; `{score}` is replaced with the score |
+| `gamePicker` | Accessible name of the desktop game picker | Option labels are the two game titles |
+| `snakeGame` | Context Window Snake, the only mini game on touch devices, and the second option with a mouse | Labels, meters and `endings` (one per way a run can end); `{score}` and `{best}` are replaced |
+| `escapeGame` | The Model Escapes, the default mini game with a mouse or trackpad | `durationSeconds`, `catchesToWin`, fake `citations` and `result` messages; `{time}`, `{caught}` and `{total}` are replaced |
 | `versatility` | Title, description, link, hub words, **industries** and pillars | The hub has **6 node positions**. Give an industry an `href` to make it a link with a pulsing dot |
 | `devWorks` | Horizontal-scroll project cards (6 fits the scroll distance) | `meta` is the small accent line ("01 / Category / Role"). Add `caseStudy` to show the "Read Case Study" link |
 | `threeDWorks` | Scroll-flipped research card | Any number of `items`; each half-turn reveals the next |
@@ -241,7 +243,7 @@ same way (e.g. `Instrument_Serif` with `variable: "--font-display-serif"`) and p
 - With **reduce motion** enabled in the OS, the site turns off Lenis, marquees, spins, particles, the cursor spring,
   hub animations and the 3D rotation. Scroll-driven tracks still follow the user's own scrolling.
 - Keyboard: skip link, visible focus rings, an accessible tablist in Tech Stack, prev/next buttons on the timeline,
-  Esc to quit the mini game. Keyboard users can Tab to the game target, which is the intended "hack".
+  Esc to quit the mini game. Snake steers with arrow keys or WASD; in The Model Escapes, keyboard users can Tab to the target and press Enter.
 - The design deliberately uses faded text (white/20, black/30), which Lighthouse flags as low contrast
   (Accessibility 95–97). To raise it, increase those opacities in the section components, e.g. `text-white/20` →
   `text-white/60`.

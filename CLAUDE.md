@@ -41,7 +41,7 @@ How content reaches the pages:
 
 **Activity:** with Cache Components, Next hides routes in a React `<Activity>` instead of unmounting them, so effects clean up on navigation but `useState` survives and the DOM stays. Anything transient (open overlays, running games) must reset in a `useLayoutEffect` cleanup (`node_modules/next/dist/docs/01-app/02-guides/preserving-ui-state.md`).
 
-**Mini game test (branch `mini-game-test` only):** `?game=snake|escape|rogue` picks a game in `src/components/games/`; no parameter shows `sections/firewall-game.tsx`. To remove a game, delete its folder, its line in `game-host.tsx`, and its `site.ts` key and `types.ts` interface. The switcher is `game-switcher.tsx` plus one line in `game-host.tsx`.
+**Mini game:** `src/components/games/game-host.tsx` picks by input device, not screen width. Touch devices get Context Window Snake only. A mouse or trackpad gets both through a small picker, opening on The Model Escapes. Each game is lazy-loaded, so its code downloads only once it's shown. Page effects in Escape are overlays and Web Animations only, so ending the game restores the page by construction.
 
 ## Docs
 

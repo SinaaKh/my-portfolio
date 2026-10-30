@@ -213,6 +213,10 @@ Insights 1998 · Partnership 1819 · Collaborations 929.
 `hero.image`, `hero.overlayTitle`.
 
 ### 3.2 My Works: word marquee + AI Firewall Challenge (`#my-works`)
+
+> **Superseded game (2026-10-30):** the marquee below still applies, but the AI Firewall Challenge was replaced by two
+> games in `src/components/games/`: touch devices get Context Window Snake, and a mouse or trackpad gets both, opening on The Model Escapes.
+> The widget notes are kept for reference only.
 **Layout**
 - Wrapper `md:-mt-[430px]`. `section relative h-screen w-full flex items-center justify-center overflow-hidden bg-black`.
 - Background: `absolute inset-0 flex flex-col justify-center gap-12 lg:gap-20 select-none`, two rows of words
@@ -613,7 +617,7 @@ Defaults applied during the build (2026-10-30). Each can be revisited.
 9. **Insights hover**: the reference's inline colors block the title hover color. Ours drives colors through CSS
    variables, so the accent hover works.
 10. **/blog**: the reference renders black text on black. Ours uses the readable dark row theme.
-11. **Firewall game**: keyboard users can Tab to the target and press Enter, which is the intended "hack". Esc quits.
+11. **Mini games**: the firewall game was replaced (see §3.2). In The Model Escapes keyboard users can Tab to the target and press Enter. Esc quits both games.
 12. **Reduced motion**: autonomous motion is disabled (marquees, spins, pings, particles, cursor springs, hub
     animations, 3D rotation, Lenis). Scroll-linked tracks still follow the user's own scrolling.
 13. **Unknown slugs** under `/projects/[slug]` and `/blog/[slug]` show the 404 UI with a 200 status. `dynamicParams`
