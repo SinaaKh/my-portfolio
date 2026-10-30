@@ -50,6 +50,9 @@ export interface NavContent {
   cta: Link;
   menuLabel: string;
   homeLabel: string;
+  skipLabel: string;
+  /** Accessible name of the primary navigation landmark. */
+  landmarkLabel: string;
 }
 
 export interface HomeSectionAnchor {
@@ -175,6 +178,8 @@ export interface TechItem {
 }
 
 export interface TechStackContent extends SectionHeading {
+  /** Second line of the heading, after the accent word. */
+  titleEnd: string;
   categories: TechCategory[];
   defaultCategory: TechCategory["id"];
   items: TechItem[];
@@ -253,6 +258,8 @@ export interface FooterColumn {
 }
 
 export interface FooterContent {
+  /** Accessible name of the footer navigation landmark. */
+  navLabel: string;
   heading: string;
   headingAccent: string;
   headingSuffix: string;
@@ -296,6 +303,8 @@ export interface ProjectBand {
     background: string;
     /** Text and pill color scheme. */
     tone: "light" | "dark";
+    /** Case-study link style; defaults to the tone. Use "accent" on accent-colored bands. */
+    linkTone?: "light" | "dark" | "accent";
   };
   meta: ProjectBandMeta[];
   tags: string[];

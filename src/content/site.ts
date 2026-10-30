@@ -42,6 +42,8 @@ export const site: SiteContent = {
     cta: { label: "Let's Chat", href: SCHEDULE_URL, external: true },
     menuLabel: "Open menu",
     homeLabel: "Home",
+    skipLabel: "Skip to content",
+    landmarkLabel: "Primary",
   },
 
   sections: [
@@ -60,7 +62,7 @@ export const site: SiteContent = {
 
   hero: {
     greeting: "Hi, I am Your Name",
-    headline: "A short placeholder headline about the kind of work you do best.",
+    headline: "A short placeholder headline for the work you do best.",
     link: { label: "Placeholder link to a featured page", href: "/lab" },
     badgeText: "• Placeholder badge text • Goes around the circle ",
     badgeLink: { label: "Schedule a call", href: SCHEDULE_URL, external: true },
@@ -97,7 +99,7 @@ export const site: SiteContent = {
 
   versatility: {
     eyebrow: "Section Eyebrow",
-    title: "Placeholder Title for Every",
+    title: "Placeholder for Every",
     titleAccent: "Accent",
     description:
       "A placeholder paragraph of roughly two lines that explains the range of problems you solve and the kinds of teams you solve them for.",
@@ -198,7 +200,8 @@ export const site: SiteContent = {
   techStack: {
     eyebrow: "Section Eyebrow",
     title: "The",
-    titleAccent: "Placeholder",
+    titleAccent: "Core",
+    titleEnd: "Toolkit.",
     categories: [
       { id: "all", label: "All" },
       { id: "frontend", label: "Frontend" },
@@ -337,9 +340,9 @@ export const site: SiteContent = {
   ],
 
   partnership: {
-    watermark: "Placeholder",
+    watermark: "Values",
     eyebrow: "Section Eyebrow",
-    title: "Placeholder title line",
+    title: "Your title here",
     titleAccent: "with an accent",
     description:
       "A placeholder paragraph of two or three lines describing the kind of teams you like to work with and how you approach the work.",
@@ -361,8 +364,8 @@ export const site: SiteContent = {
 
   collaborations: {
     eyebrow: "Collaborations",
-    title: "Placeholder",
-    titleAccent: "clients",
+    title: "Clients",
+    titleAccent: "and teams",
     rows: [
       ["Client A", "Client B", "Client C", "Client D", "Client E", "Client F", "Client G", "Client H", "Client I", "Client J", "Client K", "Client L"],
       ["Client M", "Client N", "Client O", "Client P", "Client Q", "Client R", "Client S", "Client T", "Client U", "Client V", "Client W", "Client X"],
@@ -371,6 +374,7 @@ export const site: SiteContent = {
   },
 
   footer: {
+    navLabel: "Footer",
     heading: "Your closing call to action goes",
     headingAccent: "here",
     headingSuffix: ".",
@@ -440,14 +444,14 @@ export const site: SiteContent = {
       metaTitle: "Projects",
       title: "Projects",
       intro:
-        "A placeholder intro paragraph for the projects page. Explain how many projects you have worked on, what kinds, and how this page is organised. Three or four sentences works best.",
+        "A placeholder intro paragraph for the projects page. Explain roughly how many projects you have worked on and what kinds they were: client work, products you built for yourself, open-source libraries and experiments. Then say how this page is organised and what a visitor will find in each band below, from the technologies used to the role you played. Five or six lines of text works best here.",
       caseStudyLabel: "Read Case Study",
       bands: [
         {
           kicker: "Category / Your Role",
           title: "Project Title 01:",
           summary: "Placeholder summary. Two or three sentences about the project, the problem and the result.",
-          theme: { background: "#00bfa5", tone: "dark" },
+          theme: { background: "#00bfa5", tone: "dark", linkTone: "accent" },
           meta: [
             { label: "Project", value: "Project 01", href: "/projects/project-01" },
             { label: "Role", value: "Your Role" },

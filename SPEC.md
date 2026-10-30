@@ -593,17 +593,30 @@ Implementation notes:
 
 ---
 
-## 6. Open questions / deliberate deviations
-1. **Hero overlay title**: invisible on the reference (opacity stuck at 0). We plan to make it visible. Confirm.
-2. **Timeline arrows**: invisible on the reference (black on black). We render them in `white/10`.
-3. **Custom cursor on touch**: shown on the reference. We hide it on coarse pointers.
-4. **3D card height on desktop**: the reference stays 380px because of a broken class. We match 380px. Say if you want
-   600px.
+## 6. Decisions and deliberate deviations
+
+Defaults applied during the build (2026-10-30). Each can be revisited.
+
+1. **Hero overlay title**: invisible on the reference (opacity stuck at 0). Ours fades in over the full-width image
+   (scroll 450–950px).
+2. **Timeline arrows**: invisible and non-functional on the reference. Ours are `white/10` buttons that scroll to the
+   previous or next milestone.
+3. **Custom cursor on touch**: shown on the reference. Ours hides it on coarse pointers.
+4. **3D card height on desktop**: kept at 380px to match the reference's broken class.
 5. **Footer "Work" link**: 404 on the reference. Ours points to `/projects`.
-6. **Serif face**: a system stack, as on the reference, so it varies by OS. Say if you want a fixed webfont instead
-   (e.g. Instrument Serif).
-7. **Scroll snap**: the reference combines CSS `snap-y snap-proximity` with Lenis, and the two fight each other. We
-   leave CSS snap off. If snapping is wanted, use `lenis/snap`.
+6. **Serif face**: kept the system `ui-serif` stack, as on the reference.
+7. **Scroll snap**: CSS snap is left off because it conflicts with Lenis.
+8. **3D Works counter**: the reference changes the index slightly out of sync with the card flips. Ours changes it on
+   each half-turn, while the card is edge-on.
+9. **Insights hover**: the reference's inline colors block the title hover color. Ours drives colors through CSS
+   variables, so the accent hover works.
+10. **/blog**: the reference renders black text on black. Ours uses the readable dark row theme.
+11. **Firewall game**: keyboard users can Tab to the target and press Enter, which is the intended "hack". Esc quits.
+12. **Reduced motion**: autonomous motion is disabled (marquees, spins, pings, particles, cursor springs, hub
+    animations, 3D rotation, Lenis). Scroll-linked tracks still follow the user's own scrolling.
+13. **Unknown slugs** under `/projects/[slug]` and `/blog/[slug]` show the 404 UI with a 200 status. `dynamicParams`
+    isn't available with Cache Components, and params are read inside `<Suspense>` for instant navigation.
+14. **Placeholder copy** was sized to wrap like the reference's copy, so section heights match.
 
 ---
 
@@ -618,35 +631,35 @@ Foundations
 - [x] Layout shell (Lenis provider, section anchors)
 
 Global
-- [ ] Navigation (desktop + mobile dropdown, scroll fade)
-- [ ] Custom cursor
-- [ ] Shared components (ArrowLink, Eyebrow, SectionHeader, Pill, RoundArrowButton)
-- [ ] Footer
+- [x] Navigation (desktop + mobile dropdown, scroll fade)
+- [x] Custom cursor
+- [x] Shared components (ArrowLink, SmartLink, SiteImage, icons, media-query hooks)
+- [x] Footer
 
 Home sections
-- [ ] Hero
-- [ ] My Works (word marquee)
-- [ ] AI Firewall Challenge widget
-- [ ] Versatility (industries hub)
-- [ ] Selected Dev Works
-- [ ] Selected 3D Works
-- [ ] Tech Stack
-- [ ] Story / Timeline
-- [ ] Latest Insights
-- [ ] Partnership
-- [ ] Collaborations
+- [x] Hero
+- [x] My Works (word marquee)
+- [x] AI Firewall Challenge widget
+- [x] Versatility (industries hub)
+- [x] Selected Dev Works
+- [x] Selected 3D Works
+- [x] Tech Stack
+- [x] Story / Timeline
+- [x] Latest Insights
+- [x] Partnership
+- [x] Collaborations
 
 Secondary pages
-- [ ] About (`/about`)
-- [ ] Projects (`/projects`)
-- [ ] Case study (`/projects/[slug]`)
-- [ ] Lab (`/lab`)
-- [ ] Writing index (`/blog`)
-- [ ] Post (`/blog/[slug]`)
-- [ ] Learn (`/learn`)
+- [x] About (`/about`)
+- [x] Projects (`/projects`)
+- [x] Case study (`/projects/[slug]`)
+- [x] Lab (`/lab`)
+- [x] Writing index (`/blog`)
+- [x] Post (`/blog/[slug]`)
+- [x] Learn (`/learn`)
 
 Polish
-- [ ] Reduced-motion fallbacks
-- [ ] Responsive QA at 375 / 768 / 1024 / 1440
+- [x] Reduced-motion fallbacks
+- [x] Responsive QA at 375 / 768 / 1024 / 1440
 - [ ] Metadata, OG image, favicon
 - [ ] Lighthouse pass (performance, a11y)

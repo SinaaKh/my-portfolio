@@ -114,6 +114,30 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
   }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Thin black scrollbar, as on the reference */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink) var(--color-paper);
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-paper);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-ink);
+    border: 3px solid var(--color-paper);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
-import { SmoothScroll } from "@/components/smooth-scroll";
+import { Providers } from "@/components/providers";
+import { Cursor } from "@/components/layout/cursor";
+import { Nav } from "@/components/layout/nav";
+import { Footer } from "@/components/sections/footer";
 import { site } from "@/content/site";
 
 // Same family and weights as the reference. 900 is intentionally not loaded,
@@ -34,7 +37,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${poppins.variable} antialiased`}>
       <body className="bg-paper font-sans text-ink">
-        <SmoothScroll>{children}</SmoothScroll>
+        <Providers>
+          <a
+            href="#main"
+            className="sr-only z-[10001] rounded-full bg-black px-5 py-2.5 text-sm font-bold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          >
+            {site.nav.skipLabel}
+          </a>
+          <Cursor />
+          <Nav />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
