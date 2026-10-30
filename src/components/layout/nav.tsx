@@ -38,7 +38,7 @@ export function Nav() {
             <span className="text-xl font-bold tracking-tighter text-black">{meta.shortName}</span>
           </SmartLink>
 
-          <nav aria-label="Primary" className="hidden lg:block">
+          <nav aria-label={nav.landmarkLabel} className="hidden lg:block">
             <ul className="flex items-center gap-10">
               {nav.links.map((link) => (
                 <li key={link.href}>
