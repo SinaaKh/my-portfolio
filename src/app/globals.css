@@ -1,26 +1,128 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Design tokens. Values measured from the reference site (see SPEC.md §1).
+ * Every token below becomes both a Tailwind utility and a CSS variable on :root.
+ * `static` emits all of them, even ones no utility uses yet.
+ */
+@theme static {
+  /* Color */
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-accent: #00bfa5;
+  --color-violet: #7c4dff;
+  --color-indigo: #6366f1;
+  --color-indigo-deep: #4f46e5;
+  --color-coral: #ff5252;
+  --color-surface: #080808;
+  --color-deep-teal: #09757a;
+
+  /* Industry hub node accents (Versatility section) */
+  --color-industry-1: #ff4d4d;
+  --color-industry-2: #1db954;
+  --color-industry-3: #00a3ff;
+  --color-industry-4: #ffd700;
+  --color-industry-5: #ff6b00;
+  --color-industry-6: #7c4dff;
+
+  /* Type: small named sizes; headings use Tailwind's default xs…9xl scale */
+  --text-micro: 8px;
+  --text-tag: 9px;
+  --text-eyebrow: 10px;
+  --text-nav: 13px;
+  --text-lead: 18px;
+
+  /* Letter spacing */
+  --tracking-caps: 0.2em;
+  --tracking-label: 0.3em;
+  --tracking-eyebrow: 0.4em;
+  --tracking-ultra: 0.5em;
+
+  /* Line height (display headings) */
+  --leading-display: 0.85;
+  --leading-display-loose: 0.9;
+  --leading-heading: 1.1;
+
+  /* Radius (Tailwind's defaults cover xl 12px, 2xl 16px, 3xl 24px, 4xl 32px) */
+  --radius-5xl: 2.5rem;
+
+  /* Elevation */
+  --shadow-card: 0 20px 40px rgb(0 0 0 / 0.4);
+  --shadow-card-sm: 0 10px 20px rgb(0 0 0 / 0.4);
+  --shadow-glow: 0 20px 40px rgb(0 191 165 / 0.2);
+  --shadow-dot: 0 0 20px #00bfa5;
+
+  /* Animation */
+  --animate-spin-slow: spin 12s linear infinite;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Poppins is loaded with next/font in layout.tsx and exposed as --font-poppins.
+     Serif and mono intentionally keep Tailwind's system stacks, matching the reference. */
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --nav-height: 5rem;
+  --gutter: 1.5rem;
+  --gutter-lg: 3rem;
+
+  --cursor-size: 2rem;
+  --cursor-dot-size: 0.5rem;
+  --cursor-hover-scale: 2.5;
+
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 700ms;
+  --duration-slowest: 1000ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --dot-grid-size: 40px;
+
+  color-scheme: light;
+}
+
+/* Outlined display text (My Works marquee, row A) */
+@utility outline-text {
+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.1);
+  color: transparent;
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Dot grid backdrop; tint and opacity come from text color and opacity utilities */
+@utility dot-grid {
+  background-image: radial-gradient(currentColor 1px, transparent 1px);
+  background-size: var(--dot-grid-size) var(--dot-grid-size);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
