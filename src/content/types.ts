@@ -259,6 +259,8 @@ export interface TimelineEntry {
   period: string;
   tag: string;
   description: string;
+  /** A milestone that belongs to this entry (e.g. a thesis), shown attached under the description. */
+  milestone?: { label: string; period: string; text: string };
 }
 
 export interface TimelineContent extends SectionHeading {
