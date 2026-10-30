@@ -642,7 +642,7 @@ Secondary pages
 - [x] Case study (`/projects/[slug]`)
 - [x] Lab (`/lab`)
 - [x] Writing index (`/blog`)
-- [ ] Post (`/blog/[slug]`)
+- [x] Post (`/blog/[slug]`)
 - [ ] Learn (`/learn`)
 
 Polish
