@@ -8,11 +8,12 @@ import { site } from "@/content/site";
 
 const { escapeGame: copy } = site;
 
+const TARGET_SIZE = 56;
+const TARGET_HALF = TARGET_SIZE / 2;
 /** Pointer distance (px) at which the model starts running. */
 const FLEE_RADIUS = 210;
 const FLEE_SPEED = 640;
 const WANDER_SPEED = 60;
-const TOUCH_WANDER_SPEED = 40;
 /** How long it stays put in view before running to another part of the page. */
 const HOP_AFTER_MS = 9000;
 const CALM_HOP_AFTER_MS = 4000;
@@ -117,9 +118,6 @@ function LooseModel({
   const root = useOverlayRoot();
   const reduceMotion = useReducedMotion() ?? false;
   const lenis = useLenis();
-  const [coarse] = useState(() => window.matchMedia("(pointer: coarse)").matches);
-  const size = coarse ? 72 : 56;
-  const half = size / 2;
 
   const layerRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLButtonElement>(null);
@@ -152,7 +150,7 @@ function LooseModel({
     pos.x = box ? box.left + box.width / 2 : window.innerWidth / 2;
     pos.y = (box ? box.top + box.height / 2 : window.innerHeight / 2) + window.scrollY;
 
-    const pointer = { x: 0, y: 0, active: false, type: coarse ? "touch" : "mouse" };
+    const pointer = { x: 0, y: 0, active: false, type: "mouse" };
     const running = new Set<Animation>();
     const headings = Array.from(document.querySelectorAll<HTMLElement>("main h1, main h2, footer h2"));
 
@@ -186,7 +184,7 @@ function LooseModel({
       lastHop = performance.now();
       const scroll = window.scrollY;
       const width = window.innerWidth;
-      const randomX = half + EDGE_MARGIN + Math.random() * Math.max(0, width - size - EDGE_MARGIN * 2);
+      const randomX = TARGET_HALF + EDGE_MARGIN + Math.random() * Math.max(0, width - TARGET_SIZE - EDGE_MARGIN * 2);
       const hideBehindNav = !reduceMotion && scroll < 150 && Math.random() < NAV_HIDE_CHANCE;
       // The first run is always up to the hero, so the player goes where the nav can be used as cover.
       const sections = hops === 0 ? SECTIONS.slice(0, 1) : SECTIONS;
@@ -263,10 +261,10 @@ function LooseModel({
         addChip(8 + Math.random() * Math.max(0, viewW - 240), scroll + 60 + Math.random() * Math.max(0, viewH - 220));
       }
 
-      const minX = half + EDGE_MARGIN;
-      const maxX = viewW - half - EDGE_MARGIN;
-      const minY = scroll + half + EDGE_MARGIN;
-      const maxY = scroll + viewH - hudHeight - half - EDGE_MARGIN * 3;
+      const minX = TARGET_HALF + EDGE_MARGIN;
+      const maxX = viewW - TARGET_HALF - EDGE_MARGIN;
+      const minY = scroll + TARGET_HALF + EDGE_MARGIN;
+      const maxY = scroll + viewH - hudHeight - TARGET_HALF - EDGE_MARGIN * 3;
       const inView = pos.y > scroll && pos.y < scroll + viewH;
       let isCornered = false;
       let shake = 0;
@@ -305,7 +303,7 @@ function LooseModel({
           vy = (dy / distance) * speed;
         } else {
           angle += (Math.random() - 0.5) * dt * 4;
-          const speed = coarse ? TOUCH_WANDER_SPEED : WANDER_SPEED;
+          const speed = WANDER_SPEED;
           vx = Math.cos(angle) * speed;
           vy = Math.sin(angle) * speed;
         }
@@ -346,7 +344,7 @@ function LooseModel({
       }
 
       layer.style.transform = `translate3d(0, ${-scroll}px, 0)`;
-      target.style.transform = `translate3d(${pos.x - half + shake}px, ${pos.y - half}px, 0)`;
+      target.style.transform = `translate3d(${pos.x - TARGET_HALF + shake}px, ${pos.y - TARGET_HALF}px, 0)`;
       frameId = requestAnimationFrame(loop);
     };
     frameId = requestAnimationFrame(loop);
@@ -363,12 +361,12 @@ function LooseModel({
     const onPointerDown = (event: PointerEvent) => {
       pointer.type = event.pointerType;
       if (event.pointerType !== "touch" || mode.name !== "roam" || reduceMotion) return;
-      // A near miss on touch makes it hop aside, gently. There's no hover to dodge on a phone.
+      // On a touchscreen laptop a near miss makes it hop aside, since there's no hover to dodge.
       const dx = pos.x - event.clientX;
       const dy = pos.y - window.scrollY - event.clientY;
       const distance = Math.hypot(dx, dy) || 1;
-      if (distance > half && distance < CLICK_GUARD_RADIUS) {
-        pos.x = Math.min(Math.max(pos.x + (dx / distance) * TOUCH_DASH, half + EDGE_MARGIN), window.innerWidth - half - EDGE_MARGIN);
+      if (distance > TARGET_HALF && distance < CLICK_GUARD_RADIUS) {
+        pos.x = Math.min(Math.max(pos.x + (dx / distance) * TOUCH_DASH, TARGET_HALF + EDGE_MARGIN), window.innerWidth - TARGET_HALF - EDGE_MARGIN);
         pos.y += (dy / distance) * TOUCH_DASH;
       }
     };
@@ -409,7 +407,7 @@ function LooseModel({
       running.forEach((animation) => animation.cancel());
       running.clear();
     };
-  }, [boxRef, coarse, half, size, reduceMotion, onEnd, onQuit]);
+  }, [boxRef, reduceMotion, onEnd, onQuit]);
 
   const scrollToTarget = () => {
     const top = Math.max(0, posRef.current.y - window.innerHeight / 2);
@@ -450,7 +448,7 @@ function LooseModel({
             type="button"
             data-escape-ui
             aria-label={copy.targetAriaLabel}
-            style={{ width: size, height: size }}
+            style={{ width: TARGET_SIZE, height: TARGET_SIZE }}
             onPointerDown={(event) => {
               event.stopPropagation();
               catchIt();

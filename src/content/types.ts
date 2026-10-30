@@ -93,39 +93,11 @@ export interface MyWorksContent {
   rowB: string[];
 }
 
-export interface FirewallGameContent {
-  title: string;
-  subtitle: string;
-  note: string;
-  startLabel: string;
-  scoreLabel: string;
-  timeLabel: string;
-  /** Unit appended to the countdown value, e.g. "s". */
-  timeUnit: string;
-  durationSeconds: number;
-  /** Two-letter label inside the evasive target. */
-  targetLabel: string;
-  hints: string[];
-  missMessages: string[];
-  touchBlockedMessage: string;
-  result: {
-    lostTitle: string;
-    wonTitle: string;
-    /** `{score}` is replaced with the final score. */
-    lostMessage: string;
-    wonMessage: string;
-    retryLabel: string;
-  };
-}
+/* Mini games: Snake everywhere, Escape only with a mouse or trackpad (components/games/game-host.tsx). */
 
-/* Mini game test (?game=). Each block goes away with its folder in components/games/. */
-
-export interface GameSwitcherContent {
+export interface GamePickerContent {
+  /** Accessible name of the desktop game picker. */
   label: string;
-  /** Accessible name of the switcher landmark. */
-  landmarkLabel: string;
-  /** Switcher label for the current game (no URL parameter). */
-  baselineLabel: string;
 }
 
 export interface SnakeEnding {
@@ -134,8 +106,6 @@ export interface SnakeEnding {
 }
 
 export interface SnakeGameContent {
-  /** Switcher label for this game. */
-  switchLabel: string;
   title: string;
   subtitle: string;
   note: string;
@@ -166,8 +136,6 @@ export interface SnakeGameContent {
 }
 
 export interface EscapeGameContent {
-  /** Switcher label for this game. */
-  switchLabel: string;
   title: string;
   subtitle: string;
   note: string;
@@ -197,62 +165,6 @@ export interface EscapeGameContent {
     /** `{time}` is replaced with the seconds left. */
     wonMessage: string;
     /** `{caught}` and `{total}` are replaced. */
-    lostMessage: string;
-    retryLabel: string;
-    closeLabel: string;
-  };
-}
-
-/** The elements the agent can pretend to edit. Selectors live in rogue-game.tsx. */
-export type RogueEditTarget =
-  | "greeting"
-  | "headline"
-  | "heroLink"
-  | "navCta"
-  | "navLab"
-  | "versatility"
-  | "devWorks"
-  | "research"
-  | "story"
-  | "insights"
-  | "partnership"
-  | "collaborations"
-  | "footer";
-
-export interface RogueGameContent {
-  /** Switcher label for this game. */
-  switchLabel: string;
-  title: string;
-  subtitle: string;
-  note: string;
-  reducedMotionNote: string;
-  startLabel: string;
-  durationSeconds: number;
-  /** Unreverted edits at once that end the game. */
-  maxEdits: number;
-  banner: string;
-  inProgressMessage: string;
-  /** Two-letter label on the agent. */
-  agentLabel: string;
-  revertedLabel: string;
-  unrevertedLabel: string;
-  timeLabel: string;
-  timeUnit: string;
-  nextEditLabel: string;
-  endLabel: string;
-  /** `{text}` is replaced with the fake text. */
-  revertAriaLabel: string;
-  /** `{text}` is replaced with the fake text. */
-  editAnnouncement: string;
-  /** `{score}` is replaced. */
-  revertAnnouncement: string;
-  edits: { target: RogueEditTarget; text: string }[];
-  result: {
-    wonTitle: string;
-    lostTitle: string;
-    /** `{score}` is replaced. */
-    wonMessage: string;
-    /** `{score}` is replaced. */
     lostMessage: string;
     retryLabel: string;
     closeLabel: string;
@@ -549,11 +461,9 @@ export interface SiteContent {
   sections: HomeSectionAnchor[];
   hero: HeroContent;
   myWorks: MyWorksContent;
-  firewall: FirewallGameContent;
-  gameSwitcher: GameSwitcherContent;
+  gamePicker: GamePickerContent;
   snakeGame: SnakeGameContent;
   escapeGame: EscapeGameContent;
-  rogueGame: RogueGameContent;
   versatility: VersatilityContent;
   devWorks: DevWorksContent;
   threeDWorks: ThreeDWorksContent;
