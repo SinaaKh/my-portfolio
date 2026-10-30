@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { site, type ProjectBand } from "@/content/site";
 import { Collaborations } from "@/components/sections/collaborations";
 import { ArrowLink } from "@/components/ui/arrow-link";
@@ -7,10 +8,11 @@ import { SmartLink } from "@/components/ui/smart-link";
 
 const { projects } = site.pages;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: projects.metaTitle,
   description: projects.intro,
-};
+  path: "/projects",
+});
 
 const TONE = {
   dark: { kicker: "text-white/70", title: "text-white", summary: "text-white/80", label: "text-white/70", value: "text-white", pill: "border-white/80 text-white" },
@@ -20,7 +22,7 @@ const TONE = {
 /** Projects page: sticky intro with full-bleed project bands scrolling over it (SPEC.md §4.2). */
 export default function ProjectsPage() {
   return (
-    <main id="main" className="bg-gray-100">
+    <main id="main" tabIndex={-1} className="outline-none bg-gray-100">
       <div className="sticky top-0 z-0 w-full bg-gray-100 pt-[50px] text-black md:pt-[100px]">
         <div className="container m-auto max-w-[900px] p-5 text-center">
           <h1 className="pt-3 text-5xl font-medium leading-[0.85] tracking-tighter md:text-8xl md:leading-none lg:text-[10rem]">

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/content/site";
 import { PostRow, darkRowTheme } from "@/components/ui/post-row";
 
 const { blog } = site.pages;
 
-export const metadata: Metadata = {
-  title: blog.metaTitle,
-};
+export const metadata: Metadata = pageMetadata({ title: blog.metaTitle, path: "/blog" });
 
 /**
  * Writing index (SPEC.md §4.5). Reuses the home Insights rows in their dark theme.
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
  */
 export default function BlogPage() {
   return (
-    <main id="main" style={darkRowTheme} className="w-full bg-black pt-[50px] text-white md:pt-[100px]">
+    <main id="main" tabIndex={-1} style={darkRowTheme} className="outline-none w-full bg-black pt-[50px] text-white md:pt-[100px]">
       <div className="container m-auto p-5 lg:max-w-[1000px]">
         <h1 className="pt-3 text-center text-4xl font-medium leading-[110%] md:leading-[140%] lg:text-5xl lg:leading-none">
           {blog.title}
@@ -22,7 +21,13 @@ export default function BlogPage() {
         <div className="pb-[100px]">
           <ol className="mt-14 flex flex-col">
             {site.posts.map((post, i) => (
-              <PostRow key={post.slug} post={post} index={i} readMoreLabel={site.insights.readMoreLabel} />
+              <PostRow
+                key={post.slug}
+                post={post}
+                index={i}
+                readMoreLabel={site.insights.readMoreLabel}
+                headingLevel={2}
+              />
             ))}
           </ol>
         </div>

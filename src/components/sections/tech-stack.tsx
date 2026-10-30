@@ -46,7 +46,7 @@ export function TechStack() {
       className="relative -mt-[600px] min-h-screen w-full overflow-hidden bg-surface py-32"
     >
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute left-0 top-0 h-full w-full bg-[radial-gradient(circle_at_50%_0%,rgb(0_191_165/0.03),transparent_70%)]" />
+        <div className="absolute left-0 top-0 h-full w-full bg-[radial-gradient(circle_at_50%_0%,color-mix(in_srgb,var(--color-accent)_3%,transparent),transparent_70%)]" />
       </div>
 
       <div className="container relative z-10 mx-auto px-6">

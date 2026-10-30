@@ -28,9 +28,16 @@ export const site: SiteContent = {
     description: "A one-sentence placeholder description of what you do and who you do it for.",
     url: "https://example.com",
     locale: "en_US",
+    keywords: ["Your Name", "portfolio", "your role", "your specialty"],
+    twitterHandle: undefined,
     email: "hello@example.com",
     avatar: img("avatar.svg", 160, 160, "Portrait of Your Name"),
-    ogImage: img("og.svg", 1200, 630, "Your Name: portfolio"),
+    ogImage: img("og.png", 1200, 630, "Your Name: portfolio"),
+    icons: {
+      svg: "/placeholders/favicon.svg",
+      png: "/placeholders/favicon-32.png",
+      apple: "/placeholders/apple-touch-icon.png",
+    },
   },
 
   nav: {
@@ -64,7 +71,7 @@ export const site: SiteContent = {
     greeting: "Hi, I am Your Name",
     headline: "A short placeholder headline for the work you do best.",
     link: { label: "Placeholder link to a featured page", href: "/lab" },
-    badgeText: "• Placeholder badge text • Goes around the circle ",
+    badgeText: "• Your badge text • Placeholder ring copy ",
     badgeLink: { label: "Schedule a call", href: SCHEDULE_URL, external: true },
     image: img("hero.svg", 2100, 900, "Hero image placeholder"),
     overlayTitle: "My Works",
@@ -111,7 +118,7 @@ export const site: SiteContent = {
       { icon: "🛰️", label: "Industry C", color: "#00a3ff" },
       { icon: "📊", label: "Industry D", color: "#ffd700" },
       { icon: "🧪", label: "Industry E", color: "#ff6b00" },
-      { icon: "⚙️", label: "Industry F", color: "#7c4dff" },
+      { icon: "⚙️", label: "Industry F", color: "#7c4dff", href: "/projects/project-02" },
     ],
     pillars: [
       { icon: "✦", title: "Pillar One", description: "Short placeholder sentence describing this pillar." },
@@ -590,6 +597,14 @@ export const site: SiteContent = {
       lines: ["Placeholder line one...", "Placeholder line two?", "Placeholder line three?"],
       message: "A placeholder sentence about upcoming learning content.",
       badge: "Coming soon!",
+    },
+
+    notFound: {
+      metaTitle: "Page not found",
+      eyebrow: "Error 404",
+      titleLines: ["Lost in", "the scroll."],
+      message: "The page you are looking for does not exist or has moved.",
+      link: { label: "Back to home", href: "/" },
     },
   },
 

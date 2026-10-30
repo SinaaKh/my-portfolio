@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { site } from "@/content/site";
+import { sectionLabel } from "@/lib/content";
+import { site, type Industry } from "@/content/site";
 import { ArrowLink } from "@/components/ui/arrow-link";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
+import { SmartLink } from "@/components/ui/smart-link";
 import { seededRandom } from "@/lib/random";
 
 const { versatility } = site;
@@ -42,7 +45,7 @@ export function Versatility() {
   return (
     <section
       id="versatility"
-      aria-label={site.sections[2].label}
+      aria-label={sectionLabel("versatility")}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black py-12 lg:py-24"
     >
       <div aria-hidden className="dot-grid absolute inset-0 text-white opacity-[0.05]" />
@@ -127,7 +130,7 @@ function Hub() {
                 textAnchor="middle"
                 dominantBaseline="central"
                 opacity={0}
-                style={{ filter: "drop-shadow(0 0 8px rgb(99 102 241 / 0.5))" }}
+                style={{ filter: "drop-shadow(0 0 8px color-mix(in srgb, var(--color-indigo) 50%, transparent))" }}
               >
                 {bit.digit}
                 <animateMotion dur={`${BIT_DURATION}s`} begin={`${bit.begin}s`} repeatCount="indefinite" path={bit.path} />
@@ -170,15 +173,8 @@ function Core({ reduceMotion }: { reduceMotion: boolean }) {
 
   return (
     <div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2">
-      <motion.div
-        animate={
-          reduceMotion
-            ? undefined
-            : { boxShadow: ["0 0 20px rgb(99 102 241 / 0.2)", "0 0 40px rgb(99 102 241 / 0.4)", "0 0 20px rgb(99 102 241 / 0.2)"] }
-        }
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-indigo to-indigo-deep p-[2px] lg:h-32 lg:w-32"
-      >
+      {/* Glow pulse is a CSS keyframe (animate-hub-pulse) so it follows --color-indigo. */}
+      <div className="relative flex h-24 w-24 animate-hub-pulse items-center justify-center rounded-full bg-gradient-to-br from-indigo to-indigo-deep p-[2px] lg:h-32 lg:w-32">
         <div aria-hidden className="absolute inset-0 rounded-full bg-black/40 backdrop-blur-xl" />
         <div className="relative z-10 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-black/80 shadow-2xl lg:h-24 lg:w-24">
           <AnimatePresence initial={false}>
@@ -206,7 +202,7 @@ function Core({ reduceMotion }: { reduceMotion: boolean }) {
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="absolute inset-[-20px] rounded-full border border-dotted border-indigo/20 lg:inset-[-30px]"
         />
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -216,42 +212,52 @@ function IndustryNode({
   icon,
   label,
   color,
+  href,
   reduceMotion,
-}: {
-  index: number;
-  icon: string;
-  label: string;
-  color: string;
-  reduceMotion: boolean;
-}) {
+}: Industry & { index: number; reduceMotion: boolean }) {
   const { left, top } = CONNECTORS[index % CONNECTORS.length];
+  const tile = (
+    <div
+      style={{ borderBottom: `2px solid ${color}` }}
+      className={`relative -mt-[30px] flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-neutral-900 text-xl shadow-card-sm transition-all duration-500 group-hover:scale-110 lg:h-16 lg:w-16 lg:rounded-2xl lg:text-3xl lg:shadow-card ${
+        href ? "group-hover:border-accent/50 group-focus-within:border-accent/50" : "group-hover:border-white/20"
+      }`}
+    >
+      <span aria-hidden>{icon}</span>
+      {href && (
+        <span
+          aria-hidden
+          className="absolute -right-1 -top-1 h-3 w-3 animate-pulse rounded-full border-2 border-black bg-accent"
+        />
+      )}
+    </div>
+  );
+
   return (
+    // Pops in once when the hub scrolls into view, then stays (as on the reference).
     <motion.li
-      initial={{ scale: 0, opacity: 0 }}
-      animate={
-        reduceMotion
-          ? { scale: 1, opacity: 1 }
-          : { scale: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }
-      }
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { duration: 7, times: [0, 0.08, 0.88, 1], repeat: Infinity, repeatDelay: 0.6, delay: index * 0.9, ease: "easeOut" }
-      }
+      initial={reduceMotion ? false : { scale: 0, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.3 + index * 0.1 }}
       style={{ left: `${left}%`, top: `${top}%` }}
       className="absolute z-30"
     >
       <div className="group relative">
+        {href ? (
+          <SmartLink href={href} aria-label={label} className="block rounded-xl lg:rounded-2xl">
+            {tile}
+          </SmartLink>
+        ) : (
+          tile
+        )}
         <div
-          aria-hidden
-          style={{ borderBottom: `2px solid ${color}` }}
-          className="-mt-[30px] flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-neutral-900 text-xl shadow-card-sm transition-all duration-500 group-hover:scale-110 group-hover:border-white/20 lg:h-16 lg:w-16 lg:rounded-2xl lg:text-3xl lg:shadow-card"
+          aria-hidden={Boolean(href)}
+          className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 translate-y-2 opacity-0 transition-all duration-300 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100 lg:-bottom-12"
         >
-          {icon}
-        </div>
-        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:-bottom-12">
           <span className="flex items-center gap-1 whitespace-nowrap rounded-full bg-accent px-2 py-1 text-[8px] font-black uppercase tracking-caps text-black shadow-lg lg:px-3 lg:py-1.5 lg:text-eyebrow">
             {label}
+            {href && <ArrowUpRightIcon className="h-2.5 w-2.5" />}
           </span>
         </div>
       </div>
