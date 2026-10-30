@@ -442,14 +442,14 @@ export const site: SiteContent = {
       metaTitle: "Projects",
       title: "Projects",
       intro:
-        "A placeholder intro paragraph for the projects page. Explain how many projects you have worked on, what kinds, and how this page is organised. Three or four sentences works best.",
+        "A placeholder intro paragraph for the projects page. Explain roughly how many projects you have worked on and what kinds they were: client work, products you built for yourself, open-source libraries and experiments. Then say how this page is organised and what a visitor will find in each band below, from the technologies used to the role you played. Five or six lines of text works best here.",
       caseStudyLabel: "Read Case Study",
       bands: [
         {
           kicker: "Category / Your Role",
           title: "Project Title 01:",
           summary: "Placeholder summary. Two or three sentences about the project, the problem and the result.",
-          theme: { background: "#00bfa5", tone: "dark" },
+          theme: { background: "#00bfa5", tone: "dark", linkTone: "accent" },
           meta: [
             { label: "Project", value: "Project 01", href: "/projects/project-01" },
             { label: "Role", value: "Your Role" },
