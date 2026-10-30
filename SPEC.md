@@ -631,7 +631,7 @@ Home sections
 - [x] Selected Dev Works
 - [x] Selected 3D Works
 - [x] Tech Stack
-- [ ] Story / Timeline
+- [x] Story / Timeline
 - [ ] Latest Insights
 - [ ] Partnership
 - [ ] Collaborations
