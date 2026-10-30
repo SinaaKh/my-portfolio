@@ -339,9 +339,9 @@ export const site: SiteContent = {
   ],
 
   partnership: {
-    watermark: "Placeholder",
+    watermark: "Values",
     eyebrow: "Section Eyebrow",
-    title: "Placeholder title line",
+    title: "Your title here",
     titleAccent: "with an accent",
     description:
       "A placeholder paragraph of two or three lines describing the kind of teams you like to work with and how you approach the work.",
