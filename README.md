@@ -1,16 +1,14 @@
-# Portfolio
+# Sina Khodadadi: Portfolio
 
-A one-page developer portfolio with secondary pages, built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**,
-**Framer Motion** and **Lenis** smooth scrolling. Every piece of text is a placeholder ("Your Name",
-"Project Title 01", "Client A") waiting for your content.
+Personal portfolio of Sina Khodadadi, AI Software Engineer, built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**,
+**Framer Motion** and **Lenis** smooth scrolling.
 
-To personalize the site you only need to:
+To change the site you normally only need to:
 
 1. edit **`src/content/site.ts`**, and
-2. replace the files in **`public/placeholders/`**.
+2. replace or regenerate the files in **`public/images/`**.
 
-Nothing else is required. The sections below also cover the optional extras: changing the accent color and fonts,
-and deploying.
+The sections below also cover changing the accent color and fonts, and deploying.
 
 The design system (tokens, every section's layout and motion) is documented in [`SPEC.md`](./SPEC.md).
 
@@ -66,8 +64,8 @@ src/
     layout/          ← nav, custom cursor
     ui/              ← shared pieces (links, images, post rows, reveal animation)
   lib/               ← small helpers (metadata, media queries, seeded randomness)
-public/placeholders/ ← every image the site uses
-scripts/generate-placeholders.mjs ← regenerates the placeholder images
+public/images/       ← every image the site uses
+scripts/generate-art.mjs ← regenerates the generated artwork
 ```
 
 ## Editing `site.ts`
@@ -79,13 +77,12 @@ General rules:
 
 - **Links**: `{ label, href }`. Internal links start with `/` (`"/projects"`). Anything starting with `http(s)://`
   opens in a new tab automatically. You can also force it with `external: true`.
-- **Images**: use the `img(file, width, height, alt)` helper. `file` is a name inside `public/placeholders/`, and
+- **Images**: use the `img(file, width, height, alt)` helper. `file` is a name inside `public/images/`, and
   `width`/`height` should match the image's real pixel size (they set the aspect ratio). Always write a meaningful
   `alt`.
 - **Lists can grow or shrink**: projects, posts, timeline entries, tech items, clients and so on. Exceptions are
   noted below.
-- The placeholder text lengths were chosen to wrap like the original design. Very long titles still work, but they
-  can change section heights.
+- Very long titles still work, but they can change section heights.
 
 ### `meta`: site identity and SEO
 
@@ -120,9 +117,9 @@ landmarks. Keep the ids, because the components look their label up by id. Renam
 | `myWorks` | Two rows of drifting words behind the mini game | 6–10 short words per row |
 | `firewall` | The "catch the target" mini game | Labels, hints, duration (`durationSeconds`) and result messages; `{score}` is replaced with the score |
 | `versatility` | Title, description, link, hub words, **industries** and pillars | The hub has **6 node positions**. Give an industry an `href` to make it a link with a pulsing dot |
-| `devWorks` | Horizontal-scroll project cards | `meta` is the small accent line ("01 / Category / Role"). Add `caseStudy` to show the "Read Case Study" link |
-| `threeDWorks` | Scroll-flipped 3D card | Any number of `items`; each half-turn reveals the next |
-| `techStack` | Filter tabs and tech tiles | `categories` drive the tabs, `defaultCategory` is selected first. Items in category `"tools"` only appear under "All". `color` tints the icon on hover; add `icon: "/placeholders/your-logo.svg"` for a real logo (otherwise initials are drawn) |
+| `devWorks` | Horizontal-scroll project cards (6 fits the scroll distance) | `meta` is the small accent line ("01 / Category / Role"). Add `caseStudy` to show the "Read Case Study" link |
+| `threeDWorks` | Scroll-flipped research card | Any number of `items`; each half-turn reveals the next |
+| `techStack` | Filter tabs and tech tiles | `categories` drive the tabs, `defaultCategory` is selected first. Items in category `"tools"` only appear under "All". `color` tints the icon on hover; add `icon: "/images/your-logo.svg"` for a real logo (otherwise initials are drawn) |
 | `timeline` | Horizontal story | Any number of `entries` (`title`, `period`, `tag`, `description`) |
 | `insights` | "Latest writing" list | Shows the first `limit` posts from `posts` |
 | `posts` | Blog posts (home list, `/blog`, `/blog/[slug]`) | `body` is a list of blocks: `paragraph`, `heading`, `list` (`ordered?`), `quote`. `date` is ISO (`"2026-01-15"`) |
@@ -153,11 +150,11 @@ One entry per case study. The `slug` becomes the URL, so link to it with `caseSt
 
 ## Swapping images
 
-All images live in `public/placeholders/`. There are two ways to replace one:
+All images live in `public/images/`. There are two ways to replace one:
 
 - **Same name**: overwrite the file (keep the format, e.g. replace `hero.svg` with your own `hero.svg`). Nothing
   else to change.
-- **Different name or format** (most real photos are JPG, PNG or WebP): put the file in `public/placeholders/`
+- **Different name or format** (most real photos are JPG, PNG or WebP): put the file in `public/images/`
   (or anywhere in `public/`) and update its `img(...)` call in `site.ts`, with the new file name and its real
   `width`/`height`.
 
@@ -166,21 +163,21 @@ hosted elsewhere (a CDN, Cloudinary…), add the host to `images.remotePatterns`
 
 | File | Size | Used by |
 | --- | --- | --- |
-| `avatar.svg` | 160×160 (1:1) | Nav logo, hero greeting |
-| `hero.svg` | 2100×900 (21:9) | Hero image |
-| `dev-work-01…06.svg` | 1200×800 (3:2) | Dev Works cards (shown whole, `object-contain`) |
-| `3d-work-01…04.svg` | 900×1200 (3:4) | 3D card faces (cropped to fill) |
-| `about-portrait.svg` | 800×1000 (4:5) | About page |
+| `avatar.jpg` | 320×320 (1:1) | Photo: nav logo, hero greeting |
+| `hero.svg` | 2100×900 (21:9) | Hero image (animated) |
+| `dev-work-01…05.svg`, `dev-work-06.png` | 1200×800 (3:2) | Project cards (shown whole, `object-contain`; the SVGs are animated) |
+| `research-01…04.svg` | 900×1200 (3:4) | Research card faces (cropped to fill, keep the subject in the middle) |
+| `about-portrait.jpg` | 800×1000 (4:5) | Photo: About page |
 | `lab-cover.svg` | 1600×900 (16:9) | Lab page |
-| `case-study-cover-01…02.svg` | 2100×900 (21:9) | Case study covers |
-| `project-shot-01…03.svg` | 1800×1100 | Projects page screenshots |
+| `case-study-cover-01…06.svg` | 2100×900 (21:9) | Case study covers |
+| `project-shot-01.svg` (1800×1100), `project-shot-02.png` (1800×650), `project-shot-03.png` (1800×850) | | Projects page visuals; the two PNGs are real product captures |
 | `post-cover-01…04.svg` | 1600×900 (16:9) | Blog post covers |
 | `og.png` | 1200×630 | Social share card |
 | `favicon.svg`, `favicon-32.png` | 64×64, 32×32 | Browser tab icon |
 | `apple-touch-icon.png` | 180×180 | iOS home screen icon |
 
-The placeholders can be regenerated at any time with `node scripts/generate-placeholders.mjs`. That overwrites
-files with these names, so run it before you add your own images, not after.
+The generated art can be rebuilt with `node scripts/generate-art.mjs`. That overwrites every generated file (not the
+two photos or the two PNG captures), so if you replace one with your own image, use a new file name.
 
 ## SEO, social cards and icons
 
@@ -283,10 +280,6 @@ Lighthouse on the production build (`npm run build && npm run start`):
 
 | Page | Performance (mobile / desktop, where measured) | Accessibility | Best Practices | SEO |
 | --- | --- | --- | --- | --- |
-| `/` | 93 / 100 | 97 | 100 | 100 |
-| `/about` | 95 / 100 | 96 | 100 | 100 |
-| `/projects` | 100 | 96 | 100 | 100 |
-| `/projects/project-01` | 95 / 100 | 96 | 100 | 100 |
-| `/blog` | 95 / 100 | 96 | 100 | 100 |
-| `/blog/post-title-01` | 100 | 96 | 100 | 100 |
-| `/lab`, `/learn` | 95–100 | 96 | 100 | 100 |
+| `/` | 92 / 100 | 97 | 100 | 100 |
+| `/about` | 93 | 96 | 100 | 100 |
+| `/projects` | 95 | 96 | 100 | 100 |

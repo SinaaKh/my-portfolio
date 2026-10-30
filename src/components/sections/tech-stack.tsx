@@ -171,7 +171,7 @@ function TechTile({ item }: { item: TechItem }) {
   );
 }
 
-/** Placeholder icon: initials in a rounded square, drawn in the item's brand color. */
+/** Fallback icon: initials in a rounded square, drawn in the item's brand color. */
 function Monogram({ name }: { name: string }) {
   const initials = name
     .split(/\s+/)

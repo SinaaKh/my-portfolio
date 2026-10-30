@@ -49,7 +49,7 @@ export default function AboutPage() {
                 alt={about.portrait.alt}
                 fill
                 sizes="(min-width: 1024px) 308px, 100vw"
-                className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
+                className="object-cover"
               />
             </div>
             <div className="mt-10">
