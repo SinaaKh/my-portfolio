@@ -39,6 +39,10 @@ How content reaches the pages:
 
 **Motion:** `Providers` wraps the app in Framer Motion's `MotionConfig reducedMotion="user"` plus Lenis (`smooth-scroll.tsx`). Autonomous motion (marquees, spins, particles, cursor springs, Lenis) must be disabled under prefers-reduced-motion. Scroll-linked tracks still follow the user's own scrolling. The custom cursor is hidden on coarse pointers.
 
+**Activity:** with Cache Components, Next hides routes in a React `<Activity>` instead of unmounting them, so effects clean up on navigation but `useState` survives and the DOM stays. Anything transient (open overlays, running games) must reset in a `useLayoutEffect` cleanup (`node_modules/next/dist/docs/01-app/02-guides/preserving-ui-state.md`).
+
+**Mini game test (branch `mini-game-test` only):** `?game=snake|escape|rogue` picks a game in `src/components/games/`; no parameter shows `sections/firewall-game.tsx`. To remove a game, delete its folder, its line in `game-host.tsx`, and its `site.ts` key and `types.ts` interface. The switcher is `game-switcher.tsx` plus one line in `game-host.tsx`.
+
 ## Docs
 
 - `README.md`: field-by-field guide to `site.ts`, the image table (required sizes and aspect ratios), accent color and font swaps, SEO and deployment.

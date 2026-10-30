@@ -118,6 +118,147 @@ export interface FirewallGameContent {
   };
 }
 
+/* Mini game test (?game=). Each block goes away with its folder in components/games/. */
+
+export interface GameSwitcherContent {
+  label: string;
+  /** Accessible name of the switcher landmark. */
+  landmarkLabel: string;
+  /** Switcher label for the current game (no URL parameter). */
+  baselineLabel: string;
+}
+
+export interface SnakeEnding {
+  title: string;
+  message: string;
+}
+
+export interface SnakeGameContent {
+  /** Switcher label for this game. */
+  switchLabel: string;
+  title: string;
+  subtitle: string;
+  note: string;
+  reducedMotionNote: string;
+  startLabel: string;
+  relevantLabel: string;
+  junkLabel: string;
+  scoreLabel: string;
+  contextLabel: string;
+  qualityLabel: string;
+  pauseLabel: string;
+  resumeLabel: string;
+  quitLabel: string;
+  pausedMessage: string;
+  /** Shown until the first input sets the snake moving. */
+  readyMessage: string;
+  /** Accessible name of the board. */
+  boardLabel: string;
+  /** `{score}` is replaced with the score. */
+  scoreAnnouncement: string;
+  /** `{score}` is replaced with the score. */
+  resultScore: string;
+  /** `{best}` is replaced with the best score. */
+  resultBest: string;
+  newBestLabel: string;
+  retryLabel: string;
+  endings: { wall: SnakeEnding; self: SnakeEnding; quality: SnakeEnding; overflow: SnakeEnding };
+}
+
+export interface EscapeGameContent {
+  /** Switcher label for this game. */
+  switchLabel: string;
+  title: string;
+  subtitle: string;
+  note: string;
+  reducedMotionNote: string;
+  startLabel: string;
+  durationSeconds: number;
+  catchesToWin: number;
+  /** Shown in the game box while the target is loose. */
+  inProgressMessage: string;
+  /** Two-letter label inside the target. */
+  targetLabel: string;
+  targetAriaLabel: string;
+  corneredLabel: string;
+  caughtLabel: string;
+  timeLabel: string;
+  timeUnit: string;
+  endLabel: string;
+  locateAboveLabel: string;
+  locateBelowLabel: string;
+  /** Fake citation chips left behind as the player scrolls. */
+  citations: string[];
+  /** `{caught}` and `{total}` are replaced. */
+  catchAnnouncement: string;
+  result: {
+    wonTitle: string;
+    lostTitle: string;
+    /** `{time}` is replaced with the seconds left. */
+    wonMessage: string;
+    /** `{caught}` and `{total}` are replaced. */
+    lostMessage: string;
+    retryLabel: string;
+    closeLabel: string;
+  };
+}
+
+/** The elements the agent can pretend to edit. Selectors live in rogue-game.tsx. */
+export type RogueEditTarget =
+  | "greeting"
+  | "headline"
+  | "heroLink"
+  | "navCta"
+  | "navLab"
+  | "versatility"
+  | "devWorks"
+  | "research"
+  | "story"
+  | "insights"
+  | "partnership"
+  | "collaborations"
+  | "footer";
+
+export interface RogueGameContent {
+  /** Switcher label for this game. */
+  switchLabel: string;
+  title: string;
+  subtitle: string;
+  note: string;
+  reducedMotionNote: string;
+  startLabel: string;
+  durationSeconds: number;
+  /** Unreverted edits at once that end the game. */
+  maxEdits: number;
+  banner: string;
+  inProgressMessage: string;
+  /** Two-letter label on the agent. */
+  agentLabel: string;
+  revertedLabel: string;
+  unrevertedLabel: string;
+  timeLabel: string;
+  timeUnit: string;
+  nextEditLabel: string;
+  endLabel: string;
+  /** `{text}` is replaced with the fake text. */
+  revertAriaLabel: string;
+  /** `{text}` is replaced with the fake text. */
+  editAnnouncement: string;
+  /** `{score}` is replaced. */
+  revertAnnouncement: string;
+  edits: { target: RogueEditTarget; text: string }[];
+  result: {
+    wonTitle: string;
+    lostTitle: string;
+    /** `{score}` is replaced. */
+    wonMessage: string;
+    /** `{score}` is replaced. */
+    lostMessage: string;
+    retryLabel: string;
+    closeLabel: string;
+  };
+}
+
 export interface Industry {
   icon: string;
   label: string;
@@ -409,6 +550,10 @@ export interface SiteContent {
   hero: HeroContent;
   myWorks: MyWorksContent;
   firewall: FirewallGameContent;
+  gameSwitcher: GameSwitcherContent;
+  snakeGame: SnakeGameContent;
+  escapeGame: EscapeGameContent;
+  rogueGame: RogueGameContent;
   versatility: VersatilityContent;
   devWorks: DevWorksContent;
   threeDWorks: ThreeDWorksContent;
