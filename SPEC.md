@@ -630,7 +630,7 @@ Home sections
 - [x] Versatility (industries hub)
 - [x] Selected Dev Works
 - [x] Selected 3D Works
-- [ ] Tech Stack
+- [x] Tech Stack
 - [ ] Story / Timeline
 - [ ] Latest Insights
 - [ ] Partnership

@@ -199,7 +199,8 @@ export const site: SiteContent = {
   techStack: {
     eyebrow: "Section Eyebrow",
     title: "The",
-    titleAccent: "Placeholder",
+    titleAccent: "Core",
+    titleEnd: "Toolkit.",
     categories: [
       { id: "all", label: "All" },
       { id: "frontend", label: "Frontend" },
