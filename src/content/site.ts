@@ -111,7 +111,7 @@ export const site: SiteContent = {
       { icon: "🛰️", label: "Industry C", color: "#00a3ff" },
       { icon: "📊", label: "Industry D", color: "#ffd700" },
       { icon: "🧪", label: "Industry E", color: "#ff6b00" },
-      { icon: "⚙️", label: "Industry F", color: "#7c4dff" },
+      { icon: "⚙️", label: "Industry F", color: "#7c4dff", href: "/projects/project-02" },
     ],
     pillars: [
       { icon: "✦", title: "Pillar One", description: "Short placeholder sentence describing this pillar." },

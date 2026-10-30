@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { site } from "@/content/site";
+import { site, type Industry } from "@/content/site";
 import { ArrowLink } from "@/components/ui/arrow-link";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
+import { SmartLink } from "@/components/ui/smart-link";
 import { seededRandom } from "@/lib/random";
 
 const { versatility } = site;
@@ -216,42 +218,52 @@ function IndustryNode({
   icon,
   label,
   color,
+  href,
   reduceMotion,
-}: {
-  index: number;
-  icon: string;
-  label: string;
-  color: string;
-  reduceMotion: boolean;
-}) {
+}: Industry & { index: number; reduceMotion: boolean }) {
   const { left, top } = CONNECTORS[index % CONNECTORS.length];
+  const tile = (
+    <div
+      style={{ borderBottom: `2px solid ${color}` }}
+      className={`relative -mt-[30px] flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-neutral-900 text-xl shadow-card-sm transition-all duration-500 group-hover:scale-110 lg:h-16 lg:w-16 lg:rounded-2xl lg:text-3xl lg:shadow-card ${
+        href ? "group-hover:border-accent/50 group-focus-within:border-accent/50" : "group-hover:border-white/20"
+      }`}
+    >
+      <span aria-hidden>{icon}</span>
+      {href && (
+        <span
+          aria-hidden
+          className="absolute -right-1 -top-1 h-3 w-3 animate-pulse rounded-full border-2 border-black bg-accent"
+        />
+      )}
+    </div>
+  );
+
   return (
+    // Pops in once when the hub scrolls into view, then stays (as on the reference).
     <motion.li
-      initial={{ scale: 0, opacity: 0 }}
-      animate={
-        reduceMotion
-          ? { scale: 1, opacity: 1 }
-          : { scale: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }
-      }
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { duration: 7, times: [0, 0.08, 0.88, 1], repeat: Infinity, repeatDelay: 0.6, delay: index * 0.9, ease: "easeOut" }
-      }
+      initial={reduceMotion ? false : { scale: 0, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.3 + index * 0.1 }}
       style={{ left: `${left}%`, top: `${top}%` }}
       className="absolute z-30"
     >
       <div className="group relative">
+        {href ? (
+          <SmartLink href={href} aria-label={label} className="block rounded-xl lg:rounded-2xl">
+            {tile}
+          </SmartLink>
+        ) : (
+          tile
+        )}
         <div
-          aria-hidden
-          style={{ borderBottom: `2px solid ${color}` }}
-          className="-mt-[30px] flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-neutral-900 text-xl shadow-card-sm transition-all duration-500 group-hover:scale-110 group-hover:border-white/20 lg:h-16 lg:w-16 lg:rounded-2xl lg:text-3xl lg:shadow-card"
+          aria-hidden={Boolean(href)}
+          className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 translate-y-2 opacity-0 transition-all duration-300 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100 lg:-bottom-12"
         >
-          {icon}
-        </div>
-        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:-bottom-12">
           <span className="flex items-center gap-1 whitespace-nowrap rounded-full bg-accent px-2 py-1 text-[8px] font-black uppercase tracking-caps text-black shadow-lg lg:px-3 lg:py-1.5 lg:text-eyebrow">
             {label}
+            {href && <ArrowUpRightIcon className="h-2.5 w-2.5" />}
           </span>
         </div>
       </div>
