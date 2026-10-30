@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { sectionLabel } from "@/lib/content";
 import { site } from "@/content/site";
-import { FirewallGame } from "./firewall-game";
+import { GameHost } from "@/components/games/game-host";
 
 const { myWorks } = site;
 
@@ -21,7 +21,7 @@ export function MyWorks() {
         ref={ref}
         id="my-works"
         aria-label={sectionLabel("my-works")}
-        className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-black"
+        className="relative flex h-screen w-full items-center justify-center overflow-clip bg-black"
       >
         <div
           aria-hidden
@@ -46,7 +46,7 @@ export function MyWorks() {
           </motion.div>
         </div>
 
-        <FirewallGame />
+        <GameHost />
       </section>
     </div>
   );
