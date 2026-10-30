@@ -10,6 +10,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
+import { sectionLabel } from "@/lib/content";
 import { site } from "@/content/site";
 import { EyeIcon } from "@/components/ui/icons";
 import { SiteImage } from "@/components/ui/site-image";
@@ -61,7 +62,7 @@ export function Hero() {
   return (
     <motion.section
       id="hero"
-      aria-label={site.sections[0].label}
+      aria-label={sectionLabel("hero")}
       style={isDesktop ? { backgroundColor: background } : undefined}
       className="relative min-h-screen w-full overflow-hidden bg-black pb-20 pt-32 lg:min-h-[200vh] lg:bg-white"
     >
@@ -131,6 +132,7 @@ export function Hero() {
             fill
             sizes="100vw"
             loading="eager"
+            fetchPriority="high"
             className="object-cover"
           />
         </motion.div>

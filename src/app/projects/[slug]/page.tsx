@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/lib/metadata";
 import { site, type CaseStudy } from "@/content/site";
 import { Reveal } from "@/components/ui/reveal";
 import { SiteImage } from "@/components/ui/site-image";
@@ -13,13 +14,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const study = findCaseStudy((await params).slug);
-  return study ? { title: study.metaTitle, description: study.intro } : {};
+  return study
+    ? pageMetadata({ title: study.metaTitle, description: study.intro, path: `/projects/${study.slug}`, type: "article" })
+    : {};
 }
 
 /** Case study page (SPEC.md §4.3). */
 export default function CaseStudyPage({ params }: PageProps<"/projects/[slug]">) {
   return (
-    <main id="main" className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
+    <main id="main" tabIndex={-1} className="outline-none min-h-screen bg-white text-black selection:bg-black selection:text-white">
       {/* Params are URL data: reading them inside Suspense keeps the route's shell instant. */}
       <Suspense fallback={null}>{params.then(({ slug }) => <CaseStudyContent slug={slug} />)}</Suspense>
     </main>
@@ -178,7 +181,7 @@ function Structure({ study }: { study: CaseStudy }) {
               <div
                 className={`w-full rounded-2xl border px-6 py-4 text-center font-medium ${
                   i === last
-                    ? "border-accent bg-accent text-black shadow-[0_0_30px_rgb(0_191_165/0.3)]"
+                    ? "border-accent bg-accent text-black shadow-[0_0_30px_color-mix(in_srgb,var(--color-accent)_30%,transparent)]"
                     : "border-white/10 bg-white/5 text-white"
                 }`}
               >
