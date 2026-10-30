@@ -37,5 +37,6 @@ jobs:
 
       - run: npm ci
       - run: npm run lint
-      - run: npx tsc --noEmit
+      # tsc runs after the build because Next generates the PageProps/LayoutProps types there.
       - run: npm run build
+      - run: npx tsc --noEmit
