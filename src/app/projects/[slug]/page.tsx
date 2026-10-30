@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
 /** Case study page (SPEC.md §4.3). */
 export default function CaseStudyPage({ params }: PageProps<"/projects/[slug]">) {
   return (
-    <main id="main" className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
+    <main id="main" tabIndex={-1} className="outline-none min-h-screen bg-white text-black selection:bg-black selection:text-white">
       {/* Params are URL data: reading them inside Suspense keeps the route's shell instant. */}
       <Suspense fallback={null}>{params.then(({ slug }) => <CaseStudyContent slug={slug} />)}</Suspense>
     </main>

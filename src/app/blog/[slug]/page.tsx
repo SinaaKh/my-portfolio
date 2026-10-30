@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): P
 /** Single post (SPEC.md §4.6). */
 export default function PostPage({ params }: PageProps<"/blog/[slug]">) {
   return (
-    <main id="main" className="w-full bg-gray-100 pb-[50px] pt-[50px] text-black md:pb-[100px] md:pt-[100px]">
+    <main id="main" tabIndex={-1} className="outline-none w-full bg-gray-100 pb-[50px] pt-[50px] text-black md:pb-[100px] md:pt-[100px]">
       {/* Params are URL data: reading them inside Suspense keeps the route's shell instant. */}
       <Suspense fallback={null}>{params.then(({ slug }) => <PostContent slug={slug} />)}</Suspense>
     </main>
