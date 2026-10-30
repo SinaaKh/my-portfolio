@@ -7,6 +7,7 @@ import { DevWorks } from "@/components/sections/dev-works";
 import { ThreeDWorks } from "@/components/sections/three-d-works";
 import { TechStack } from "@/components/sections/tech-stack";
 import { Story } from "@/components/sections/story";
+import { Insights } from "@/components/sections/insights";
 
 // Home sections in page order (SPEC.md §3). Sections not built yet render a placeholder.
 const SECTIONS: Partial<Record<string, ComponentType>> = {
@@ -17,6 +18,7 @@ const SECTIONS: Partial<Record<string, ComponentType>> = {
   "three-d-works": ThreeDWorks,
   "tech-stack": TechStack,
   story: Story,
+  insights: Insights,
 };
 
 export default function Home() {
