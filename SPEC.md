@@ -629,7 +629,7 @@ Home sections
 - [x] AI Firewall Challenge widget
 - [x] Versatility (industries hub)
 - [x] Selected Dev Works
-- [ ] Selected 3D Works
+- [x] Selected 3D Works
 - [ ] Tech Stack
 - [ ] Story / Timeline
 - [ ] Latest Insights
