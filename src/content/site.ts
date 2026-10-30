@@ -61,7 +61,7 @@ export const site: SiteContent = {
 
   hero: {
     greeting: "Hi, I am Your Name",
-    headline: "A short placeholder headline about the kind of work you do best.",
+    headline: "A short placeholder headline for the work you do best.",
     link: { label: "Placeholder link to a featured page", href: "/lab" },
     badgeText: "• Placeholder badge text • Goes around the circle ",
     badgeLink: { label: "Schedule a call", href: SCHEDULE_URL, external: true },

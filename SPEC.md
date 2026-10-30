@@ -624,7 +624,7 @@ Global
 - [ ] Footer
 
 Home sections
-- [ ] Hero
+- [x] Hero
 - [ ] My Works (word marquee)
 - [ ] AI Firewall Challenge widget
 - [ ] Versatility (industries hub)
