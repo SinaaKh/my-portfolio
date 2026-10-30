@@ -173,7 +173,7 @@ export type TechCategoryId =
   | "frontend"
   | "backend"
   | "ai"
-  | "mobile"
+  | "ml"
   | "cloud"
   | "database"
   /** Only listed under "All". */
