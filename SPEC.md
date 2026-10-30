@@ -633,7 +633,7 @@ Home sections
 - [x] Tech Stack
 - [x] Story / Timeline
 - [x] Latest Insights
-- [ ] Partnership
+- [x] Partnership
 - [ ] Collaborations
 
 Secondary pages
