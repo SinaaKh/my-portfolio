@@ -12,7 +12,7 @@ import { Collaborations } from "@/components/sections/collaborations";
 // Home sections in page order (SPEC.md §3). The footer (#contact) comes from the root layout.
 export default function Home() {
   return (
-    <main id="main">
+    <main id="main" tabIndex={-1} className="outline-none">
       <Hero />
       <MyWorks />
       <Versatility />

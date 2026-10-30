@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 /** Lab / experiment page (SPEC.md §4.4). */
 export default function LabPage() {
   return (
-    <main id="main" className="w-full bg-gray-100 text-black">
+    <main id="main" tabIndex={-1} className="outline-none w-full bg-gray-100 text-black">
       <div className="mx-auto max-w-[1100px] px-6 pb-24 pt-32">
         <Reveal className="space-y-8">
           <div className="space-y-4">

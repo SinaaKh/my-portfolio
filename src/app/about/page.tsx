@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 /** About page (SPEC.md §4.1). */
 export default function AboutPage() {
   return (
-    <main id="main" className="w-full bg-white text-black selection:bg-black selection:text-white">
+    <main id="main" tabIndex={-1} className="outline-none w-full bg-white text-black selection:bg-black selection:text-white">
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden px-6 pt-20 md:min-h-[80vh]">
         <div className="z-10 max-w-[900px] text-center">
           <Reveal as="p" y={0} className="mb-8 text-eyebrow font-black uppercase tracking-eyebrow text-accent">
