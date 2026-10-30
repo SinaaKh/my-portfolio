@@ -50,6 +50,7 @@ export interface NavContent {
   cta: Link;
   menuLabel: string;
   homeLabel: string;
+  skipLabel: string;
 }
 
 export interface HomeSectionAnchor {

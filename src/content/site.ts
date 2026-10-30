@@ -42,6 +42,7 @@ export const site: SiteContent = {
     cta: { label: "Let's Chat", href: SCHEDULE_URL, external: true },
     menuLabel: "Open menu",
     homeLabel: "Home",
+    skipLabel: "Skip to content",
   },
 
   sections: [

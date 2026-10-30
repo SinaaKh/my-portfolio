@@ -618,9 +618,9 @@ Foundations
 - [x] Layout shell (Lenis provider, section anchors)
 
 Global
-- [ ] Navigation (desktop + mobile dropdown, scroll fade)
-- [ ] Custom cursor
-- [ ] Shared components (ArrowLink, Eyebrow, SectionHeader, Pill, RoundArrowButton)
+- [x] Navigation (desktop + mobile dropdown, scroll fade)
+- [x] Custom cursor
+- [x] Shared components (ArrowLink, SmartLink, SiteImage, icons, media-query hooks)
 - [ ] Footer
 
 Home sections
