@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { Providers } from "@/components/providers";
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
