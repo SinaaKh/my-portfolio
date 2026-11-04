@@ -332,10 +332,12 @@ caseStudy?`).
     overflow-hidden shadow-2xl bg-black`, and the back face is pre-rotated `rotateY(180deg)`.
     *(The reference's card is 450×380; ours matches the 3:4 research art so nothing is cropped, see §6.4.)*
 - **Motion** (scroll-linked over the 600vh): the card transform is `rotateX(15deg) rotateY(θ) rotateZ(-10deg)`.
-  Progress is split into `n + 0.5` bands (the extra half is a final hold before Tech Stack slides over, §6.8). θ stays
-  at `k × 180deg` inside band k and turns 180deg over ±0.04 around each band edge. Active index =
-  `min(n-1, floor(p × (n + 0.5)))`. Whichever face is turned away swaps to the next image, so every half-turn
-  reveals a new work. On index change the title block cross-fades (`opacity 0, y 10 → 1, 0`) and the counter updates.
+  Progress maps linearly to a position x from -0.25 to `n - 1 + 0.9`, where work k faces the viewer at x = k. θ is
+  `180deg × (x - 0.75/2π · sin 2πx)`: it never stops, but slows to a quarter speed while a work faces the viewer and
+  speeds through each flip. Past the last work it eases out over the remaining 0.9, a run-out before Tech Stack
+  slides over (§6.8). Active index = `clamp(round(x), 0, n-1)`, so the work changes mid-flip while the card is
+  edge-on. Whichever face is turned away swaps to the next image, so every half-turn reveals a new work. On index
+  change the title block cross-fades (`opacity 0, y 10 → 1, 0`) and the counter updates.
 - **Mobile**: stacked, with the title above the card.
 
 **Content slots**: `threeDWorks.eyebrow/title/titleAccent`, `items[]` (`title, subtitle, image`).
@@ -620,9 +622,10 @@ Defaults applied during the build (2026-10-30). Each can be revisited.
 5. **Footer "Work" link**: 404 on the reference. Ours points to `/projects`.
 6. **Serif face**: kept the system `ui-serif` stack, as on the reference.
 7. **Scroll snap**: CSS snap is left off because it conflicts with Lenis.
-8. **3D Works pacing**: the reference turns the card continuously, so the last work appears late and Tech Stack
-   covers it almost at once. Ours holds each work still between quick half-turns, with an extra half band at the end.
-   The counter changes mid-turn, while the card is edge-on.
+8. **3D Works pacing**: the reference turns the card at a constant speed, so the last work appears late and Tech
+   Stack covers it almost at once. Ours slows the card while each work faces the viewer and speeds through the
+   flips, and adds a run-out after the last work. It never holds completely still: dead stretches of scroll read as
+   a stuck page. The counter changes mid-turn, while the card is edge-on.
 9. **Insights hover**: the reference's inline colors block the title hover color. Ours drives colors through CSS
    variables, so the accent hover works.
 10. **/blog**: the reference renders black text on black. Ours uses the readable dark row theme.

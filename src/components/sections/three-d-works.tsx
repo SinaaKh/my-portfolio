@@ -16,15 +16,30 @@ const { threeDWorks } = site;
 const items = threeDWorks.items;
 const last = items.length - 1;
 /**
- * Scroll is split into one band per work plus half a band of extra hold at the end, because
- * Tech Stack slides over the last 600px of this track. Each half-turn happens quickly around
- * a band edge, so a work stays still and readable for the rest of its band.
+ * Scroll position is measured in works: work k faces the viewer at k, and the card is edge-on,
+ * mid-flip, halfway between two works. The range starts a quarter of a work early, so the card is
+ * already turning when the section pins, and runs on past the last work, so it stays readable
+ * before Tech Stack slides over the last 600px of this track.
  */
-const BANDS = items.length + 0.5;
-const HALF_TURN = 0.04;
-const turnAt = (k: number) => k / BANDS;
-const rotationInput = [0, ...items.slice(1).flatMap((_, i) => [turnAt(i + 1) - HALF_TURN, turnAt(i + 1) + HALF_TURN]), 1];
-const rotationOutput = [0, ...items.slice(1).flatMap((_, i) => [i * 180, (i + 1) * 180]), last * 180];
+const START = -0.25;
+const END = last + 0.9;
+/**
+ * How much the card slows while a work faces the viewer: 0 is a steady spin, 1 a dead stop.
+ * Below 1 every bit of scroll still turns it, so there's no stretch where scrolling seems to do nothing.
+ */
+const SETTLE = 0.75;
+
+const position = (progress: number) => START + progress * (END - START);
+const activeAt = (x: number) => Math.min(last, Math.max(0, Math.round(x)));
+
+/** Card angle in half-turns: always moving, slowest while a work faces the viewer, fastest mid-flip. */
+function halfTurns(x: number) {
+  if (x <= last) return x - (SETTLE / (2 * Math.PI)) * Math.sin(2 * Math.PI * x);
+  // Past the last work there's no next flip: keep the slow pace and ease it out by the end.
+  const tail = END - last;
+  const u = Math.min(x - last, tail);
+  return last + (1 - SETTLE) * u * (1 - u / (2 * tail));
+}
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -36,12 +51,12 @@ export function ThreeDWorks() {
   const ref = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const rotateY = useTransform(scrollYProgress, rotationInput, rotationOutput);
+  const rotateY = useTransform(scrollYProgress, (progress) => halfTurns(position(progress)) * 180);
   const [active, setActive] = useState(0);
 
-  // The work changes at each band edge, mid-turn, while the card is edge-on.
+  // The work changes mid-flip, while the card is edge-on.
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    const next = Math.min(last, Math.max(0, Math.floor(progress * BANDS)));
+    const next = activeAt(position(progress));
     if (next !== active) setActive(next);
   });
 
