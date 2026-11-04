@@ -81,7 +81,7 @@ export function SnakeGame({ withPicker = false }: { withPicker?: boolean }) {
   );
 
   return (
-    <div className={`relative z-10 flex h-full w-full flex-col items-center justify-center px-4 pt-6 ${withPicker ? "pb-14" : "pb-6"}`}>
+    <div className={`relative z-10 flex h-full w-full flex-col items-center justify-center px-4 pt-6 short:pt-3 ${withPicker ? "pb-14" : "pb-6 short:pb-3"}`}>
       {phase === "idle" && <Intro best={best} focusOnMount={refocus} onStart={start} />}
       {phase === "playing" && <Board key={round} onEnd={finish} onQuit={quit} />}
       {phase === "result" && result && <Outcome result={result} onRetry={start} />}
@@ -100,10 +100,10 @@ function Intro({ best, focusOnMount, onStart }: { best: number; focusOnMount: bo
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="text-center">
-      <h2 className="mb-6 text-4xl font-black uppercase tracking-tighter text-white md:text-6xl">{copy.title}</h2>
-      <p className="mb-4 text-lg font-bold uppercase tracking-widest text-accent">{copy.subtitle}</p>
-      <p className="mb-4 text-xs uppercase italic tracking-widest text-white/40">{copy.note}</p>
-      <ul className="mb-8 flex justify-center gap-6 text-xs font-bold uppercase tracking-widest text-white/60">
+      <h2 className="mb-6 text-4xl font-black uppercase tracking-tighter text-white md:text-6xl short:mb-3 short:text-4xl">{copy.title}</h2>
+      <p className="mb-4 text-lg font-bold uppercase tracking-widest text-accent short:mb-2 short:text-base">{copy.subtitle}</p>
+      <p className="mb-4 text-xs uppercase italic tracking-widest text-white/40 short:mb-2">{copy.note}</p>
+      <ul className="mb-8 flex justify-center gap-6 text-xs font-bold uppercase tracking-widest text-white/60 short:mb-5">
         <li className="flex items-center gap-2">
           <span aria-hidden className="h-3 w-3 rounded-sm bg-accent" />
           {copy.relevantLabel}
@@ -114,12 +114,12 @@ function Intro({ best, focusOnMount, onStart }: { best: number; focusOnMount: bo
         </li>
       </ul>
       {reduceMotion && <p className="mb-6 text-sm text-white/60">{copy.reducedMotionNote}</p>}
-      {best > 0 && <p className="mb-6 text-sm font-bold uppercase tracking-widest text-white/60">{copy.resultBest.replace("{best}", String(best))}</p>}
+      {best > 0 && <p className="mb-6 text-sm font-bold uppercase tracking-widest text-white/60 short:mb-3">{copy.resultBest.replace("{best}", String(best))}</p>}
       <button
         ref={startRef}
         type="button"
         onClick={onStart}
-        className="rounded-full bg-accent px-10 py-4 text-xl font-black uppercase tracking-tighter text-black shadow-glow transition-transform hover:scale-110 focus-visible:scale-110"
+        className="rounded-full bg-accent px-10 py-4 text-xl font-black uppercase tracking-tighter text-black shadow-glow short:py-3 transition-transform hover:scale-110 focus-visible:scale-110"
       >
         {copy.startLabel}
       </button>
@@ -398,7 +398,7 @@ function Board({ onEnd, onQuit }: { onEnd: (cause: EndCause, score: number) => v
       ref={rootRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="@container flex h-full w-full max-w-[760px] flex-col justify-center gap-3 pt-2"
+      className="@container flex h-full w-full max-w-[760px] flex-col justify-center gap-3 pt-2 short:gap-2 short:pt-0"
     >
       <div className="flex items-center justify-between gap-3">
         <p className="text-white">
@@ -502,14 +502,14 @@ function Outcome({ result, onRetry }: { result: Result; onRetry: () => void }) {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       role="status"
-      className="max-w-xl rounded-5xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-xl md:p-12"
+      className="max-w-xl rounded-5xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-xl md:p-12 short:p-6"
     >
-      <h3 className="mb-2 text-4xl font-black uppercase italic tracking-tighter text-white md:text-6xl">{ending.title}</h3>
-      <p className="mb-6 text-white/70">{ending.message}</p>
-      <p className="mb-1 text-2xl font-bold uppercase tracking-widest text-accent">
+      <h3 className="mb-2 text-4xl font-black uppercase italic tracking-tighter text-white md:text-6xl short:text-4xl">{ending.title}</h3>
+      <p className="mb-6 text-white/70 short:mb-3">{ending.message}</p>
+      <p className="mb-1 text-2xl font-bold uppercase tracking-widest text-accent short:text-xl">
         {copy.resultScore.replace("{score}", String(result.score))}
       </p>
-      <p className="mb-8 text-sm font-bold uppercase tracking-widest text-white/60">
+      <p className="mb-8 text-sm font-bold uppercase tracking-widest text-white/60 short:mb-4">
         {result.isBest ? copy.newBestLabel : copy.resultBest.replace("{best}", String(result.best))}
       </p>
       <button

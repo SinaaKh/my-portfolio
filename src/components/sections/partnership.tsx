@@ -15,14 +15,14 @@ export function Partnership() {
     <section
       id="partnership"
       aria-labelledby="partnership-title"
-      className="relative overflow-hidden bg-white py-24 lg:py-32"
+      className="relative overflow-hidden bg-white py-24 short:py-14 lg:py-32"
     >
       <div aria-hidden className="pointer-events-none absolute right-[-5%] top-10 select-none opacity-[0.015]">
         <p className="text-[18vw] font-black uppercase leading-none tracking-tighter text-black">{partnership.watermark}</p>
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-24">
+        <div className="grid grid-cols-1 gap-16 short:grid-cols-2 short:gap-10 lg:grid-cols-12 lg:gap-24">
           <div className="lg:col-span-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -35,16 +35,16 @@ export function Partnership() {
               </span>
               <h2
                 id="partnership-title"
-                className="mb-12 text-5xl font-light leading-[0.95] tracking-tighter text-black lg:text-7xl lg:leading-none"
+                className="mb-12 text-5xl font-light leading-[0.95] tracking-tighter text-black short:mb-6 short:text-4xl lg:text-7xl lg:leading-none"
               >
                 {partnership.title}
                 <br />
                 <span className="font-serif italic text-black/80">{partnership.titleAccent}</span>
               </h2>
-              <p className="mb-12 max-w-lg text-lg font-light leading-relaxed tracking-tight text-black/50 lg:text-xl lg:leading-7">
+              <p className="mb-12 max-w-lg text-lg font-light leading-relaxed tracking-tight text-black/50 short:mb-8 short:text-base lg:text-xl lg:leading-7">
                 {partnership.description}
               </p>
-              <ul className="space-y-6 border-t border-black/5 pt-10">
+              <ul className="space-y-6 border-t border-black/5 pt-10 short:space-y-4 short:pt-6">
                 {partnership.antiList.map((item) => (
                   <li key={item} className="group flex items-center gap-4">
                     <div
@@ -61,7 +61,7 @@ export function Partnership() {
           </div>
 
           <div className="flex flex-col justify-between lg:col-span-6">
-            <ol className="mb-16 grid grid-cols-1 gap-12 lg:mb-0">
+            <ol className="mb-16 grid grid-cols-1 gap-12 short:mb-0 short:gap-6 lg:mb-0">
               {partnership.audiences.map((audience, i) => (
                 <motion.li
                   key={audience.label}
@@ -69,7 +69,7 @@ export function Partnership() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.5 }}
                   transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
-                  className="group flex items-start gap-8 border-b border-black/5 pb-8 last:border-0"
+                  className="group flex items-start gap-8 border-b border-black/5 pb-8 last:border-0 short:gap-5 short:pb-6"
                 >
                   <span className="pt-1 text-eyebrow font-black uppercase tracking-widest text-black/10 transition-colors duration-500 group-hover:text-accent">
                     {String(i + 1).padStart(2, "0")}
@@ -78,7 +78,7 @@ export function Partnership() {
                     <h3 className="mb-2 text-xs font-black uppercase tracking-widest text-black/30 transition-colors duration-500 group-hover:text-black">
                       {audience.label}
                     </h3>
-                    <p className="text-xl font-light leading-snug tracking-tight text-black/70 transition-colors duration-500 group-hover:text-black">
+                    <p className="text-xl font-light leading-snug tracking-tight text-black/70 short:text-lg transition-colors duration-500 group-hover:text-black">
                       {audience.description}
                     </p>
                   </div>
@@ -91,13 +91,13 @@ export function Partnership() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.8, ease: EASE }}
-              className="group relative mt-12 cursor-pointer overflow-hidden rounded-3xl bg-black p-8 lg:p-12"
+              className="group relative mt-12 cursor-pointer overflow-hidden rounded-3xl bg-black p-8 short:mt-8 short:p-6 lg:p-12"
             >
               <div
                 aria-hidden
                 className="absolute right-0 top-0 h-32 w-32 rounded-full bg-accent/10 blur-3xl transition-colors duration-700 group-hover:bg-accent/20"
               />
-              <div className="relative z-10 flex flex-col justify-between gap-8 md:flex-row md:items-center">
+              <div className="relative z-10 flex flex-col justify-between gap-8 md:flex-row md:items-center short:flex-col short:items-start short:gap-5">
                 <div>
                   <h3 className="mb-2 text-3xl font-light tracking-tighter text-white lg:text-4xl">
                     {cta.title} <span className="font-serif italic text-accent">{cta.titleAccent}</span>

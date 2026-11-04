@@ -16,25 +16,25 @@ export const metadata: Metadata = pageMetadata({
 export default function LabPage() {
   return (
     <main id="main" tabIndex={-1} className="outline-none w-full bg-gray-100 text-black">
-      <div className="mx-auto max-w-[1100px] px-6 pb-24 pt-32">
+      <div className="mx-auto max-w-[1100px] px-6 pb-24 pt-32 short:pt-20">
         <Reveal className="space-y-8">
           <div className="space-y-4">
             {/* Inline span in a 24px line box, as on the reference. */}
             <p>
               <span className="text-eyebrow font-black uppercase tracking-eyebrow text-accent">{lab.eyebrow}</span>
             </p>
-            <h1 className="text-5xl font-medium leading-[0.85] tracking-tighter md:text-8xl md:leading-none lg:text-[10rem]">
+            <h1 className="text-5xl font-medium leading-[0.85] tracking-tighter md:text-8xl md:leading-none lg:text-[10rem] short:text-6xl">
               {lab.titleLines[0]}
               <br />
               <span className="font-light italic text-gray-400">{lab.titleLines[1]}</span>
             </h1>
           </div>
           <div className="max-w-2xl">
-            <p className="text-[18px] font-normal leading-relaxed text-gray-700 md:text-[20px]">{lab.intro}</p>
+            <p className="text-[18px] font-normal leading-relaxed text-gray-700 md:text-[20px] short:text-base">{lab.intro}</p>
           </div>
         </Reveal>
 
-        <Reveal y={0} className="relative mt-24 h-screen w-full overflow-hidden rounded-5xl shadow-2xl">
+        <Reveal y={0} className="relative mt-24 h-screen w-full overflow-hidden rounded-5xl shadow-2xl short:mt-12 short:h-[calc(100svh-2rem)]">
           <SiteImage
             src={lab.image.src}
             alt={lab.image.alt}
@@ -45,7 +45,7 @@ export default function LabPage() {
           />
         </Reveal>
 
-        <article className="mt-24 grid gap-6 text-[18px] text-gray-800">
+        <article className="mt-24 grid gap-6 text-[18px] text-gray-800 short:mt-12">
           {lab.body.map((block, i) => (
             <LabBlockView key={i} block={block} />
           ))}

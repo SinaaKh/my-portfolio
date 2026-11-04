@@ -16,7 +16,7 @@ export function MyWorks() {
   const rowBX = useTransform(scrollYProgress, [0, 1], [-300, 300]);
 
   return (
-    <div className="md:-mt-[430px]">
+    <div className="md:-mt-[430px] short:mt-0">
       <section
         ref={ref}
         id="my-works"

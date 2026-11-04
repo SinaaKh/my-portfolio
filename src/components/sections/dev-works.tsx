@@ -37,7 +37,7 @@ export function DevWorks() {
   return (
     <section ref={ref} id="dev-works" aria-labelledby="dev-works-title" className="relative h-[600vh] bg-black">
       {/* The header sits in the flow, not over the track, so cards can't run into it on short screens. */}
-      <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
+      <div className="sticky top-0 flex h-screen flex-col overflow-hidden short:h-svh">
         <div className="flex w-full items-end justify-between px-6 pt-4 md:px-12">
           <div>
             <span className="mb-2 block text-eyebrow font-black uppercase tracking-ultra text-white/20">
@@ -52,7 +52,7 @@ export function DevWorks() {
         <motion.ul
           ref={trackRef}
           style={{ x }}
-          className="flex min-h-0 w-max flex-1 items-center gap-16 py-8 pl-[10vw] pr-6 md:gap-24 md:pr-[10vw]"
+          className="flex min-h-0 w-max flex-1 items-center gap-16 py-8 pl-[10vw] pr-6 short:py-4 md:gap-24 md:pr-[10vw]"
         >
           {devWorks.projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
@@ -64,17 +64,18 @@ export function DevWorks() {
 }
 
 function ProjectCard({ project }: { project: DevProject }) {
+  // On a phone held sideways there's no height for text above the image, so they sit side by side.
   return (
-    <li className="group relative flex h-full max-h-[550px] w-[350px] shrink-0 flex-col justify-between md:max-h-[650px] md:w-[600px]">
-      <div className="relative z-20 mb-8">
-        <div className="mb-4 flex items-center gap-4">
+    <li className="group relative flex h-full max-h-[550px] w-[350px] shrink-0 flex-col justify-between md:max-h-[650px] md:w-[600px] short:w-[min(44rem,88vw)] short:flex-row short:gap-6">
+      <div className="relative z-20 mb-8 short:mb-0 short:w-1/2 short:shrink-0 short:self-center">
+        <div className="mb-4 flex items-center gap-4 short:mb-2">
           <span className="text-eyebrow font-black uppercase tracking-label text-accent">{project.meta}</span>
           <div aria-hidden className="h-px flex-1 bg-white/10" />
         </div>
-        <h3 className="mb-6 text-4xl font-medium leading-[1.1] tracking-tight text-white md:text-6xl md:leading-none">
+        <h3 className="mb-6 text-4xl font-medium leading-[1.1] tracking-tight text-white md:text-6xl md:leading-none short:mb-3 short:text-[clamp(1.5rem,8svh,1.875rem)] short:leading-[1.05]">
           {project.title}
         </h3>
-        <ul className="mb-8 flex flex-wrap gap-2">
+        <ul className="mb-8 flex flex-wrap gap-2 short:mb-4">
           {project.tags.map((tag) => (
             <li
               key={tag}
@@ -89,7 +90,7 @@ function ProjectCard({ project }: { project: DevProject }) {
         )}
       </div>
 
-      <div className="relative min-h-40 w-full flex-1 overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl transition-all duration-500 group-hover:border-white/20">
+      <div className="relative min-h-40 w-full flex-1 overflow-hidden rounded-2xl short:min-h-0 border border-white/10 bg-white/5 shadow-2xl transition-all duration-500 group-hover:border-white/20">
         <SiteImage
           src={project.image.src}
           alt={project.image.alt}

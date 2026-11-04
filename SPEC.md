@@ -660,6 +660,23 @@ Defaults applied during the build (2026-10-30). Each can be revisited.
     is never taller than it is wide. **Collaborations**: tighter spacing below `md`, names at `text-2xl md:text-5xl
     lg:text-6xl` in `black/70` with accent dots between them, drifting at about 1.7em/s instead of 25px/s. Under
     reduced motion the names wrap instead of scrolling.
+23. **Phones held sideways**: the reference stacks tall-screen layouts on a 320–430px tall viewport, so pinned
+    sections overflow and run into their headers. Ours has a `short:` variant (`globals.css`: landscape, at most
+    500px tall, narrower than `lg`), so no other viewport changes. Under it, display headings drop to `text-4xl`–
+    `text-6xl`, section padding roughly halves, the nav is `h-14` and pinned sections are `h-svh`. Per section:
+    - **Hero**: no 100px top inset; the image shows the whole 21:9 artwork. **My Works** drops the `md` overlap
+      with the hero, which would cover the image.
+    - **Industries hub**: the 1000×600 diagram at every width, sized by height (`max-w: (100svh − 3rem) × 5/3`);
+      pillars in three columns.
+    - **Dev Works**: each card is a row, text left and screenshot right; the title scales with height
+      (`clamp(1.5rem, 8svh, 1.875rem)`). **3D Works**: two columns, card width `(100svh − 8rem) × 3/4`.
+    - **Timeline**: the step controls move to the top right beside the heading, and the line drops 1.5rem. Labels
+      are up to 34rem wide with entries 20vw apart, and the scroll cue is hidden, so the tallest entry fits 320px.
+    - **Tech Stack**: four columns of `h-32` tiles. **Insights** and **Partnership**: header and rows side by
+      side, two columns, with the hover-only excerpt column removed. **Snake**: tighter intro, board and result
+      card.
+    - **Secondary pages**: the same heading and padding scale. /about puts the portrait and links in a 13rem
+      column beside the story, and /projects caps band screenshots at `100svh − 3rem` tall.
 
 ---
 

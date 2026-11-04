@@ -50,17 +50,17 @@ export function Insights() {
           "--row-fg-5": fg5,
         } as MotionStyle
       }
-      className="relative w-full overflow-hidden py-32"
+      className="relative w-full overflow-hidden py-32 short:py-14"
     >
       <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 text-white opacity-[0.02]" />
 
       <div className="container relative z-10 mx-auto px-6">
-        <div className="mb-24 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+        <div className="mb-24 flex flex-col justify-between gap-8 md:flex-row md:items-end short:mb-8 short:flex-row short:items-end">
           <div className="max-w-2xl">
-            <p className="mb-6 text-eyebrow font-black uppercase tracking-eyebrow text-accent">{insights.eyebrow}</p>
+            <p className="mb-6 text-eyebrow font-black uppercase tracking-eyebrow text-accent short:mb-3">{insights.eyebrow}</p>
             <h2
               id="insights-title"
-              className="text-5xl font-medium leading-[0.9] tracking-tighter text-(--row-fg) md:text-8xl md:leading-none"
+              className="text-5xl font-medium leading-[0.9] tracking-tighter text-(--row-fg) md:text-8xl md:leading-none short:text-5xl short:leading-[0.95]"
             >
               {insights.title} <span className="font-light italic text-(--row-fg-30)">{insights.titleAccent}</span>
               {insights.titleSuffix}
@@ -69,7 +69,7 @@ export function Insights() {
           <SmartLink
             href={insights.browseAll.href}
             external={insights.browseAll.external}
-            className="group mb-4 flex items-center gap-4 text-sm font-bold uppercase tracking-widest text-(--row-fg) transition-colors duration-300 hover:text-accent"
+            className="group mb-4 flex items-center gap-4 text-sm font-bold uppercase tracking-widest text-(--row-fg) transition-colors duration-300 hover:text-accent short:shrink-0"
           >
             <span>{insights.browseAll.label}</span>
             <span className="flex h-12 w-12 items-center justify-center rounded-full border border-(--row-fg-10) transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-white">

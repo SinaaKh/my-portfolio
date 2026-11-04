@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 /*
+ * `short:` is a phone held sideways: a landscape viewport under 500px tall and narrower than lg.
+ * Stacked layouts and display type sized for a tall screen don't fit there, so sections compact
+ * themselves under this variant. Portrait phones, tablets and desktops never match it.
+ */
+@custom-variant short (@media (orientation: landscape) and (max-height: 500px) and (max-width: 1023px));
+
+/*
  * Design tokens. Values measured from the reference site (see SPEC.md §1).
  * Every token below becomes both a Tailwind utility and a CSS variable on :root.
  * `static` emits all of them, even ones no utility uses yet.

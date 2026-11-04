@@ -15,8 +15,8 @@ type Point = [x: number, y: number];
 type HubLayout = { width: number; height: number; nodes: { at: Point; bend?: Point }[] };
 
 // Hub geometry (SPEC.md §3.3): one node per industry, each wired to the core at the centre. Tiles are
-// centred on their node and paths start there, so every path runs out from under its tile. Phones get
-// a square diagram, wider screens the 1000×600 one.
+// centred on their node and paths start there, so every path runs out from under its tile. Portrait
+// phones get a square diagram; wider screens and phones held sideways get the 1000×600 one.
 const WIDE: HubLayout = {
   width: 1000,
   height: 600,
@@ -92,7 +92,7 @@ export function Versatility() {
           </motion.span>
           <motion.h2
             {...reveal(0.1)}
-            className="mb-4 text-3xl font-medium leading-[0.9] tracking-tighter text-white md:text-8xl md:leading-none lg:mb-8"
+            className="mb-4 text-3xl font-medium leading-[0.9] tracking-tighter text-white short:text-5xl md:text-8xl md:leading-none short:leading-none lg:mb-8"
           >
             {versatility.title} <span className="font-serif italic text-white/80">{versatility.titleAccent}</span>
           </motion.h2>
@@ -112,7 +112,7 @@ export function Versatility() {
 
         <Hub />
 
-        <ul className="grid grid-cols-1 gap-6 border-t border-white/5 pt-10 md:grid-cols-3 lg:gap-12">
+        <ul className="grid grid-cols-1 gap-6 border-t border-white/5 pt-10 md:grid-cols-3 short:grid-cols-3 lg:gap-12">
           {versatility.pillars.map((pillar, i) => (
             <motion.li key={pillar.title} {...reveal(i * 0.1)} className="group text-center">
               <div
@@ -139,11 +139,12 @@ function Hub() {
   const reduceMotion = useReducedMotion() ?? false;
 
   return (
-    <div className="relative mx-auto mb-8 aspect-square w-full max-w-[1000px] md:aspect-[1000/600] lg:mb-20">
+    // On a phone held sideways the hub is sized by the screen's height, so the whole diagram fits on screen.
+    <div className="relative mx-auto mb-8 aspect-square w-full max-w-[1000px] md:aspect-[1000/600] short:aspect-[1000/600] short:max-w-[calc((100svh-3rem)*5/3)] lg:mb-20">
       {/* Both diagrams are in the markup and CSS shows one, so nothing shifts after hydration.
           Strokes and bits are sized to come out about the same on screen either way. */}
-      <Diagram layout={SQUARE} strokeWidth={4} bitSize={30} reduceMotion={reduceMotion} className="md:hidden" />
-      <Diagram layout={WIDE} strokeWidth={2} bitSize={12} reduceMotion={reduceMotion} className="hidden md:block" />
+      <Diagram layout={SQUARE} strokeWidth={4} bitSize={30} reduceMotion={reduceMotion} className="md:hidden short:hidden" />
+      <Diagram layout={WIDE} strokeWidth={2} bitSize={12} reduceMotion={reduceMotion} className="hidden md:block short:block" />
 
       <Core reduceMotion={reduceMotion} />
 
@@ -304,7 +305,7 @@ function IndustryNode({
           "--node-y-md": wide.top,
         } as React.CSSProperties
       }
-      className="absolute left-[var(--node-x)] top-[var(--node-y)] z-30 -translate-x-1/2 -translate-y-1/2 md:left-[var(--node-x-md)] md:top-[var(--node-y-md)]"
+      className="absolute left-[var(--node-x)] top-[var(--node-y)] z-30 -translate-x-1/2 -translate-y-1/2 md:left-[var(--node-x-md)] md:top-[var(--node-y-md)] short:left-[var(--node-x-md)] short:top-[var(--node-y-md)]"
     >
       {/* Pops in once when the hub scrolls into view, then stays (as on the reference). */}
       <motion.div
