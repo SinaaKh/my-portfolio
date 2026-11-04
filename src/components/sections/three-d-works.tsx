@@ -80,7 +80,7 @@ export function ThreeDWorks() {
       aria-labelledby="three-d-works-title"
       className="relative h-[600vh] w-full bg-black text-white"
     >
-      <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
+      <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden short:h-svh">
         <div className="absolute left-0 top-4 z-10 flex w-full items-end justify-between px-6 md:px-12">
           <div>
             <span className="mb-2 block text-eyebrow font-black uppercase tracking-ultra text-white/20">
@@ -97,7 +97,7 @@ export function ThreeDWorks() {
           </p>
         </div>
 
-        <div className="container mx-auto mt-12 grid grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
+        <div className="container mx-auto mt-12 grid grid-cols-1 items-center gap-12 px-6 md:grid-cols-2 short:mt-10 short:grid-cols-2 short:gap-8">
           <div className="max-w-xl" aria-live="polite">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -109,7 +109,7 @@ export function ThreeDWorks() {
                 className="space-y-6"
               >
                 <div aria-hidden className="flex items-center gap-4 text-eyebrow font-black uppercase tracking-eyebrow text-white/40" />
-                <h3 className="text-5xl font-medium uppercase leading-[0.9] tracking-tight text-white md:text-8xl md:leading-none">
+                <h3 className="text-5xl font-medium uppercase leading-[0.9] tracking-tight text-white md:text-8xl md:leading-none short:text-4xl short:leading-[0.95]">
                   {items[active].title}
                   <br />
                   <span className="font-light lowercase italic text-white/40">{items[active].subtitle}</span>
@@ -121,7 +121,7 @@ export function ThreeDWorks() {
           <div className="perspective-1000 flex justify-center md:justify-end">
             <motion.div
               style={{ rotateX: 15, rotateY: reduceMotion ? 0 : rotateY, rotateZ: -10, transformStyle: "preserve-3d" }}
-              className="relative aspect-[3/4] w-[240px] md:w-[330px]"
+              className="relative aspect-[3/4] w-[240px] md:w-[330px] short:w-[calc((100svh-8rem)*3/4)]"
             >
               {reduceMotion ? (
                 <Face>

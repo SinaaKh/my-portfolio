@@ -35,18 +35,18 @@ function CaseStudyContent({ slug }: { slug: string }) {
 
   return (
     <>
-      <section className="relative overflow-hidden px-6 pb-20 pt-48">
+      <section className="relative overflow-hidden px-6 pb-20 pt-48 short:pb-12 short:pt-24">
         <div className="container relative z-10 mx-auto max-w-[1100px]">
           <Reveal className="text-left">
-            <p className="mb-8 text-eyebrow font-black uppercase tracking-eyebrow text-accent">{study.category}</p>
-            <h1 className="mb-12 text-5xl font-medium leading-[0.85] tracking-tighter text-black md:text-8xl md:leading-none lg:text-[10rem]">
+            <p className="mb-8 text-eyebrow font-black uppercase tracking-eyebrow text-accent short:mb-4">{study.category}</p>
+            <h1 className="mb-12 text-5xl font-medium leading-[0.85] tracking-tighter text-black md:text-8xl md:leading-none lg:text-[10rem] short:mb-6 short:text-6xl">
               {study.titleLines[0]}
               <br />
               <span className="font-light italic text-gray-400">{study.titleLines[1]}</span>
             </h1>
             <div className="max-w-3xl">
-              <h2 className="mb-8 text-2xl font-medium tracking-tight text-black/80 md:text-4xl">{study.subtitle}</h2>
-              <p className="mb-12 text-[14px] leading-relaxed text-gray-500 md:text-[16px]">{study.intro}</p>
+              <h2 className="mb-8 text-2xl font-medium tracking-tight text-black/80 md:text-4xl short:mb-4 short:text-2xl">{study.subtitle}</h2>
+              <p className="mb-12 text-[14px] leading-relaxed text-gray-500 md:text-[16px] short:mb-6">{study.intro}</p>
               <ul className="flex flex-wrap gap-4">
                 {study.chips.map((chip) => (
                   <li
@@ -64,7 +64,7 @@ function CaseStudyContent({ slug }: { slug: string }) {
 
       <section className="px-6 pb-20">
         <Reveal y={0} scale={0.95} className="container mx-auto max-w-[1100px]">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-5xl border border-black/5 shadow-2xl md:aspect-[21/9]">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-5xl border border-black/5 shadow-2xl md:aspect-[21/9] short:aspect-[21/9]">
             <SiteImage
               src={study.cover.src}
               alt={study.cover.alt}
@@ -79,7 +79,7 @@ function CaseStudyContent({ slug }: { slug: string }) {
       </section>
 
       <section className="border-y border-black/5 bg-gray-50/50 py-12">
-        <dl className="container mx-auto grid max-w-[1100px] grid-cols-2 gap-8 px-6 md:grid-cols-4">
+        <dl className="container mx-auto grid max-w-[1100px] grid-cols-2 gap-8 px-6 md:grid-cols-4 short:grid-cols-4">
           {study.facts.map((fact) => (
             <div key={fact.label} className="text-left">
               <dt className="mb-2 text-eyebrow font-black uppercase tracking-widest text-gray-400">{fact.label}</dt>
@@ -89,7 +89,7 @@ function CaseStudyContent({ slug }: { slug: string }) {
         </dl>
       </section>
 
-      <div className="mx-auto max-w-[1100px] space-y-32 px-6 py-32">
+      <div className="mx-auto max-w-[1100px] space-y-32 px-6 py-32 short:space-y-20 short:py-20">
         <Why study={study} />
         <Concept study={study} />
         <Structure study={study} />
@@ -102,7 +102,7 @@ function CaseStudyContent({ slug }: { slug: string }) {
 function SplitHeading({ title, accent, sticky = false }: { title: string; accent: string; sticky?: boolean }) {
   return (
     <h2
-      className={`text-3xl font-medium leading-[1.1] tracking-tight text-black md:text-5xl md:leading-none ${sticky ? "lg:sticky lg:top-32" : "mb-8"}`}
+      className={`text-3xl font-medium leading-[1.1] tracking-tight text-black md:text-5xl md:leading-none short:text-4xl ${sticky ? "lg:sticky lg:top-32" : "mb-8"}`}
     >
       {title} <span className="italic text-gray-400">{accent}</span>
     </h2>
@@ -143,7 +143,7 @@ function Concept({ study }: { study: CaseStudy }) {
         <SplitHeading title={concept.title} accent={concept.titleAccent} />
         <p className="text-[14px] leading-relaxed text-gray-500 md:text-[16px]">{concept.intro}</p>
       </Reveal>
-      <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-8 md:grid-cols-2 short:grid-cols-2 lg:grid-cols-3">
         {concept.features.map((feature, i) => (
           <Reveal
             as="li"
@@ -167,10 +167,10 @@ function Structure({ study }: { study: CaseStudy }) {
   const { structure } = study;
   const last = structure.steps.length - 1;
   return (
-    <Reveal as="section" className="relative overflow-hidden rounded-5xl bg-black p-10 text-white md:p-20">
+    <Reveal as="section" className="relative overflow-hidden rounded-5xl bg-black p-10 text-white md:p-20 short:p-10">
       <div className="relative z-10">
-        <div className="mb-16 max-w-3xl">
-          <h2 className="mb-8 text-3xl font-medium leading-[1.1] tracking-tight md:text-5xl md:leading-none">
+        <div className="mb-16 max-w-3xl short:mb-10">
+          <h2 className="mb-8 text-3xl font-medium leading-[1.1] tracking-tight md:text-5xl md:leading-none short:text-4xl">
             {structure.title} <span className="italic text-gray-400">{structure.titleAccent}</span>
           </h2>
           <p className="text-[14px] text-gray-400 md:text-[16px]">{structure.intro}</p>

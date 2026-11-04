@@ -28,9 +28,9 @@ export function PostRow({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative border-b border-(--row-fg-5) py-12 last:border-0"
+      className="group relative border-b border-(--row-fg-5) py-12 last:border-0 short:py-6"
     >
-      <Link href={`/blog/${post.slug}`} className="flex flex-col justify-between gap-8 md:flex-row md:items-center">
+      <Link href={`/blog/${post.slug}`} className="flex flex-col justify-between gap-8 md:flex-row md:items-center short:flex-row short:items-center short:gap-6">
         <div className="flex-1 transition-all duration-500">
           <div className="mb-4 flex items-center gap-4">
             <span className="text-eyebrow font-black tracking-widest text-(--row-fg-20)">
@@ -39,11 +39,11 @@ export function PostRow({
             <div aria-hidden className="h-px w-8 bg-(--row-fg-5)" />
             <span className="text-eyebrow font-black uppercase tracking-label text-accent">{post.category}</span>
           </div>
-          <Heading className="text-4xl font-medium leading-[0.9] tracking-tighter text-(--row-fg) transition-colors duration-500 group-hover:text-accent md:text-5xl md:leading-none">
+          <Heading className="text-4xl font-medium leading-[0.9] tracking-tighter text-(--row-fg) transition-colors duration-500 group-hover:text-accent md:text-5xl md:leading-none short:text-3xl short:leading-[1.05]">
             {post.title}
           </Heading>
         </div>
-        <div className="hidden opacity-0 transition-opacity duration-500 group-focus-within:opacity-100 group-hover:opacity-100 md:block md:w-1/3">
+        <div className="hidden opacity-0 transition-opacity duration-500 group-focus-within:opacity-100 group-hover:opacity-100 md:block md:w-1/3 short:hidden">
           <p className="max-w-xs text-sm font-medium leading-relaxed text-(--row-fg-40)">{post.excerpt}</p>
         </div>
         <div className="flex items-center gap-6 transition-all duration-500 group-hover:translate-x-4">

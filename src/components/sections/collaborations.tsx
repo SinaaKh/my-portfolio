@@ -25,20 +25,20 @@ const ROW_SPEEDS = [-1.6, 1.8];
  * Type of the names, shared by the marquee and its reduced-motion fallback. The rows clip their
  * overflow, so the line height has to leave room for descenders.
  */
-const NAME_TYPE = "text-2xl leading-tight md:text-5xl lg:text-6xl";
+const NAME_TYPE = "text-2xl leading-tight md:text-5xl short:text-3xl lg:text-6xl";
 
 /** Collaborations: velocity-reactive client marquee (SPEC.md §3.11). Reused on /projects. */
 export function Collaborations({ id = "collaborations" }: { id?: string }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="relative w-full overflow-hidden bg-white py-20 text-black md:py-32">
-      <div className="container relative z-10 mx-auto mb-10 px-6 md:mb-24">
+    <section id={id} aria-labelledby={`${id}-title`} className="relative w-full overflow-hidden bg-white py-20 text-black md:py-32 short:py-12">
+      <div className="container relative z-10 mx-auto mb-10 px-6 md:mb-24 short:mb-8">
         <div className="max-w-4xl">
           <motion.p
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-4 text-eyebrow font-black uppercase tracking-eyebrow text-accent md:mb-8"
+            className="mb-4 text-eyebrow font-black uppercase tracking-eyebrow text-accent md:mb-8 short:mb-3"
           >
             {collaborations.eyebrow}
           </motion.p>
@@ -48,7 +48,7 @@ export function Collaborations({ id = "collaborations" }: { id?: string }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex text-5xl font-medium leading-[0.85] text-black md:text-9xl md:leading-none"
+            className="flex text-5xl font-medium leading-[0.85] text-black md:text-9xl md:leading-none short:text-6xl"
           >
             {collaborations.title}
             <span className="font-light italic text-black/40">{collaborations.titleAccent}</span>
@@ -56,13 +56,13 @@ export function Collaborations({ id = "collaborations" }: { id?: string }) {
         </div>
       </div>
 
-      <div className="relative flex flex-col gap-5 border-y border-black/5 bg-black/[0.02] py-8 md:gap-10 md:py-12">
+      <div className="relative flex flex-col gap-5 border-y border-black/5 bg-black/[0.02] py-8 md:gap-10 md:py-12 short:gap-4 short:py-6">
         {collaborations.rows.map((row, i) => (
           <MarqueeRow key={i} items={row} speed={ROW_SPEEDS[i % ROW_SPEEDS.length]} />
         ))}
       </div>
 
-      <div className="container mx-auto mt-10 px-6 md:mt-24">
+      <div className="container mx-auto mt-10 px-6 md:mt-24 short:mt-8">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

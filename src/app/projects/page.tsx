@@ -23,12 +23,12 @@ const TONE = {
 export default function ProjectsPage() {
   return (
     <main id="main" tabIndex={-1} className="outline-none bg-gray-100">
-      <div className="sticky top-0 z-0 w-full bg-gray-100 pt-[50px] text-black md:pt-[100px]">
+      <div className="sticky top-0 z-0 w-full bg-gray-100 pt-[50px] text-black md:pt-[100px] short:pt-[60px]">
         <div className="container m-auto max-w-[900px] p-5 text-center">
-          <h1 className="pt-3 text-5xl font-medium leading-[0.85] tracking-tighter md:text-8xl md:leading-none lg:text-[10rem]">
+          <h1 className="pt-3 text-5xl font-medium leading-[0.85] tracking-tighter md:text-8xl md:leading-none lg:text-[10rem] short:text-6xl">
             {projects.title}
           </h1>
-          <p className="mt-7 text-[18px] font-normal leading-relaxed text-gray-700 md:text-[20px]">{projects.intro}</p>
+          <p className="mt-7 text-[18px] font-normal leading-relaxed text-gray-700 md:text-[20px] short:mt-4 short:text-base">{projects.intro}</p>
         </div>
       </div>
 
@@ -38,7 +38,7 @@ export default function ProjectsPage() {
         ))}
       </div>
 
-      <div className="relative z-[99] bg-white pt-[80px] md:pt-[150px]">
+      <div className="relative z-[99] bg-white pt-[80px] md:pt-[150px] short:pt-12">
         <Collaborations id="projects-collaborations" />
       </div>
     </main>
@@ -51,7 +51,7 @@ function Band({ band }: { band: ProjectBand }) {
 
   return (
     <section aria-labelledby={`band-${slug(band.title)}`} className="relative w-full" style={{ backgroundColor: band.theme.background }}>
-      <div className="py-[100px]">
+      <div className="py-[100px] short:py-16">
         <div className="container m-auto px-5">
           <div className="flex flex-col lg:flex-row lg:justify-between">
             <div className="max-w-[750px]">
@@ -66,7 +66,7 @@ function Band({ band }: { band: ProjectBand }) {
 
               {band.snippet && <Terminal lines={band.snippet} />}
 
-              <dl className="mt-14 flex flex-wrap gap-4 md:gap-11">
+              <dl className="mt-14 flex flex-wrap gap-4 md:gap-11 short:mt-8">
                 {band.meta.map((item) => (
                   <div key={item.label}>
                     <dt className={`text-[18px] ${tone.label}`}>{item.label}</dt>
@@ -130,7 +130,7 @@ function Band({ band }: { band: ProjectBand }) {
               width={band.screenshot.width}
               height={band.screenshot.height}
               sizes="(min-width: 900px) 860px, 100vw"
-              className="h-auto w-full rounded-lg object-cover"
+              className="h-auto w-full rounded-lg object-cover short:mx-auto short:max-h-[calc(100svh-3rem)] short:w-auto short:max-w-full"
             />
           </div>
         </div>

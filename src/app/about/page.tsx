@@ -19,11 +19,11 @@ export default function AboutPage() {
     <main id="main" tabIndex={-1} className="outline-none w-full bg-white text-black selection:bg-black selection:text-white">
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden px-6 pt-20 md:min-h-[80vh]">
         <div className="z-10 max-w-[900px] text-center">
-          <Reveal as="p" y={0} className="mb-8 text-eyebrow font-black uppercase tracking-eyebrow text-accent">
+          <Reveal as="p" y={0} className="mb-8 text-eyebrow font-black uppercase tracking-eyebrow text-accent short:mb-4">
             {about.eyebrow}
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="text-5xl font-medium leading-[0.85] tracking-tighter md:text-8xl md:leading-none lg:text-[10rem]">
+            <h1 className="text-5xl font-medium leading-[0.85] tracking-tighter md:text-8xl md:leading-none lg:text-[10rem] short:text-6xl">
               {about.titleLines[0]}
               <br />
               <span className="font-light italic text-gray-400">{about.titleLines[1]}</span>
@@ -33,7 +33,7 @@ export default function AboutPage() {
             as="p"
             y={0}
             delay={0.2}
-            className="mx-auto mt-8 max-w-xl text-[18px] leading-relaxed text-gray-500 md:text-[20px]"
+            className="mx-auto mt-8 max-w-xl text-[18px] leading-relaxed text-gray-500 md:text-[20px] short:mt-5 short:text-base"
           >
             {about.intro}
           </Reveal>
@@ -41,14 +41,16 @@ export default function AboutPage() {
       </section>
 
       <div className="mx-auto max-w-[1100px] px-6 pb-32">
-        <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-12">
+        {/* On a phone held sideways the portrait and links take a narrow column beside the story, as on
+            desktop, instead of a full-width photo taller than the screen. */}
+        <div className="grid grid-cols-1 items-start gap-16 short:grid-cols-[13rem_minmax(0,1fr)] short:gap-10 lg:grid-cols-12">
           <Reveal x={-20} y={0} className="lg:sticky lg:top-32 lg:col-span-4">
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-100 shadow-2xl shadow-black/5">
               <SiteImage
                 src={about.portrait.src}
                 alt={about.portrait.alt}
                 fill
-                sizes="(min-width: 1024px) 308px, 100vw"
+                sizes="(min-width: 1024px) 308px, (orientation: landscape) and (max-height: 500px) 208px, 100vw"
                 className="object-cover"
               />
             </div>
@@ -90,17 +92,17 @@ export default function AboutPage() {
             </div>
           </Reveal>
 
-          <div className="space-y-24 lg:col-span-8">
+          <div className="space-y-24 short:space-y-14 lg:col-span-8">
             {about.sections.map((section) => (
               <Reveal
                 key={section.title}
                 as="section"
-                className={`space-y-8 ${section.highlight ? "rounded-5xl bg-gray-50 p-10 md:p-16" : ""}`}
+                className={`space-y-8 short:space-y-5 ${section.highlight ? "rounded-5xl bg-gray-50 p-10 md:p-16 short:p-8" : ""}`}
               >
-                <h2 className="text-3xl font-medium leading-[1.1] tracking-tight md:text-5xl md:leading-none">
+                <h2 className="text-3xl font-medium leading-[1.1] tracking-tight md:text-5xl md:leading-none short:text-3xl short:leading-[1.1]">
                   {section.title}
                 </h2>
-                <div className="space-y-6 text-[18px] font-normal leading-relaxed text-gray-700 md:text-[20px]">
+                <div className="space-y-6 text-[18px] font-normal leading-relaxed text-gray-700 md:text-[20px] short:text-base">
                   {section.paragraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
@@ -109,7 +111,7 @@ export default function AboutPage() {
             ))}
 
             <Reveal as="section" className="pt-12">
-              <div className="space-y-4 text-5xl font-medium tracking-tighter md:text-7xl">
+              <div className="space-y-4 text-5xl font-medium tracking-tighter md:text-7xl short:text-5xl">
                 <p className="text-gray-200">{about.closingLines[0]}</p>
                 <p className="text-gray-300">{about.closingLines[1]}</p>
                 <p className="text-black">{about.closingLines[2]}</p>

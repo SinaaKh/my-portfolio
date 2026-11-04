@@ -64,7 +64,7 @@ export function Hero() {
       id="hero"
       aria-label={sectionLabel("hero")}
       style={isDesktop ? { backgroundColor: background } : undefined}
-      className="relative min-h-screen w-full overflow-hidden bg-black pb-20 pt-32 lg:min-h-[200vh] lg:bg-white"
+      className="relative min-h-screen w-full overflow-hidden bg-black pb-20 pt-32 short:pb-12 short:pt-20 lg:min-h-[200vh] lg:bg-white"
     >
       <Ambient />
 
@@ -72,12 +72,12 @@ export function Hero() {
         style={isDesktop ? { color } : undefined}
         className="w-full px-6 text-white lg:px-12 lg:text-black"
       >
-        <div className="mb-12 flex flex-col items-start justify-between lg:mb-20 lg:flex-row">
+        <div className="mb-12 flex flex-col items-start justify-between short:mb-8 lg:mb-20 lg:flex-row">
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: EASE_OUT }}
-            className="max-w-4xl pt-[100px]"
+            className="max-w-4xl pt-[100px] short:pt-0"
           >
             <p className="mb-1 flex items-center gap-2 text-[18px] leading-[1.1]">
               <SiteImage
@@ -122,11 +122,12 @@ export function Hero() {
       </motion.div>
 
       {/* Below lg the frame is a static inset card: taller than the 21:9 artwork, cropped to centre the
-          point where the strands converge (62% across), and at full opacity since the page is already black. */}
+          point where the strands converge (62% across), and at full opacity since the page is already black.
+          On a phone held sideways it shows the whole 21:9 artwork, which keeps it shorter than the screen. */}
       <div className="relative flex w-full justify-center px-6 lg:mt-20 lg:px-0">
         <motion.div
           style={isDesktop ? { width: frameWidth, borderRadius: frameRadius } : undefined}
-          className="relative z-[60] aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:aspect-[16/9] lg:aspect-[21/9] lg:w-[70%] lg:border-0 lg:opacity-50"
+          className="relative z-[60] aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:aspect-[16/9] short:aspect-[21/9] lg:aspect-[21/9] lg:w-[70%] lg:border-0 lg:opacity-50"
         >
           <SiteImage
             src={hero.image.src}
@@ -135,7 +136,7 @@ export function Hero() {
             sizes="100vw"
             loading="eager"
             fetchPriority="high"
-            className="object-cover object-[78%_50%] sm:object-right lg:object-center"
+            className="object-cover object-[78%_50%] sm:object-right short:object-center lg:object-center"
           />
         </motion.div>
       </div>
@@ -159,7 +160,7 @@ export function Hero() {
 function Headline({ text }: { text: string }) {
   const words = text.split(" ");
   return (
-    <h1 className="mb-12 overflow-hidden text-3xl font-medium leading-[1.1] tracking-tight md:text-4xl lg:text-6xl lg:leading-none">
+    <h1 className="mb-12 overflow-hidden text-3xl font-medium leading-[1.1] tracking-tight short:mb-6 md:text-4xl lg:text-6xl lg:leading-none">
       {words.map((word, i) => (
         <motion.span
           key={`${word}-${i}`}

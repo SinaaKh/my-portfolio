@@ -93,22 +93,24 @@ export function Story() {
 
   return (
     <section ref={sectionRef} id="story" aria-labelledby="story-title" className="relative h-[600vh] bg-black text-white">
-      <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
+      {/* On a phone held sideways the controls move up beside the heading, and the line drops a little
+          (short:pt-12 shifts the track's centre, short:top-[…] the line's) to give the text below it room. */}
+      <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden short:h-svh short:pt-12">
         <div aria-hidden className="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 select-none opacity-[0.05]">
           <p className="whitespace-nowrap font-serif text-[20vw] font-bold leading-none text-white">{timeline.watermark}</p>
         </div>
 
-        <div ref={headerRef} className="absolute left-6 top-12 z-20 md:left-12">
-          <span className="mb-2 block text-eyebrow font-black uppercase tracking-ultra text-white/20">
+        <div ref={headerRef} className="absolute left-6 top-12 z-20 short:top-4 md:left-12">
+          <span className="mb-2 block text-eyebrow font-black uppercase tracking-ultra text-white/20 short:mb-1">
             {timeline.eyebrow}
           </span>
-          <h2 id="story-title" className="text-2xl font-light tracking-tight text-white/90 md:text-4xl">
+          <h2 id="story-title" className="text-2xl font-light tracking-tight text-white/90 md:text-4xl short:text-xl">
             {timeline.title} <span className="font-serif italic">{timeline.titleAccent}</span>
           </h2>
-          <p className="mt-2 text-xs font-light text-white/40 md:text-sm">{timeline.subtitle}</p>
+          <p className="mt-2 text-xs font-light text-white/40 md:text-sm short:mt-1 short:text-[11px]">{timeline.subtitle}</p>
         </div>
 
-        <div aria-hidden className="absolute left-0 top-1/2 z-10 h-px w-full bg-white/5">
+        <div aria-hidden className="absolute left-0 top-1/2 z-10 h-px w-full bg-white/5 short:top-[calc(50%+1.5rem)]">
           <motion.div
             style={{ x: travelerX, y: travelerY }}
             className="pointer-events-none absolute left-0 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2"
@@ -127,13 +129,13 @@ export function Story() {
           </motion.div>
         </div>
 
-        <motion.ol ref={trackRef} style={{ x: trackX }} className="flex items-center gap-[40vw] md:gap-[20vw]">
+        <motion.ol ref={trackRef} style={{ x: trackX }} className="flex items-center gap-[40vw] md:gap-[20vw] short:gap-[20vw]">
           {timeline.entries.map((entry, i) => (
             <Entry key={entry.title} entry={entry} index={i} count={timeline.entries.length} />
           ))}
         </motion.ol>
 
-        <div className="absolute bottom-12 left-6 z-20 flex items-center gap-8 md:left-12">
+        <div className="absolute bottom-12 left-6 z-20 flex items-center gap-8 md:left-12 short:bottom-auto short:left-auto short:right-6 short:top-4 short:gap-4 md:short:right-12">
           <div className="flex items-center gap-4">
             <StepButton label={timeline.prevLabel} onClick={() => step(-1)}>
               ←
@@ -157,11 +159,11 @@ function Entry({ entry, index, count }: { entry: TimelineEntry; index: number; c
   const progress = count > 1 ? index / (count - 1) : 0;
   const alignEnd = progress > 0.5;
   const isLast = index === count - 1;
-  const label = `absolute left-0 w-[min(17.5rem,calc(100vw-5rem))] md:w-[25rem] ${alignEnd ? "text-right" : "text-left"}`;
+  const label = `absolute left-0 w-[min(17.5rem,calc(100vw-5rem))] md:w-[25rem] short:w-[min(34rem,calc(100vw-8rem))] ${alignEnd ? "text-right" : "text-left"}`;
   const shift = { translate: `${-progress * 100}% 0` };
 
   return (
-    <li data-entry className="relative w-[280px] shrink-0 md:w-[500px]">
+    <li data-entry className="relative w-[280px] shrink-0 md:w-[500px] short:w-[34rem]">
       <div style={shift} className={`${label} bottom-[calc(50%+40px)]`}>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -169,7 +171,7 @@ function Entry({ entry, index, count }: { entry: TimelineEntry; index: number; c
           viewport={inView}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h3 className="mb-1 text-lg font-medium tracking-tight text-white/90 md:text-2xl">{entry.title}</h3>
+          <h3 className="mb-1 text-lg font-medium tracking-tight text-white/90 md:text-2xl short:text-lg">{entry.title}</h3>
           <div className={`flex items-center gap-3 ${alignEnd ? "justify-end" : ""}`}>
             <span className="text-micro font-bold uppercase tracking-label text-white/30 md:text-eyebrow">{entry.period}</span>
             <div aria-hidden className="h-px w-4 bg-white/10" />
@@ -177,7 +179,7 @@ function Entry({ entry, index, count }: { entry: TimelineEntry; index: number; c
           </div>
         </motion.div>
       </div>
-      <div style={shift} className={`${label} top-[calc(50%+40px)]`}>
+      <div style={shift} className={`${label} top-[calc(50%+40px)] short:top-[calc(50%+28px)]`}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -185,15 +187,15 @@ function Entry({ entry, index, count }: { entry: TimelineEntry; index: number; c
           transition={{ duration: 0.6, ease: "easeOut" }}
           className={`flex items-start gap-4 md:gap-6 ${alignEnd ? "flex-row-reverse" : ""}`}
         >
-          <span aria-hidden className="font-serif text-3xl font-bold italic leading-none text-white/20 md:text-5xl">
+          <span aria-hidden className="font-serif text-3xl font-bold italic leading-none text-white/20 md:text-5xl short:text-3xl">
             {String(index + 1).padStart(2, "0")}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="mb-4 text-xs font-light leading-relaxed text-white/50 md:mb-6 md:text-sm md:leading-5">
+            <p className="mb-4 text-xs font-light leading-relaxed text-white/50 md:mb-6 md:text-sm md:leading-5 short:mb-3 short:text-xs short:leading-relaxed">
               {entry.description}
             </p>
             {entry.milestone && (
-              <div className={`mb-4 border-accent/40 md:mb-6 ${alignEnd ? "border-r pr-4" : "border-l pl-4"}`}>
+              <div className={`mb-4 border-accent/40 md:mb-6 short:mb-0 ${alignEnd ? "border-r pr-4" : "border-l pl-4"}`}>
                 <div className={`mb-1 flex items-center gap-3 ${alignEnd ? "justify-end" : ""}`}>
                   <span className="text-micro font-bold uppercase tracking-label text-accent md:text-eyebrow">
                     {entry.milestone.label}
@@ -201,12 +203,12 @@ function Entry({ entry, index, count }: { entry: TimelineEntry; index: number; c
                   <div aria-hidden className="h-px w-4 bg-white/10" />
                   <span className="font-serif text-micro italic text-white/40 md:text-eyebrow">{entry.milestone.period}</span>
                 </div>
-                <p className="text-xs font-light leading-relaxed text-white/50 md:text-sm md:leading-5">
+                <p className="text-xs font-light leading-relaxed text-white/50 md:text-sm md:leading-5 short:text-xs short:leading-relaxed">
                   {entry.milestone.text}
                 </p>
               </div>
             )}
-            <div aria-hidden className={`group flex cursor-pointer items-center gap-4 ${alignEnd ? "justify-end" : ""}`}>
+            <div aria-hidden className={`group flex cursor-pointer items-center gap-4 short:hidden ${alignEnd ? "justify-end" : ""}`}>
               <div className="h-px w-8 bg-white/10 transition-all duration-500 group-hover:w-16" />
               <span className="text-micro font-black uppercase tracking-widest text-white/20 transition-colors group-hover:text-accent">
                 {isLast ? timeline.endCue : timeline.scrollCue}

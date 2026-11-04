@@ -6,9 +6,9 @@ const { footer, meta } = site;
 /** Site footer, shared by every page (SPEC.md §3.12). */
 export function Footer() {
   return (
-    <footer id="contact" aria-labelledby="footer-title" className="bg-white py-24 text-black">
+    <footer id="contact" aria-labelledby="footer-title" className="bg-white py-24 text-black short:py-14">
       <div className="container m-auto px-6">
-        <div className="mb-24 flex flex-col items-start justify-between gap-16 md:flex-row">
+        <div className="mb-24 flex flex-col items-start justify-between gap-16 md:flex-row short:mb-12 short:flex-row short:gap-10">
           <div className="max-w-md">
             <h2 id="footer-title" className="mb-8 text-4xl font-medium leading-tight tracking-tighter text-black">
               {footer.heading} <span className="italic text-accent">{footer.headingAccent}</span>
