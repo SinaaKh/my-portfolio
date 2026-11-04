@@ -336,8 +336,11 @@ caseStudy?`).
   `180deg × (x - 0.75/2π · sin 2πx)`: it never stops, but slows to a quarter speed while a work faces the viewer and
   speeds through each flip. Past the last work it eases out over the remaining 0.9, a run-out before Tech Stack
   slides over (§6.8). Active index = `clamp(round(x), 0, n-1)`, so the work changes mid-flip while the card is
-  edge-on. Whichever face is turned away swaps to the next image, so every half-turn reveals a new work. On index
-  change the title block cross-fades (`opacity 0, y 10 → 1, 0`) and the counter updates.
+  edge-on. Every work has its own image, loaded once: even works on the front face, odd ones on the back. A face
+  changes picture only when it's turned fully away (at θ = 180deg for the front, 360deg for the back, and so on),
+  from the angle in the same frame as the turn, so no image source changes mid-flip and the visible face is right
+  in either scroll direction. On index change the title block cross-fades (`opacity 0, y 10 → 1, 0`) and the
+  counter updates.
 - **Mobile**: stacked, with the title above the card.
 
 **Content slots**: `threeDWorks.eyebrow/title/titleAccent`, `items[]` (`title, subtitle, image`).
