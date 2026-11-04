@@ -8,6 +8,7 @@ import {
   useReducedMotion,
   useScroll,
   useTransform,
+  type MotionValue,
 } from "framer-motion";
 import { site } from "@/content/site";
 import { SiteImage } from "@/components/ui/site-image";
@@ -41,11 +42,23 @@ function halfTurns(x: number) {
   return last + (1 - SETTLE) * u * (1 - u / (2 * tail));
 }
 
+/**
+ * Whether work k is the picture on its face at card angle θ (degrees). Even works sit on the front
+ * face, odd ones on the back, and a face changes picture only when it's turned fully away: half a
+ * turn from where either picture shows, so the change is never on screen, whichever way you scroll.
+ */
+function onFace(k: number, angle: number) {
+  const from = k < 2 ? -Infinity : (k - 1) * 180;
+  const to = k + 2 > last ? Infinity : (k + 1) * 180;
+  return angle >= from && angle < to;
+}
+
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * Selected 3D Works (SPEC.md §3.6): scrolling flips a 3D card. Whichever face is turned
- * away swaps to the next work, so each half-turn reveals a new one.
+ * Selected 3D Works (SPEC.md §3.6): scrolling flips a 3D card, and each half-turn reveals a new work.
+ * Every work keeps its own image, loaded once. The faces pick theirs from the card's angle in the
+ * same frame as the turn, so flipping never waits on a re-render or an image reload.
  */
 export function ThreeDWorks() {
   const ref = useRef<HTMLElement>(null);
@@ -59,10 +72,6 @@ export function ThreeDWorks() {
     const next = activeAt(position(progress));
     if (next !== active) setActive(next);
   });
-
-  // Even-numbered works sit on the front face, odd-numbered on the back.
-  const front = reduceMotion ? active : Math.min(last, active + (active % 2));
-  const back = Math.min(last, active + 1 - (active % 2));
 
   return (
     <section
@@ -114,8 +123,20 @@ export function ThreeDWorks() {
               style={{ rotateX: 15, rotateY: reduceMotion ? 0 : rotateY, rotateZ: -10, transformStyle: "preserve-3d" }}
               className="relative aspect-[3/4] w-[240px] md:w-[330px]"
             >
-              <Face item={items[front]} />
-              {!reduceMotion && <Face item={items[back]} flipped />}
+              {reduceMotion ? (
+                <Face>
+                  <Picture index={active} active={active} />
+                </Face>
+              ) : (
+                <>
+                  <Face>
+                    {items.map((_, k) => k % 2 === 0 && <Picture key={k} index={k} active={active} angle={rotateY} />)}
+                  </Face>
+                  <Face flipped>
+                    {items.map((_, k) => k % 2 === 1 && <Picture key={k} index={k} active={active} angle={rotateY} />)}
+                  </Face>
+                </>
+              )}
             </motion.div>
           </div>
         </div>
@@ -124,13 +145,33 @@ export function ThreeDWorks() {
   );
 }
 
-function Face({ item, flipped = false }: { item: (typeof items)[number]; flipped?: boolean }) {
+function Face({ flipped = false, children }: { flipped?: boolean; children: React.ReactNode }) {
   return (
     <div
       style={{ backfaceVisibility: "hidden", transform: flipped ? "rotateY(180deg)" : undefined }}
       className="absolute inset-0 overflow-hidden rounded-5xl bg-black shadow-2xl"
     >
-      <SiteImage src={item.image.src} alt={item.image.alt} fill sizes="(min-width: 768px) 330px, 240px" className="object-cover" />
+      {children}
     </div>
+  );
+}
+
+/**
+ * One work's image. With an angle it shows only while its face carries it; without, always. Only the
+ * current work's image is described, so screen readers don't read out the ones waiting off-face.
+ */
+function Picture({ index, active, angle }: { index: number; active: number; angle?: MotionValue<number> }) {
+  const shown = useTransform(() => (!angle || onFace(index, angle.get()) ? 1 : 0));
+  const { image } = items[index];
+  return (
+    <motion.div style={{ opacity: shown }} className="absolute inset-0">
+      <SiteImage
+        src={image.src}
+        alt={index === active ? image.alt : ""}
+        fill
+        sizes="(min-width: 768px) 330px, 240px"
+        className="object-cover"
+      />
+    </motion.div>
   );
 }
