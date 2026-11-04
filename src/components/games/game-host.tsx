@@ -44,7 +44,7 @@ function DesktopGames() {
 
   return (
     <>
-      {game === "escape" ? <EscapeGame /> : <SnakeGame />}
+      {game === "escape" ? <EscapeGame /> : <SnakeGame withPicker />}
       <div
         role="group"
         aria-label={gamePicker.label}

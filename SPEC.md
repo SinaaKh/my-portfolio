@@ -641,6 +641,19 @@ Defaults applied during the build (2026-10-30). Each can be revisited.
     hundreds of pixels. Ours flips the background over 0.37 → 0.43 and the text almost instantly inside that (§3.9).
 18. **Tech Stack logos**: the reference's grayscale filter left dark brand colors nearly invisible. Ours draws every
     logo in `white/60` until hover, then in its brand color (§3.7).
+19. **Hero image below `lg`**: a static inset card (`aspect-[4/3]`, `sm:aspect-[16/9]`, `rounded-3xl`, full opacity),
+    cropped to centre the point where the strands converge, instead of a dim full-bleed 21:9 strip. A bottom fade
+    hides the seam with the black section below. Desktop keeps the reference's scroll-driven frame.
+20. **Industries hub on phones**: the reference letterboxes the 1000×600 diagram inside a square box while placing
+    the tiles against the square, so the paths miss the tiles. Ours draws a separate square diagram below `md`, and
+    every tile is centred on its path's endpoint in both layouts.
+21. **Timeline traveler**: walks the full width, margin to margin, instead of stopping at about a third. Each label
+    slides across the traveler by the fraction of the walk where it's met (the first starts at the traveler, the
+    last ends at it, labels past halfway are right-aligned), so every label stays on screen.
+22. **Mini game on phones**: the My Works section is `h-svh`, so it fits under the browser bars, and the snake board
+    is never taller than it is wide. **Collaborations**: tighter spacing below `md`, names at `text-2xl md:text-5xl
+    lg:text-6xl` in `black/70` with accent dots between them, drifting at about 1.7em/s instead of 25px/s. Under
+    reduced motion the names wrap instead of scrolling.
 
 ---
 
