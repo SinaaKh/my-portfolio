@@ -42,8 +42,8 @@ function writeBest(best: number) {
 type Phase = "idle" | "playing" | "result";
 type Result = { cause: EndCause; score: number; best: number; isBest: boolean };
 
-/** Game A: Context Window Snake. */
-export function SnakeGame() {
+/** Game A: Context Window Snake. `withPicker` leaves room at the bottom for the game picker. */
+export function SnakeGame({ withPicker = false }: { withPicker?: boolean }) {
   const [phase, setPhase] = useState<Phase>("idle");
   const [round, setRound] = useState(0);
   const [result, setResult] = useState<Result | null>(null);
@@ -81,7 +81,7 @@ export function SnakeGame() {
   );
 
   return (
-    <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-4 pb-14 pt-6">
+    <div className={`relative z-10 flex h-full w-full flex-col items-center justify-center px-4 pt-6 ${withPicker ? "pb-14" : "pb-6"}`}>
       {phase === "idle" && <Intro best={best} focusOnMount={refocus} onStart={start} />}
       {phase === "playing" && <Board key={round} onEnd={finish} onQuit={quit} />}
       {phase === "result" && result && <Outcome result={result} onRetry={start} />}
@@ -398,7 +398,7 @@ function Board({ onEnd, onQuit }: { onEnd: (cause: EndCause, score: number) => v
       ref={rootRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex h-full w-full max-w-[760px] flex-col gap-3 pt-2"
+      className="@container flex h-full w-full max-w-[760px] flex-col justify-center gap-3 pt-2"
     >
       <div className="flex items-center justify-between gap-3">
         <p className="text-white">
@@ -431,7 +431,9 @@ function Board({ onEnd, onQuit }: { onEnd: (cause: EndCause, score: number) => v
         <Meter meterRef={qualityMeterRef} barRef={qualityBarRef} label={copy.qualityLabel} barClass="bg-accent" />
       </div>
 
-      <div className="relative min-h-0 flex-1">
+      {/* Fills the height that's left, but never gets taller than it is wide, so on a phone the board
+          is a compact square with the whole game on screen instead of a tall strip. */}
+      <div className="relative max-h-[100cqw] min-h-0 flex-1">
         <div
           ref={boardRef}
           tabIndex={0}

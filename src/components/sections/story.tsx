@@ -17,26 +17,28 @@ const { timeline } = site;
 
 /** The traveler reaches the last milestone at this much scroll progress, then holds there. */
 const TRACK_END = 0.9;
-/** Where the last milestone stops: at most this fraction of the viewport from the left... */
-const END_X_VW = 0.4;
-/** ...and never so far right that its text runs off screen. */
-const END_MARGIN = 24;
+/** Half the traveler's width: its centre keeps this far inside the heading's margins. */
+const TRAVELER_RADIUS = 16;
 
 /** Story / Timeline: a horizontal journey driven by vertical scroll (SPEC.md §3.8). */
 export function Story() {
   const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLOListElement>(null);
   const reduceMotion = useReducedMotion();
   const lenis = useLenis();
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-  // Measured, since both depend on the entry count and the viewport: the track slides until the
-  // last entry sits at endX, and the traveler walks to endX, so the two meet on every entry.
-  const shift = useMotionValue(0);
-  const endX = useMotionValue(0);
+  // The traveler walks the full width, from the left margin to the right one, while the track slides
+  // the other way so it meets every entry on the way: the first one at the start, the last at the end.
+  // Measured, since both depend on the viewport and the entry count.
+  const fromX = useMotionValue(0);
+  const toX = useMotionValue(0);
+  const trackStart = useMotionValue(0);
+  const trackSlide = useMotionValue(0);
   const travel = useTransform(scrollYProgress, [0, TRACK_END], [0, 1]);
-  const trackX = useTransform([travel, shift], ([t, d]: number[]) => -t * d);
-  const travelerX = useTransform([travel, endX], ([t, e]: number[]) => t * e);
+  const trackX = useTransform([travel, trackStart, trackSlide], ([t, start, slide]: number[]) => start - t * slide);
+  const travelerX = useTransform([travel, fromX, toX], ([t, from, to]: number[]) => from + t * (to - from));
   const travelerY = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -20, 0, -20, 0, -20]);
   // Wobble: scroll velocity tilts the traveler, a loose spring lets it settle.
   const velocity = useVelocity(scrollYProgress);
@@ -45,13 +47,21 @@ export function Story() {
 
   useEffect(() => {
     const track = trackRef.current;
-    const lastEntry = track?.querySelector<HTMLElement>("[data-entry]:last-of-type");
-    if (!track || !lastEntry) return;
+    const header = headerRef.current;
+    const entries = track ? [...track.querySelectorAll<HTMLElement>("[data-entry]")] : [];
+    if (!track || !header || entries.length < 2) return;
     const measure = () => {
-      const viewport = window.innerWidth;
-      const end = Math.max(0, Math.min(END_X_VW * viewport, viewport - lastEntry.offsetWidth - END_MARGIN));
-      endX.set(end);
-      shift.set(Math.max(0, lastEntry.offsetLeft - end));
+      const margin = header.offsetLeft + TRAVELER_RADIUS;
+      const from = margin;
+      const to = Math.max(from, window.innerWidth - margin);
+      const first = entries[0].offsetLeft;
+      const span = entries[entries.length - 1].offsetLeft - first;
+      fromX.set(from);
+      toX.set(to);
+      // Entry i sits at first + i * spacing on the track, so with the track at start - t * slide the
+      // traveler reaches each one at t = (offsetLeft - first) / span.
+      trackStart.set(from - first);
+      trackSlide.set(span - (to - from));
     };
     measure();
     const observer = new ResizeObserver(measure);
@@ -61,7 +71,7 @@ export function Story() {
       observer.disconnect();
       window.removeEventListener("resize", measure);
     };
-  }, [shift, endX]);
+  }, [fromX, toX, trackStart, trackSlide]);
 
   /** Scroll so the traveler sits at the next or previous entry. */
   const step = (direction: 1 | -1) => {
@@ -69,10 +79,10 @@ export function Story() {
     const track = trackRef.current;
     if (!section || !track) return;
     const entries = [...track.querySelectorAll<HTMLElement>("[data-entry]")];
-    const lastLeft = entries[entries.length - 1].offsetLeft;
+    const first = entries[0].offsetLeft;
+    const span = entries[entries.length - 1].offsetLeft - first;
     const current = scrollYProgress.get();
-    // The traveler meets an entry when travel reaches offsetLeft / lastLeft.
-    const stops = entries.map((el) => (el.offsetLeft / lastLeft) * TRACK_END);
+    const stops = entries.map((el) => ((el.offsetLeft - first) / span) * TRACK_END);
     const target =
       direction === 1 ? stops.find((p) => p > current + 0.01) : [...stops].reverse().find((p) => p < current - 0.01);
     if (target === undefined) return;
@@ -88,7 +98,7 @@ export function Story() {
           <p className="whitespace-nowrap font-serif text-[20vw] font-bold leading-none text-white">{timeline.watermark}</p>
         </div>
 
-        <div className="absolute left-6 top-12 z-20 md:left-12">
+        <div ref={headerRef} className="absolute left-6 top-12 z-20 md:left-12">
           <span className="mb-2 block text-eyebrow font-black uppercase tracking-ultra text-white/20">
             {timeline.eyebrow}
           </span>
@@ -101,7 +111,7 @@ export function Story() {
         <div aria-hidden className="absolute left-0 top-1/2 z-10 h-px w-full bg-white/5">
           <motion.div
             style={{ x: travelerX, y: travelerY }}
-            className="pointer-events-none absolute left-0 top-1/2 z-30 -translate-y-1/2"
+            className="pointer-events-none absolute left-0 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2"
           >
             <div className="relative">
               <motion.div
@@ -117,9 +127,9 @@ export function Story() {
           </motion.div>
         </div>
 
-        <motion.ol ref={trackRef} style={{ x: trackX }} className="flex items-center gap-[40vw] pl-[20vw] md:gap-[20vw]">
+        <motion.ol ref={trackRef} style={{ x: trackX }} className="flex items-center gap-[40vw] md:gap-[20vw]">
           {timeline.entries.map((entry, i) => (
-            <Entry key={entry.title} entry={entry} index={i} isLast={i === timeline.entries.length - 1} />
+            <Entry key={entry.title} entry={entry} index={i} count={timeline.entries.length} />
           ))}
         </motion.ol>
 
@@ -139,42 +149,52 @@ export function Story() {
   );
 }
 
-function Entry({ entry, index, isLast }: { entry: TimelineEntry; index: number; isLast: boolean }) {
+function Entry({ entry, index, count }: { entry: TimelineEntry; index: number; count: number }) {
   const inView = { amount: 0.3 } as const;
+  // The traveler meets this entry this far along its walk. The labels slide across the traveler by the
+  // same fraction of their width, which keeps them between the margins: the first label starts at the
+  // traveler, the last one ends at it, and the ones past halfway are set right-aligned.
+  const progress = count > 1 ? index / (count - 1) : 0;
+  const alignEnd = progress > 0.5;
+  const isLast = index === count - 1;
+  const label = `absolute left-0 w-[min(17.5rem,calc(100vw-5rem))] md:w-[25rem] ${alignEnd ? "text-right" : "text-left"}`;
+  const shift = { translate: `${-progress * 100}% 0` };
+
   return (
     <li data-entry className="relative w-[280px] shrink-0 md:w-[500px]">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={inView}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="absolute bottom-[calc(50%+40px)] left-0 pl-4 text-left"
-      >
-        <h3 className="mb-1 text-lg font-medium tracking-tight text-white/90 md:text-2xl">{entry.title}</h3>
-        <div className="flex items-center gap-3">
-          <span className="text-micro font-bold uppercase tracking-label text-white/30 md:text-eyebrow">{entry.period}</span>
-          <div aria-hidden className="h-px w-4 bg-white/10" />
-          <span className="font-serif text-micro italic text-white/40 md:text-eyebrow">{entry.tag}</span>
-        </div>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={inView}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="absolute left-0 top-[calc(50%+40px)] pl-4 text-left"
-      >
-        <div className="flex items-start gap-4 md:gap-6">
+      <div style={shift} className={`${label} bottom-[calc(50%+40px)]`}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <h3 className="mb-1 text-lg font-medium tracking-tight text-white/90 md:text-2xl">{entry.title}</h3>
+          <div className={`flex items-center gap-3 ${alignEnd ? "justify-end" : ""}`}>
+            <span className="text-micro font-bold uppercase tracking-label text-white/30 md:text-eyebrow">{entry.period}</span>
+            <div aria-hidden className="h-px w-4 bg-white/10" />
+            <span className="font-serif text-micro italic text-white/40 md:text-eyebrow">{entry.tag}</span>
+          </div>
+        </motion.div>
+      </div>
+      <div style={shift} className={`${label} top-[calc(50%+40px)]`}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className={`flex items-start gap-4 md:gap-6 ${alignEnd ? "flex-row-reverse" : ""}`}
+        >
           <span aria-hidden className="font-serif text-3xl font-bold italic leading-none text-white/20 md:text-5xl">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <div className="max-w-[240px] md:max-w-[300px]">
+          <div className="min-w-0 flex-1">
             <p className="mb-4 text-xs font-light leading-relaxed text-white/50 md:mb-6 md:text-sm md:leading-5">
               {entry.description}
             </p>
             {entry.milestone && (
-              <div className="mb-4 border-l border-accent/40 pl-4 md:mb-6">
-                <div className="mb-1 flex items-center gap-3">
+              <div className={`mb-4 border-accent/40 md:mb-6 ${alignEnd ? "border-r pr-4" : "border-l pl-4"}`}>
+                <div className={`mb-1 flex items-center gap-3 ${alignEnd ? "justify-end" : ""}`}>
                   <span className="text-micro font-bold uppercase tracking-label text-accent md:text-eyebrow">
                     {entry.milestone.label}
                   </span>
@@ -186,15 +206,15 @@ function Entry({ entry, index, isLast }: { entry: TimelineEntry; index: number; 
                 </p>
               </div>
             )}
-            <div aria-hidden className="group flex cursor-pointer items-center gap-4">
+            <div aria-hidden className={`group flex cursor-pointer items-center gap-4 ${alignEnd ? "justify-end" : ""}`}>
               <div className="h-px w-8 bg-white/10 transition-all duration-500 group-hover:w-16" />
               <span className="text-micro font-black uppercase tracking-widest text-white/20 transition-colors group-hover:text-accent">
                 {isLast ? timeline.endCue : timeline.scrollCue}
               </span>
             </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </li>
   );
 }

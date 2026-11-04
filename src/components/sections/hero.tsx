@@ -72,7 +72,7 @@ export function Hero() {
         style={isDesktop ? { color } : undefined}
         className="w-full px-6 text-white lg:px-12 lg:text-black"
       >
-        <div className="mb-20 flex flex-col items-start justify-between lg:flex-row">
+        <div className="mb-12 flex flex-col items-start justify-between lg:mb-20 lg:flex-row">
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
@@ -121,10 +121,12 @@ export function Hero() {
         </div>
       </motion.div>
 
-      <div className="relative mt-20 flex w-full justify-center">
+      {/* Below lg the frame is a static inset card: taller than the 21:9 artwork, cropped to centre the
+          point where the strands converge (62% across), and at full opacity since the page is already black. */}
+      <div className="relative flex w-full justify-center px-6 lg:mt-20 lg:px-0">
         <motion.div
           style={isDesktop ? { width: frameWidth, borderRadius: frameRadius } : undefined}
-          className="relative z-[60] aspect-[21/9] w-full overflow-hidden opacity-50 shadow-2xl lg:w-[70%] lg:rounded-3xl"
+          className="relative z-[60] aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:aspect-[16/9] lg:aspect-[21/9] lg:w-[70%] lg:border-0 lg:opacity-50"
         >
           <SiteImage
             src={hero.image.src}
@@ -133,10 +135,13 @@ export function Hero() {
             sizes="100vw"
             loading="eager"
             fetchPriority="high"
-            className="object-cover"
+            className="object-cover object-[78%_50%] sm:object-right lg:object-center"
           />
         </motion.div>
       </div>
+
+      {/* Fades the glows out, so the hero meets the black section below without a seam. */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-black lg:hidden" />
 
       <motion.div
         aria-hidden

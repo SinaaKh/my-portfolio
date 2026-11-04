@@ -21,7 +21,7 @@ export function MyWorks() {
         ref={ref}
         id="my-works"
         aria-label={sectionLabel("my-works")}
-        className="relative flex h-screen w-full items-center justify-center overflow-clip bg-black"
+        className="relative flex h-svh w-full items-center justify-center overflow-clip bg-black"
       >
         <div
           aria-hidden
