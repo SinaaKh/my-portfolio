@@ -23,6 +23,8 @@
   --color-coral: #ff5252;
   --color-surface: #080808;
   --color-deep-teal: #09757a;
+  /* Contact-link goo (ui/symbiote.tsx): a hair off black, so its sheen still reads on black buttons */
+  --color-goo: #0a0a0a;
 
   /* Industry hub node accents (Versatility section) */
   --color-industry-1: #ff4d4d;

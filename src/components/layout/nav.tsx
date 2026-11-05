@@ -7,6 +7,7 @@ import { site } from "@/content/site";
 import { MenuIcon } from "@/components/ui/icons";
 import { SiteImage } from "@/components/ui/site-image";
 import { SmartLink } from "@/components/ui/smart-link";
+import { Symbiote } from "@/components/ui/symbiote";
 
 const { nav, meta } = site;
 
@@ -58,9 +59,10 @@ export function Nav() {
             <SmartLink
               href={nav.cta.href}
               external={nav.cta.external}
-              className="rounded-full bg-black px-7 py-2.5 text-nav font-bold text-white transition-all hover:bg-gray-800 active:scale-95"
+              className="group/goo relative isolate rounded-full bg-black px-7 py-2.5 text-nav font-bold text-white transition-all hover:bg-gray-800 active:scale-95 data-goo-caught:scale-[1.04] data-goo-caught:active:scale-[0.99]"
             >
-              {nav.cta.label}
+              <Symbiote shape="rect" reach={150} thickness={8.5} />
+              <span className="relative transition-colors group-data-goo-caught/goo:text-accent">{nav.cta.label}</span>
             </SmartLink>
             <MobileMenu />
           </div>

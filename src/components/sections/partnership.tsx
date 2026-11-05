@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { site } from "@/content/site";
 import { SmartLink } from "@/components/ui/smart-link";
+import { Symbiote } from "@/components/ui/symbiote";
 
 const { partnership } = site;
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -87,6 +88,7 @@ export function Partnership() {
             </ol>
 
             <motion.div
+              data-goo-zone
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.5 }}
@@ -112,8 +114,13 @@ export function Partnership() {
                 >
                   <span className="flex items-center gap-4">
                     {cta.link.label}
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white transition-all duration-500 group-hover:bg-accent">
-                      <span aria-hidden className="text-xl text-black transition-transform duration-500 group-hover:scale-125">
+                    {/* White goo grows out of the arrow circle; it stays on the card (data-goo-zone). */}
+                    <span className="group/goo relative isolate flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white transition-all duration-500 group-hover:bg-accent">
+                      <Symbiote shape="circle" reach={220} thickness={8.5} ink="light" />
+                      <span
+                        aria-hidden
+                        className="relative text-xl text-black transition-transform duration-500 group-hover:scale-125 group-data-goo-caught/goo:scale-125"
+                      >
                         →
                       </span>
                     </span>

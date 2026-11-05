@@ -58,12 +58,14 @@ function CursorLayers() {
       <motion.div
         aria-hidden
         style={{ x: blobX, y: blobY, scale: blobScale }}
-        className="pointer-events-none fixed left-0 top-0 z-[9999] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent mix-blend-difference transition-opacity duration-150 [html[data-symbiote]_&]:opacity-0"
       />
+      {/* While a contact link's goo holds the pointer (ui/symbiote.tsx), the blob is swallowed and the dot rides
+          inside the goo: white in black goo, black in white goo. */}
       <motion.div
         aria-hidden
         style={{ x, y, opacity: dotOpacity }}
-        className="pointer-events-none fixed left-0 top-0 z-[10000] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
+        className="pointer-events-none fixed left-0 top-0 z-[10000] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white [html[data-symbiote=light]_&]:bg-black"
       />
     </>
   );
