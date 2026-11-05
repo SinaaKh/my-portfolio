@@ -1,5 +1,6 @@
 import { site } from "@/content/site";
 import { SmartLink } from "@/components/ui/smart-link";
+import { Symbiote } from "@/components/ui/symbiote";
 
 const { footer, meta } = site;
 
@@ -16,9 +17,10 @@ export function Footer() {
             </h2>
             <SmartLink
               href={`mailto:${meta.email}`}
-              className="text-xl font-medium text-black/60 transition-colors hover:text-accent"
+              className="group/goo relative isolate inline-block text-xl font-medium text-black/60 transition-colors hover:text-accent data-goo-caught:text-accent"
             >
-              {meta.email}
+              <Symbiote shape="underline" reach={130} thickness={6.5} />
+              <span className="relative">{meta.email}</span>
             </SmartLink>
           </div>
 

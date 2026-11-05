@@ -15,6 +15,7 @@ import { site } from "@/content/site";
 import { EyeIcon } from "@/components/ui/icons";
 import { SiteImage } from "@/components/ui/site-image";
 import { SmartLink } from "@/components/ui/smart-link";
+import { Symbiote } from "@/components/ui/symbiote";
 import { seededRandom } from "@/lib/random";
 import { useFinePointer, useIsDesktop } from "@/lib/use-media-query";
 
@@ -183,7 +184,7 @@ function Badge() {
       href={hero.badgeLink.href}
       external={hero.badgeLink.external}
       aria-label={hero.badgeLink.label}
-      className="relative flex h-32 w-32 items-center justify-center rounded-full"
+      className="group/goo relative isolate flex h-32 w-32 items-center justify-center rounded-full transition-colors data-goo-caught:text-accent"
     >
       <svg aria-hidden viewBox="0 0 100 100" className="absolute inset-0 h-full w-full animate-spin-slow">
         <defs>
@@ -193,7 +194,12 @@ function Badge() {
           <textPath href={`#${pathId}`}>{hero.badgeText}</textPath>
         </text>
       </svg>
-      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-current/10">
+      {/* The goo grows out of the eye; the ring of text measures its reach. */}
+      <Symbiote shape="circle" reach={150} thickness={7.5} />
+      <span
+        data-goo-base
+        className="relative flex h-10 w-10 items-center justify-center rounded-full bg-current/10 group-data-goo-active/goo:bg-transparent group-data-goo-active/goo:text-white"
+      >
         <EyeIcon className="h-5 w-5" />
       </span>
     </SmartLink>

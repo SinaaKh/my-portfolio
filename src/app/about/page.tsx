@@ -4,6 +4,7 @@ import { site } from "@/content/site";
 import { Reveal } from "@/components/ui/reveal";
 import { SiteImage } from "@/components/ui/site-image";
 import { SmartLink } from "@/components/ui/smart-link";
+import { Symbiote } from "@/components/ui/symbiote";
 
 const { about } = site.pages;
 
@@ -65,20 +66,24 @@ export default function AboutPage() {
                     <SmartLink
                       href={link.href}
                       external={link.external}
-                      className="group flex items-center justify-between rounded-xl border border-transparent bg-gray-50 p-4 transition-all duration-300 hover:border-gray-100 hover:bg-white"
+                      className="group group/goo relative isolate flex items-center justify-between rounded-xl border border-transparent bg-gray-50 p-4 transition-all duration-300 hover:border-gray-100 hover:bg-white data-goo-caught:border-gray-100 data-goo-caught:bg-white"
                     >
+                      {/* Only the email row grows goo, out of its icon tile, with a short reach so it
+                          doesn't grab the pointer off the GitHub row above. */}
+                      {link.href.startsWith("mailto:") && <Symbiote shape="rect" reach={36} thickness={7} swell={2} />}
                       <span className="flex items-center gap-4">
                         <span
                           aria-hidden
-                          className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-xs font-black uppercase text-black shadow-sm transition-transform duration-300 group-hover:scale-110"
+                          data-goo-base
+                          className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-xs font-black uppercase text-black shadow-sm transition-transform duration-300 group-hover:scale-110 group-data-goo-active/goo:bg-transparent group-data-goo-active/goo:shadow-none"
                         >
-                          {link.icon}
+                          <span className="relative group-data-goo-active/goo:text-white">{link.icon}</span>
                         </span>
                         <span className="font-medium text-gray-900">{link.label}</span>
                       </span>
                       <svg
                         aria-hidden
-                        className="h-5 w-5 text-gray-300 transition-colors group-hover:text-black"
+                        className="h-5 w-5 text-gray-300 transition-colors group-hover:text-black group-data-goo-caught/goo:text-black"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"

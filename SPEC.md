@@ -677,6 +677,15 @@ Defaults applied during the build (2026-10-30). Each can be revisited.
       card.
     - **Secondary pages**: the same heading and padding scale. /about puts the portrait and links in a 13rem
       column beside the story, and /projects caps band screenshots at `100svh − 3rem` tall.
+24. **Contact goo** (not on the reference): the five contact links (nav "Let's Chat", hero "Email Sina" badge,
+    Partnership "Let's talk" card, footer email, /about Email row) grow glossy goo (`ui/symbiote.tsx`, physics in
+    `lib/symbiote.ts`). When the pointer comes within reach of the link's edge, three tendrils reach out, catch it and
+    hold on while it moves; the link shows its hover state while held. The pointer itself is never moved. Pulled past
+    1.3× reach, the tendrils snap and shed drops that fall; while they hold, a drop now and then drips off. Reach:
+    nav and badge 150px, card 220px (the goo stays on the card), footer 130px, /about 36px (half the GitHub row, so
+    it doesn't grab the pointer off that row). Only one link holds the pointer at a time (the badge sits within the
+    nav's reach); a link right under the pointer takes it over and the other snaps. The goo only catches a link that
+    is really under the pointer, so it lets go when the nav fades out. Fine pointers only; off under reduced motion.
 
 ---
 

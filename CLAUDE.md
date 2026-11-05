@@ -37,7 +37,7 @@ How content reaches the pages:
 
 **Styling:** Tailwind v4 is wired through `@tailwindcss/turbopack` in `next.config.ts` (not PostCSS). Design tokens (colors, type sizes, tracking, shadows, animations) live only in the `@theme static` block of `src/app/globals.css` and become both utilities and CSS variables. Change colors there, not as inline hex values in components. Per-item colors (industry underlines, tech tints, project band backgrounds) live in `site.ts`.
 
-**Motion:** `Providers` wraps the app in Framer Motion's `MotionConfig reducedMotion="user"` plus Lenis (`smooth-scroll.tsx`). Autonomous motion (marquees, spins, particles, cursor springs, Lenis) must be disabled under prefers-reduced-motion. Scroll-linked tracks still follow the user's own scrolling. The custom cursor is hidden on coarse pointers.
+**Motion:** `Providers` wraps the app in Framer Motion's `MotionConfig reducedMotion="user"` plus Lenis (`smooth-scroll.tsx`). Autonomous motion (marquees, spins, particles, cursor springs, Lenis) must be disabled under prefers-reduced-motion. Scroll-linked tracks still follow the user's own scrolling. The custom cursor is hidden on coarse pointers. So is the contact-link goo (`<Symbiote>` in `ui/symbiote.tsx`, SPEC.md §6.24), which is also off under reduced motion; it paints by writing SVG attributes in its own frame loop, not through React state.
 
 **Activity:** with Cache Components, Next hides routes in a React `<Activity>` instead of unmounting them, so effects clean up on navigation but `useState` survives and the DOM stays. Anything transient (open overlays, running games) must reset in a `useLayoutEffect` cleanup (`node_modules/next/dist/docs/01-app/02-guides/preserving-ui-state.md`).
 
