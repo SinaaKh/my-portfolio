@@ -29,7 +29,6 @@ export const site: SiteContent = {
     titleTemplate: "%s · Sina Khodadadi",
     description:
       "AI Software Engineer in Tehran. A software engineer who is deep in AI, building production RAG systems, ML forecasting, constraint optimization and the full-stack products around them.",
-    // TODO before deploying: set this to the real production domain.
     url: "https://sinkho.vercel.app",
     locale: "en_US",
     keywords: [

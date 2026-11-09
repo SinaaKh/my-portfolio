@@ -1,9 +1,32 @@
 # Sina Khodadadi: Portfolio
 
-Personal portfolio of Sina Khodadadi, AI Software Engineer, built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**,
-**Framer Motion** and **Lenis** smooth scrolling.
+[![CI](https://github.com/SinaaKh/my-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/SinaaKh/my-portfolio/actions/workflows/ci.yml)
 
-To change the site you normally only need to:
+**Live site: [sinkho.vercel.app](https://sinkho.vercel.app)**
+
+The source of my personal portfolio. I'm an AI software engineer in Tehran who builds production RAG systems, ML
+forecasting, constraint optimization and the full-stack products around them. The site covers my case studies, writing
+and experiments, and ends in a small game you can play with the page itself.
+
+Built with **Next.js 16** (App Router, Cache Components), **TypeScript**, **Tailwind CSS v4**, **Framer Motion** and
+**Lenis** smooth scrolling.
+
+## Highlights
+
+- **One typed content file.** Every string, link, image and case study comes from `src/content/site.ts`, validated by
+  `tsc`. There is no CMS and no copy hard-coded in components.
+- **Statically prerendered.** Every page, including the dynamic case study and blog routes, is generated at build time.
+- **Motion that respects people.** Autonomous animation turns off under `prefers-reduced-motion`, and the custom
+  cursor never appears on touch devices.
+- **Phones first-class.** Layouts are tuned for portrait and landscape phones, not just a shrunk desktop page.
+- **Mini games.** Context Window Snake for touch, plus The Model Escapes for mouse and trackpad. Each is lazy-loaded.
+- **CI on every push.** GitHub Actions runs lint, a production build and a type check. Dependabot keeps dependencies
+  current.
+
+## Using this as a template
+
+You are welcome to learn from the code, but please don't republish my text, photos or case studies as your own (see
+[License](#license)). To adapt the structure for yourself you normally only need to:
 
 1. edit **`src/content/site.ts`**, and
 2. replace or regenerate the files in **`public/images/`**.
@@ -26,6 +49,7 @@ The design system (tokens, every section's layout and motion) is documented in [
 - [Motion and accessibility](#motion-and-accessibility)
 - [Deploying to Vercel](#deploying-to-vercel)
 - [Quality checks](#quality-checks)
+- [License](#license)
 
 ---
 
@@ -285,3 +309,9 @@ Lighthouse on the production build (`npm run build && npm run start`):
 | `/` | 92 / 100 | 97 | 100 | 100 |
 | `/about` | 93 | 96 | 100 | 100 |
 | `/projects` | 95 | 96 | 100 | 100 |
+
+## License
+
+The source code is released under the [MIT License](./LICENSE). The site's content is **not** covered by it and stays
+all rights reserved: the text and case studies in `src/content/`, and the photos and images in `public/`. Contact me
+if you'd like to use any of it.
