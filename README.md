@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/SinaaKh/my-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/SinaaKh/my-portfolio/actions/workflows/ci.yml)
 
-**Live site: [sinkho.vercel.app](https://sinkho.vercel.app)**
+**Live site: [www.sinkho.ir](https://www.sinkho.ir)**
 
 The source of my personal portfolio. I'm an AI software engineer in Tehran who builds production RAG systems, ML
 forecasting, constraint optimization and the full-stack products around them. The site covers my case studies, writing
